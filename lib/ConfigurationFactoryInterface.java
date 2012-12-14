@@ -8,6 +8,8 @@ package lib;
  * To change this template use File | Settings | File Templates.
  */
 public interface ConfigurationFactoryInterface {
+
+    //This function needs to be overridden in class ConfigurationFactory
     public Configuration getConfiguration();
 
 }

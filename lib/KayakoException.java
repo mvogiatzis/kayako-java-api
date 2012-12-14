@@ -14,4 +14,11 @@ package lib;
  * ###############################################
  */
 public class KayakoException extends Exception {
+    KayakoException() {
+        this("Generic Exception");
+    }
+
+    KayakoException(String str) {
+    }
+
 }

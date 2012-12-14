@@ -1,5 +1,6 @@
 package lib;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -384,6 +385,14 @@ public class TicketNote extends KEntity {
     public TicketNote setUserOrganization(UserOrganization userOrganization) {
         this.userOrganization = userOrganization;
         return this;
+    }
+
+
+    public static RawArrayElement getAll(int ticketId) {
+        ArrayList<String> searchParams = new ArrayList<String>();
+        searchParams.add("ListAll");
+        searchParams.add(Integer.toString(ticketId));
+        return KEntity.getAll(controller, searchParams);
     }
 
     //this function will populate the data of the ticket note instance when supplied with RawArrayElement derived from the xml

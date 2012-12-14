@@ -17,6 +17,7 @@ import java.util.HashMap;
  */
 public class User extends KEntity {
     static final String ROLE_USER = "user";
+    static final int DEFAULT_MAX_USERS = 1000;
     static final String ROLE_MANAGER = "manager";
     static final String SALUTATION_MR = "Mr.";
     static final String SALUTATION_MS = "Ms.";
@@ -353,6 +354,25 @@ public class User extends KEntity {
         this.userOrganization = userOrganization;
         return this;
     }
+
+    public static RawArrayElement getAll(String controller) throws KayakoException {
+        ArrayList<String> searchParams = new ArrayList<String>();
+        searchParams.add("Filter");
+        return KEntity.getAll(controller, searchParams);
+    }
+
+    public static RawArrayElement getAll(int startingUserId) {
+        return User.getAll(startingUserId, DEFAULT_MAX_USERS);
+    }
+
+    public static RawArrayElement getAll(int startingUserId, int maxItems) {
+        ArrayList<String> searchParams = new ArrayList<String>();
+        searchParams.add("Filter");
+        searchParams.add(Integer.toString(startingUserId));
+        searchParams.add(Integer.toString(maxItems));
+        return KEntity.getAll(controller, searchParams);
+    }
+
 
     //this function will populate the data of the user instance when supplied with RawArrayElement derived from the xml
     @Override

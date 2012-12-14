@@ -36,7 +36,7 @@ abstract public class KEntity {
         return null;
     }
 
-    public static RawArrayElement getAll(String controller) {
+    public static RawArrayElement getAll(String controller) throws KayakoException{
         return KEntity.getAll(controller, new ArrayList<String>());
     }
 

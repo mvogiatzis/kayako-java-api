@@ -1,5 +1,7 @@
 package lib;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -82,7 +84,7 @@ public class TicketAttachment extends KEntity {
      * @apiField required_create=true
      * @var string
      */
-    protected String contents;
+    protected byte[] contents;
 
     /**
      * Ticket with this attachment.
@@ -178,12 +180,21 @@ public class TicketAttachment extends KEntity {
         return this;
     }
 
-    public String getContents() {
+    public byte[] getContents() {
         return contents;
     }
 
-    public TicketAttachment setContents(String contents) {
+    public TicketAttachment setContents(byte[] contents) {
         this.contents = contents;
+        return this;
+    }
+
+    public TicketAttachment setContentFromFile(File file) {
+        try {
+            this.contents = Helper.readBytesFromFile(file);
+        } catch (IOException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
         return this;
     }
 
@@ -203,6 +214,19 @@ public class TicketAttachment extends KEntity {
     public TicketAttachment setTicketPost(TicketPost ticketPost) {
         this.ticketPost = ticketPost;
         return this;
+    }
+
+    //TODO - write unsupported functions like getAll(controller) , update() etc and throw appropriate exception
+
+    public static RawArrayElement getAll(String controller) throws KayakoException {
+        throw new KayakoException("This method is not available");
+    }
+
+    public static RawArrayElement getAll(int ticketId) {
+        ArrayList<String> searchParams = new ArrayList<String>();
+        searchParams.add("ListAll");
+        searchParams.add(Integer.toString(ticketId));
+        return KEntity.getAll(controller, searchParams);
     }
 
     //this function will populate the data of the ticket attachment instance when supplied with RawArrayElement derived from the xml
@@ -232,6 +256,12 @@ public class TicketAttachment extends KEntity {
                 this.setFileType(component.getContent());
             } else if (elementName.equals("dateline")) {
                 this.setDateLine(Integer.parseInt(component.getContent()));
+            } else if (elementName.equals("contents")) {
+                try {
+                    this.setContents(Base64.decode(component.getContent()));
+                } catch (IOException e) {
+                    e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                }
             }
         }
         return this;
@@ -247,7 +277,7 @@ public class TicketAttachment extends KEntity {
         ticketAttachmentHashMap.put("ticketid", Integer.toString(this.getTicketId()));
         ticketAttachmentHashMap.put("ticketpostid", Integer.toString(this.getTicketPostId()));
         ticketAttachmentHashMap.put("filename", this.getFileName());
-        ticketAttachmentHashMap.put("contents", Base64.encodeBytes(this.getContents().getBytes()));
+        ticketAttachmentHashMap.put("contents", Base64.encodeBytes(this.getContents()));
         return ticketAttachmentHashMap;
     }
 

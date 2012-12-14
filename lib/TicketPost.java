@@ -473,6 +473,15 @@ public class TicketPost extends KEntity {
         return this;
     }
 
+
+    public static RawArrayElement getAll(int ticketId) {
+        ArrayList<String> searchParams = new ArrayList<String>();
+        searchParams.add("ListAll");
+        searchParams.add(Integer.toString(ticketId));
+        return KEntity.getAll(controller, searchParams);
+    }
+
+
     //this function will populate the data of the ticket post instance when supplied with RawArrayElement derived from the xml
     @Override
     public TicketPost populate(RawArrayElement rawArrayElement) throws KayakoException {

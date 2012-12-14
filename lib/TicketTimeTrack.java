@@ -1,5 +1,6 @@
 package lib;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -357,6 +358,13 @@ public class TicketTimeTrack extends KEntity {
         return this;
     }
 
+    public static RawArrayElement getAll(int ticketId) {
+        ArrayList<String> searchParams = new ArrayList<String>();
+        searchParams.add("ListAll");
+        searchParams.add(Integer.toString(ticketId));
+        return KEntity.getAll(controller, searchParams);
+    }
+
     //this function will populate the data of the ticket timetrack instance when supplied with RawArrayElement derived from the xml
     @Override
     public TicketTimeTrack populate(RawArrayElement rawArrayElement) throws KayakoException {
@@ -399,5 +407,4 @@ public class TicketTimeTrack extends KEntity {
     }
 
 
-    //TODO a lot of functions like getAll etc, plus creating new attachments from here...
 }
