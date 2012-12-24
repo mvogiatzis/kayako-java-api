@@ -61,7 +61,7 @@ public class CustomField extends KEntity {
      *
      * @var CustomFieldGroupBase
      */
-    protected String customFieldGroup;
+    protected CustomFieldGroup customFieldGroup;
 
     /**
      * Cache for field definition.
@@ -70,6 +70,10 @@ public class CustomField extends KEntity {
      */
     protected String definition = null;
 
+
+    public CustomField(CustomFieldGroup customFieldGroup) {
+        this.customFieldGroup = customFieldGroup;
+    }
 
     //this function will populate the data of the ticket note instance when supplied with RawArrayElement derived from the xml
     @Override

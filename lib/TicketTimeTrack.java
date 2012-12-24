@@ -262,7 +262,7 @@ public class TicketTimeTrack extends KEntity {
     }
 
 
-    public Staff getCreatorStaff() {
+    public Staff getCreatorStaff() throws KayakoException {
         if (this.getCreatorStaffId() == 0) {
             return null;
         }

@@ -20,7 +20,7 @@ public class Configuration {
     private Boolean debug;
     private Boolean standardUrlType = true;
     private static Configuration configuration = null;
-
+    private String dateFormat = "MM/dd/yyyy";
 
     public Configuration(String baseUrl, String apiKey, String secretKey, Boolean testMode) {
         //this("http://swift.local.com/api/index.php?", "80866fb4-b6e2-1584-a514-da071da37894", "ZWJiNTkzYzMtNmEwNS1iMGU0LTc1YmItYzhmMWRkNDVkYmY2ZmQwYjU4MjgtYzY0Mi04NGQ0LWJkZjktNWE3NmViZDRhMmFk");
@@ -84,5 +84,13 @@ public class Configuration {
 
     public void setStandardUrlType(Boolean standardUrlType) {
         this.standardUrlType = standardUrlType;
+    }
+
+    public String getDateFormat() {
+        return dateFormat;
+    }
+
+    public void setDateFormat(String dateFormat) {
+        this.dateFormat = dateFormat;
     }
 }

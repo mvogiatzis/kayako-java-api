@@ -351,7 +351,7 @@ public class TicketNote extends KEntity {
         return this;
     }
 
-    public Staff getCreatorStaff() {
+    public Staff getCreatorStaff() throws KayakoException {
         if (this.getCreatorStaffId() == 0) {
             return null;
         }
@@ -366,7 +366,7 @@ public class TicketNote extends KEntity {
         return this;
     }
 
-    public Staff getForStaff() {
+    public Staff getForStaff() throws KayakoException {
         if (this.forStaff == null) {
             this.forStaff = (Staff) Staff.get(this.getForStaffId());
         }

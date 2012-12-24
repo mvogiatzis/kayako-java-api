@@ -1,5 +1,4 @@
 package lib;
-
 /**
  * ###############################################
  * Kayako App
@@ -12,9 +11,5 @@ package lib;
  * @link http://www.kayako.com
  * ###############################################
  */
-public interface ConfigurationFactoryInterface {
-
-    //This function needs to be overridden in class ConfigurationFactory
-    public Configuration getConfiguration();
-
+public class CustomFieldFile {
 }

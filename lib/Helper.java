@@ -6,11 +6,16 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * Created with IntelliJ IDEA.
- * User: rajatgarg
- * Date: 12/14/12
- * Time: 3:59 PM
- * To change this template use File | Settings | File Templates.
+ * ###############################################
+ * Kayako App
+ * _______________________________________________
+ *
+ * @author Rajat Garg
+ * @package lib
+ * @copyright Copyright (c) 2001-2012, Kayako
+ * @license http://www.kayako.com/license
+ * @link http://www.kayako.com
+ * ###############################################
  */
 public class Helper {
 
