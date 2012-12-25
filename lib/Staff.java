@@ -268,7 +268,7 @@ public class Staff extends KEntity {
     }
 
 
-    public StaffGroup getStaffGroup() {
+    public StaffGroup getStaffGroup() throws KayakoException {
         if (this.staffGroup == null) {
             this.staffGroup = (StaffGroup) StaffGroup.get(this.getStaffGroupId());
         }
@@ -310,7 +310,7 @@ public class Staff extends KEntity {
                 break;
             }
             if (elementName.equals("id")) {
-                this.setId(Integer.parseInt(component.getContent()));
+                this.setId(Helper.parseInt(component.getContent()));
             } else if (elementName.equals("firstname")) {
                 this.setFirstName(component.getContent());
             } else if (elementName.equals("lastName")) {
@@ -328,9 +328,9 @@ public class Staff extends KEntity {
             } else if (elementName.equals("mobilenumber")) {
                 this.setMobileNumber(component.getContent());
             } else if (elementName.equals("isenabled")) {
-                this.setEnabled(Integer.parseInt(component.getContent()) == 1);
+                this.setEnabled(Helper.parseInt(component.getContent()) == 1);
             } else if (elementName.equals("enabledst")) {
-                this.setDST(Integer.parseInt(component.getContent()) == 1);
+                this.setDST(Helper.parseInt(component.getContent()) == 1);
             } else if (elementName.equals("signature")) {
                 this.setSignature(component.getContent());
             }

@@ -201,7 +201,7 @@ public class User extends KEntity {
     }
 
 
-    public UserGroup getUserGroup() {
+    public UserGroup getUserGroup() throws KayakoException {
         if (this.userGroup == null) {
             this.userGroup = (UserGroup) UserGroup.get(this.getUserGroupId());
         }
@@ -388,17 +388,17 @@ public class User extends KEntity {
                 break;
             }
             if (elementName.equals("id")) {
-                this.setId(Integer.parseInt(component.getContent()));
+                this.setId(Helper.parseInt(component.getContent()));
             } else if (elementName.equals("usergroupid")) {
-                this.setUserGroupId(Integer.parseInt(component.getContent()));
+                this.setUserGroupId(Helper.parseInt(component.getContent()));
             } else if (elementName.equals("userrole")) {
                 this.setUserRole(component.getContent());
             } else if (elementName.equals("userorganizationid")) {
-                this.setUserOrganizationId(Integer.parseInt(component.getContent()));
+                this.setUserOrganizationId(Helper.parseInt(component.getContent()));
             } else if (elementName.equals("salutation")) {
                 this.setSalutation(component.getContent());
             } else if (elementName.equals("userexpiry")) {
-                this.setUserExpiry(Integer.parseInt(component.getContent()));
+                this.setUserExpiry(Helper.parseInt(component.getContent()));
             } else if (elementName.equals("fullname")) {
                 this.setFullName(component.getContent());
             } else if (elementName.equals("email")) {
@@ -408,19 +408,19 @@ public class User extends KEntity {
             } else if (elementName.equals("phone")) {
                 this.setPhone(component.getContent());
             } else if (elementName.equals("dateline")) {
-                this.setDateLine(Integer.parseInt(component.getContent()));
+                this.setDateLine(Helper.parseInt(component.getContent()));
             } else if (elementName.equals("lastvisit")) {
-                this.setLastVisit(Integer.parseInt(component.getContent()));
+                this.setLastVisit(Helper.parseInt(component.getContent()));
             } else if (elementName.equals("isenabled")) {
-                this.setEnabled(Integer.parseInt(component.getContent()) == 1);
+                this.setEnabled(Helper.parseInt(component.getContent()) == 1);
             } else if (elementName.equals("timezone")) {
                 this.setTimeZone(component.getContent());
             } else if (elementName.equals("enabledst")) {
-                this.setDST(Integer.parseInt(component.getContent()) == 1);
+                this.setDST(Helper.parseInt(component.getContent()) == 1);
             } else if (elementName.equals("slaplanid")) {
-                this.setSLAPlanId(Integer.parseInt(component.getContent()));
+                this.setSLAPlanId(Helper.parseInt(component.getContent()));
             } else if (elementName.equals("slaplanexpiry")) {
-                this.setSLAPlanExpiry(Integer.parseInt(component.getContent()));
+                this.setSLAPlanExpiry(Helper.parseInt(component.getContent()));
             }
         }
         return this;

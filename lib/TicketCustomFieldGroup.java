@@ -24,6 +24,16 @@ public class TicketCustomFieldGroup extends CustomFieldGroup {
     protected int ticketId;
 
 
+    public TicketCustomFieldGroup(int ticketId) {
+        this(ticketId, new RawArrayElement());
+    }
+
+    public TicketCustomFieldGroup(int ticketId, RawArrayElement rawArrayElement) {
+        //TODO implement constructor if needed
+        this.ticketId = ticketId;
+        this.type = CustomFieldGroup.TYPE_TICKET;
+    }
+
     /**
      * Fetches ticket custom fields groups from server.
      *
@@ -31,13 +41,13 @@ public class TicketCustomFieldGroup extends CustomFieldGroup {
      * @return RawArrayElement
      */
     static public RawArrayElement getAll(int ticketId) {
-        /*$objects = array();
-        if (array_key_exists( static::$object_xml_name, $result)){
-            foreach($result[ static::$object_xml_name]as $object_data){
-                $objects[]=new static ($ticket_id, $object_data);
+        /*objects = array();
+        if (array_key_exists( static::objectXmlName, result)){
+            foreach(result[ static::objectXmlName]as object_data){
+                objects[]=new static (ticket_id, object_data);
             }
         }
-        return new kyResultSet($objects);*/
+        return new ResultSet(objects);*/
         ArrayList<String> params = new ArrayList<String>();
         params.add(Integer.toString(ticketId));
         RawArrayElement rawArrayElement = KEntity.getAll(controller, params);

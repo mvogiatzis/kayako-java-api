@@ -24,6 +24,13 @@ abstract public class KEntity {
     static protected String xmlName;
     protected Boolean readOnly;
 
+    /**
+     * Data key for storing files to send as multipart/form-data.
+     *
+     * @var string
+     */
+    public static final String FILES_DATA_NAME = "_files";
+
     static String getController() {
         return controller;
     }

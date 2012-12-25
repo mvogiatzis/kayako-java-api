@@ -335,7 +335,7 @@ public class UserOrganization extends KEntity {
                 break;
             }
             if (elementName.equals("id")) {
-                this.setId(Integer.parseInt(component.getContent()));
+                this.setId(Helper.parseInt(component.getContent()));
             } else if (elementName.equals("name")) {
                 this.setName(component.getContent());
             } else if (elementName.equals("organizationtype")) {
@@ -357,13 +357,13 @@ public class UserOrganization extends KEntity {
             } else if (elementName.equals("website")) {
                 this.setWebsite(component.getContent());
             } else if (elementName.equals("dateline")) {
-                this.setDateline(Integer.parseInt(component.getContent()));
+                this.setDateline(Helper.parseInt(component.getContent()));
             } else if (elementName.equals("lastupdate")) {
-                this.setLastUpdate(Integer.parseInt(component.getContent()));
+                this.setLastUpdate(Helper.parseInt(component.getContent()));
             } else if (elementName.equals("SLAplanid")) {
-                this.setSLAPlanID(Integer.parseInt(component.getContent()));
+                this.setSLAPlanID(Helper.parseInt(component.getContent()));
             } else if (elementName.equals("SLAplanexpiry")) {
-                this.setSLAPlanExpiry(Integer.parseInt(component.getContent()));
+                this.setSLAPlanExpiry(Helper.parseInt(component.getContent()));
             }
         }
         return this;

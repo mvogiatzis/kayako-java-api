@@ -371,12 +371,12 @@ public class TicketTimeTrack extends KEntity {
         if (!rawArrayElement.getElementName().equals(objectXmlName)) {
             throw new KayakoException();
         }
-        this.setId(Integer.parseInt(rawArrayElement.getAttribute("id"))).setTicketId(Integer.parseInt(rawArrayElement.getAttribute("ticketid")));
-        this.setTimeWorked(Integer.parseInt(rawArrayElement.getAttribute("timeworked"))).setTimeBillable(Integer.parseInt(rawArrayElement.getAttribute("timebillable")));
-        this.setBillDate(Integer.parseInt(rawArrayElement.getAttribute("billdate"))).setWorkDate(Integer.parseInt(rawArrayElement.getAttribute("workdate")));
-        this.setNoteColor(Integer.parseInt(rawArrayElement.getAttribute("notecolor")));
-        this.setCreatorStaffName(rawArrayElement.getAttribute("creatorstaffname")).setCreatorStaffId(Integer.parseInt(rawArrayElement.getAttribute("creatorstaffid")));
-        this.setWorkerStaffName(rawArrayElement.getAttribute("workerstaffname")).setWorkerStaffId(Integer.parseInt(rawArrayElement.getAttribute("workerstaffid")));
+        this.setId(Helper.parseInt(rawArrayElement.getAttribute("id"))).setTicketId(Helper.parseInt(rawArrayElement.getAttribute("ticketid")));
+        this.setTimeWorked(Helper.parseInt(rawArrayElement.getAttribute("timeworked"))).setTimeBillable(Helper.parseInt(rawArrayElement.getAttribute("timebillable")));
+        this.setBillDate(Helper.parseInt(rawArrayElement.getAttribute("billdate"))).setWorkDate(Helper.parseInt(rawArrayElement.getAttribute("workdate")));
+        this.setNoteColor(Helper.parseInt(rawArrayElement.getAttribute("notecolor")));
+        this.setCreatorStaffName(rawArrayElement.getAttribute("creatorstaffname")).setCreatorStaffId(Helper.parseInt(rawArrayElement.getAttribute("creatorstaffid")));
+        this.setWorkerStaffName(rawArrayElement.getAttribute("workerstaffname")).setWorkerStaffId(Helper.parseInt(rawArrayElement.getAttribute("workerstaffid")));
         this.setContents(rawArrayElement.getContent());
         return this;
     }

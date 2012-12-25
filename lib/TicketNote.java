@@ -401,17 +401,19 @@ public class TicketNote extends KEntity {
         if (!rawArrayElement.getElementName().equals(objectXmlName)) {
             throw new KayakoException();
         }
-        this.setType(rawArrayElement.getAttribute("type")).setId(Integer.parseInt(rawArrayElement.getAttribute("id")));
+        this.setType(rawArrayElement.getAttribute("type")).setId(Helper.parseInt(rawArrayElement.getAttribute("id")));
         if (this.getType().equals(TYPE_TICKET)) {
-            this.setTicketId(Integer.parseInt(rawArrayElement.getAttribute("ticketid")));
+            this.setTicketId(Helper.parseInt(rawArrayElement.getAttribute("ticketid")));
         } else if (this.getType().equals(TYPE_USER)) {
-            this.setUserId(Integer.parseInt(rawArrayElement.getAttribute("userid")));
+            this.setUserId(Helper.parseInt(rawArrayElement.getAttribute("userid")));
         } else if (this.getType().equals(TYPE_USER_ORGANIZATION)) {
-            this.setUserOrganizationId(Integer.parseInt(rawArrayElement.getAttribute("userorganizationid")));
+            this.setUserOrganizationId(Helper.parseInt(rawArrayElement.getAttribute("userorganizationid")));
         }
-        this.setNoteColor(Integer.parseInt(rawArrayElement.getAttribute("notecolor"))).setCreatorStaffId(Integer.parseInt(rawArrayElement.getAttribute("creatorstaffid")));
-        this.setForStaffId(Integer.parseInt(rawArrayElement.getAttribute("forstaffid"))).setCreatorStaffName(rawArrayElement.getAttribute("creatorstaffname"));
-        this.setCreationDate(Integer.parseInt(rawArrayElement.getAttribute("creationdate")));
+        this.setNoteColor(Helper.parseInt(rawArrayElement.getAttribute("notecolor")));
+        this.setCreatorStaffId(Helper.parseInt(rawArrayElement.getAttribute("creatorstaffid")));
+        this.setForStaffId(Helper.parseInt(rawArrayElement.getAttribute("forstaffid")));
+        this.setCreatorStaffName(rawArrayElement.getAttribute("creatorstaffname"));
+        this.setCreationDate(Helper.parseInt(rawArrayElement.getAttribute("creationdate")));
         this.setContents(rawArrayElement.getContent());
         return this;
     }

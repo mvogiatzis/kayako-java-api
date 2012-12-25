@@ -52,4 +52,13 @@ public class Helper {
         is.close();
         return bytes;
     }
+
+
+    public static int parseInt(String string) {
+        try {
+            return Integer.parseInt(string);
+        } catch (NumberFormatException nfe) {
+            return 0;
+        }
+    }
 }

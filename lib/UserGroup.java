@@ -147,13 +147,13 @@ public class UserGroup extends KEntity {
                 break;
             }
             if (elementName.equals("id")) {
-                this.setId(Integer.parseInt(component.getContent()));
+                this.setId(Helper.parseInt(component.getContent()));
             } else if (elementName.equals("title")) {
                 this.setTitle(component.getContent());
             } else if (elementName.equals("grouptype")) {
                 this.setType(component.getContent());
             } else if (elementName.equals("ismaster")) {
-                this.setMaster(Integer.parseInt(component.getContent()) == 1);
+                this.setMaster(Helper.parseInt(component.getContent()) == 1);
             }
         }
         return this;

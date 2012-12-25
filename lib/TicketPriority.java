@@ -263,17 +263,17 @@ public class TicketPriority extends KEntity {
                 break;
             }
             if (elementName.equals("id")) {
-                this.setId(Integer.parseInt(component.getContent()));
+                this.setId(Helper.parseInt(component.getContent()));
             } else if (elementName.equals("title")) {
                 this.setTitle(component.getContent());
             } else if (elementName.equals("displayorder")) {
-                this.setDisplayOrder(Integer.parseInt(component.getContent()));
+                this.setDisplayOrder(Helper.parseInt(component.getContent()));
             } else if (elementName.equals("displayicon")) {
                 this.setDisplayIcon(component.getContent());
             } else if (elementName.equals("type")) {
                 this.setType(component.getContent());
             } else if (elementName.equals("uservisibilitycustom")) {
-                if (Integer.parseInt(component.getContent()) == 1) {
+                if (Helper.parseInt(component.getContent()) == 1) {
                     this.setUserVisibilityCustom(true);
                 } else {
                     this.setUserVisibilityCustom(false);

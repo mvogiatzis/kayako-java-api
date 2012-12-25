@@ -15,7 +15,7 @@ import java.util.HashMap;
  * @link http://www.kayako.com
  * ###############################################
  */
-public class Ticket extends KEntity {
+public class Ticket extends KEntityCustom {
 
 
     static final int FLAG_NONE = 0;
@@ -1175,8 +1175,8 @@ public class Ticket extends KEntity {
 
         ArrayList<RawArrayElement> components = rawArrayElement.getComponents();
 
-        this.setId(Integer.parseInt(rawArrayElement.getAttribute("id")));
-        this.setFlagType(Integer.parseInt(rawArrayElement.getAttribute("flagtype")));
+        this.setId(Helper.parseInt(rawArrayElement.getAttribute("id")));
+        this.setFlagType(Helper.parseInt(rawArrayElement.getAttribute("flagtype")));
         for (RawArrayElement component : components) {
             String elementName = component.getElementName();
             if (!component.isComposite() && component.getContent() == null) {
@@ -1185,21 +1185,21 @@ public class Ticket extends KEntity {
             if (elementName.equals("displayid")) {
                 this.setDisplayId(component.getContent());
             } else if (elementName.equals("departmentid")) {
-                this.setDepartmentId(Integer.parseInt(component.getContent()));
+                this.setDepartmentId(Helper.parseInt(component.getContent()));
             } else if (elementName.equals("statusid")) {
-                this.setStatusId(Integer.parseInt(component.getContent()));
+                this.setStatusId(Helper.parseInt(component.getContent()));
             } else if (elementName.equals("priorityid")) {
-                this.setPriorityId(Integer.parseInt(component.getContent()));
+                this.setPriorityId(Helper.parseInt(component.getContent()));
             } else if (elementName.equals("typeid")) {
-                this.setTypeId(Integer.parseInt(component.getContent()));
+                this.setTypeId(Helper.parseInt(component.getContent()));
             } else if (elementName.equals("userid")) {
-                this.setUserId(Integer.parseInt(component.getContent()));
+                this.setUserId(Helper.parseInt(component.getContent()));
             } else if (elementName.equals("userorganization")) {
                 this.setUserOrganizationName(component.getContent());
             } else if (elementName.equals("userorganizationid")) {
-                this.setUserOrganizationId(Integer.parseInt(component.getContent()));
+                this.setUserOrganizationId(Helper.parseInt(component.getContent()));
             } else if (elementName.equals("ownerstaffid")) {
-                this.setOwnerStaffId(Integer.parseInt(component.getContent()));
+                this.setOwnerStaffId(Helper.parseInt(component.getContent()));
             } else if (elementName.equals("ownerstaffname")) {
                 this.setOwnerStaffName(component.getContent());
             } else if (elementName.equals("fullname")) {
@@ -1211,43 +1211,43 @@ public class Ticket extends KEntity {
             } else if (elementName.equals("subject")) {
                 this.setSubject(component.getContent());
             } else if (elementName.equals("creationtime")) {
-                this.setCreationTime(Integer.parseInt(component.getContent()));
+                this.setCreationTime(Helper.parseInt(component.getContent()));
             } else if (elementName.equals("lastactivity")) {
-                this.setLastActivity(Integer.parseInt(component.getContent()));
+                this.setLastActivity(Helper.parseInt(component.getContent()));
             } else if (elementName.equals("laststaffreply")) {
-                this.setLastStaffReply(Integer.parseInt(component.getContent()));
+                this.setLastStaffReply(Helper.parseInt(component.getContent()));
             } else if (elementName.equals("lastuserreply")) {
-                this.setLastUserReply(Integer.parseInt(component.getContent()));
+                this.setLastUserReply(Helper.parseInt(component.getContent()));
             } else if (elementName.equals("slaplanid")) {
-                this.setSLAPlanId(Integer.parseInt(component.getContent()));
+                this.setSLAPlanId(Helper.parseInt(component.getContent()));
             } else if (elementName.equals("nextreplydue")) {
-                this.setNextReplyDue(Integer.parseInt(component.getContent()));
+                this.setNextReplyDue(Helper.parseInt(component.getContent()));
             } else if (elementName.equals("resolutiondue")) {
-                this.setResolutionDue(Integer.parseInt(component.getContent()));
+                this.setResolutionDue(Helper.parseInt(component.getContent()));
             } else if (elementName.equals("replies")) {
-                this.setReplies(Integer.parseInt(component.getContent()));
+                this.setReplies(Helper.parseInt(component.getContent()));
             } else if (elementName.equals("ipaddress")) {
                 this.setIpAddress(component.getContent());
             } else if (elementName.equals("creator")) {
-                this.setCreator(Integer.parseInt(component.getContent()));
+                this.setCreator(Helper.parseInt(component.getContent()));
             } else if (elementName.equals("creationmode")) {
-                this.setCreationMode(Integer.parseInt(component.getContent()));
+                this.setCreationMode(Helper.parseInt(component.getContent()));
             } else if (elementName.equals("creationtype")) {
-                this.setCreationType(Integer.parseInt(component.getContent()));
+                this.setCreationType(Helper.parseInt(component.getContent()));
             } else if (elementName.equals("isescalated")) {
-                this.setEscalated(Integer.parseInt(component.getContent()) == 1);
+                this.setEscalated(Helper.parseInt(component.getContent()) == 1);
             } else if (elementName.equals("escalationruleid")) {
-                this.setEscalationRuleId(Integer.parseInt(component.getContent()));
+                this.setEscalationRuleId(Helper.parseInt(component.getContent()));
             } else if (elementName.equals("templategroupid")) {
-                this.setTemplateGroupId(Integer.parseInt(component.getContent()));
+                this.setTemplateGroupId(Helper.parseInt(component.getContent()));
             } else if (elementName.equals("templategroupname")) {
                 this.setTemplateGroupName(component.getContent());
             } else if (elementName.equals("tags")) {
                 this.setTags(component.getContent());
             } else if (elementName.equals("watcher")) {
-                this.addWatcher(Integer.parseInt(component.getAttribute("staffid")), component.getAttribute("name"));
+                this.addWatcher(Helper.parseInt(component.getAttribute("staffid")), component.getAttribute("name"));
             } else if (elementName.equals("workflow")) {
-                this.addWorkflow(Integer.parseInt(component.getAttribute("id")), component.getAttribute("title"));
+                this.addWorkflow(Helper.parseInt(component.getAttribute("id")), component.getAttribute("title"));
             } else if (elementName.equals("note")) {
                 TicketNote ticketNote = new TicketNote();
                 ticketNote.populate(component);

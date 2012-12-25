@@ -153,7 +153,7 @@ public class Department extends KEntity {
 
     protected Department parentDepartment = null;
 
-    public Department getParentDepartment() {
+    public Department getParentDepartment() throws KayakoException {
         if (parentDepartment != null) {
             return parentDepartment;
         }
@@ -260,7 +260,7 @@ public class Department extends KEntity {
     }
 
 
-    public ArrayList<UserGroup> getUserGroups() {
+    public ArrayList<UserGroup> getUserGroups() throws KayakoException {
         for (Integer userGroupId : this.userGroupIds) {
             this.userGroups.add((UserGroup) UserGroup.get(userGroupId.intValue()));
         }
@@ -349,13 +349,13 @@ public class Department extends KEntity {
                 break;
             }
             if (elementName.equals("id")) {
-                this.setId(Integer.parseInt(component.getContent()));
+                this.setId(Helper.parseInt(component.getContent()));
             } else if (elementName.equals("title")) {
                 this.setTitle(component.getContent());
             } else if (elementName.equals("displayorder")) {
-                this.setDisplayOrder(Integer.parseInt(component.getContent()));
+                this.setDisplayOrder(Helper.parseInt(component.getContent()));
             } else if (elementName.equals("departmentid")) {
-                this.setParentDepartmentId(Integer.parseInt(component.getContent()));
+                this.setParentDepartmentId(Helper.parseInt(component.getContent()));
             } else if (elementName.equals("displayicon")) {
                 this.setDisplayIcon(component.getContent());
             } else if (elementName.equals("type")) {
@@ -363,7 +363,7 @@ public class Department extends KEntity {
             } else if (elementName.equals("app")) {
                 this.setApp(component.getContent());
             } else if (elementName.equals("uservisibilitycustom")) {
-                if (Integer.parseInt(component.getContent()) == 1) {
+                if (Helper.parseInt(component.getContent()) == 1) {
                     this.setUserVisibilityCustom(true);
                 } else {
                     this.setUserVisibilityCustom(false);

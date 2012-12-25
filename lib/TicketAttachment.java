@@ -243,19 +243,19 @@ public class TicketAttachment extends KEntity {
                 break;
             }
             if (elementName.equals("id")) {
-                this.setId(Integer.parseInt(component.getContent()));
+                this.setId(Helper.parseInt(component.getContent()));
             } else if (elementName.equals("ticketid")) {
-                this.setTicketId(Integer.parseInt(component.getContent()));
+                this.setTicketId(Helper.parseInt(component.getContent()));
             } else if (elementName.equals("ticketpostid")) {
-                this.setTicketPostId(Integer.parseInt(component.getContent()));
+                this.setTicketPostId(Helper.parseInt(component.getContent()));
             } else if (elementName.equals("filename")) {
                 this.setFileName(component.getContent());
             } else if (elementName.equals("filesize")) {
-                this.setFileSize(Integer.parseInt(component.getContent()));
+                this.setFileSize(Helper.parseInt(component.getContent()));
             } else if (elementName.equals("filetype")) {
                 this.setFileType(component.getContent());
             } else if (elementName.equals("dateline")) {
-                this.setDateLine(Integer.parseInt(component.getContent()));
+                this.setDateLine(Helper.parseInt(component.getContent()));
             } else if (elementName.equals("contents")) {
                 try {
                     this.setContents(Base64.decode(component.getContent()));

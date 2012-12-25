@@ -123,7 +123,7 @@ public abstract class CustomFieldGroup extends KEntity {
         }
 
         //attribute =  title, id
-        this.setTitle(rawArrayElement.getAttribute("title")).setId(Integer.parseInt(rawArrayElement.getAttribute("id")));
+        this.setTitle(rawArrayElement.getAttribute("title")).setId(Helper.parseInt(rawArrayElement.getAttribute("id")));
         return this;
 
     }

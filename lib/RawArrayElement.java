@@ -106,10 +106,17 @@ public class RawArrayElement {
         return this;
     }
 
+    public Map<String, String> getAttributes() {
+        return attributes;
+    }
 
     public String toString() {
         String rawArrayElementString = "";
-        rawArrayElementString += "<" + this.elementName + ">\n";
+        rawArrayElementString += "<" + this.elementName;
+        for (Map.Entry<String, String> attribute : this.getAttributes().entrySet()) {
+            rawArrayElementString += " " + attribute.getKey() + " = '" + attribute.getValue() + "' ";
+        }
+        rawArrayElementString += ">\n";
         if (this.isComposite()) {
             for (RawArrayElement component : this.components) {
                 rawArrayElementString += component.toString();

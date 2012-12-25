@@ -12,8 +12,8 @@ package lib;
  * @link http://www.kayako.com
  * ###############################################
  */
-public class CustomFieldMultiSelect extends CustomField {
-    public CustomFieldMultiSelect(CustomFieldGroup customFieldGroup) {
-        super(customFieldGroup);
-    }
+public class CustomFieldValue {
+
+
+
 }

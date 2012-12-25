@@ -126,11 +126,11 @@ public class StaffGroup extends KEntity {
                 break;
             }
             if (elementName.equals("id")) {
-                this.setId(Integer.parseInt(component.getContent()));
+                this.setId(Helper.parseInt(component.getContent()));
             } else if (elementName.equals("title")) {
                 this.setTitle(component.getContent());
             } else if (elementName.equals("isadmin")) {
-                this.setAdmin(Integer.parseInt(component.getContent()) == 1);
+                this.setAdmin(Helper.parseInt(component.getContent()) == 1);
             }
         }
         return this;

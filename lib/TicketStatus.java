@@ -392,13 +392,13 @@ public class TicketStatus extends KEntity {
                 break;
             }
             if (elementName.equals("id")) {
-                this.setId(Integer.parseInt(component.getContent()));
+                this.setId(Helper.parseInt(component.getContent()));
             } else if (elementName.equals("title")) {
                 this.setTitle(component.getContent());
             } else if (elementName.equals("displayorder")) {
-                this.setDisplayOrder(Integer.parseInt(component.getContent()));
+                this.setDisplayOrder(Helper.parseInt(component.getContent()));
             } else if (elementName.equals("departmentid")) {
-                this.setDepartmentId(Integer.parseInt(component.getContent()));
+                this.setDepartmentId(Helper.parseInt(component.getContent()));
             } else if (elementName.equals("displayicon")) {
                 this.setDisplayIcon(component.getContent());
             } else if (elementName.equals("type")) {
@@ -410,19 +410,19 @@ public class TicketStatus extends KEntity {
             } else if (elementName.equals("Status")) {
                 this.setStatus(component.getContent());
             } else if (elementName.equals("resetduetime")) {
-                if (Integer.parseInt(component.getContent()) == 1) {
+                if (Helper.parseInt(component.getContent()) == 1) {
                     this.setResetDueTime(true);
                 } else {
                     this.setResetDueTime(false);
                 }
             } else if (elementName.equals("displayinmainlist")) {
-                if (Integer.parseInt(component.getContent()) == 1) {
+                if (Helper.parseInt(component.getContent()) == 1) {
                     this.setDisplayInMainList(true);
                 } else {
                     this.setDisplayInMainList(false);
                 }
             } else if (elementName.equals("staffvisibilitycustom")) {
-                if (Integer.parseInt(component.getContent()) == 1) {
+                if (Helper.parseInt(component.getContent()) == 1) {
                     this.setStaffVisibilityCustom(true);
                 } else {
                     this.setStaffVisibilityCustom(false);
@@ -430,19 +430,19 @@ public class TicketStatus extends KEntity {
             } else if (elementName.equals("staffgroupid")) {
                 this.staffGroupIds.add(new Integer(component.getContent()));
             } else if (elementName.equals("markasresolved")) {
-                if (Integer.parseInt(component.getContent()) == 1) {
+                if (Helper.parseInt(component.getContent()) == 1) {
                     this.setMarkAsResolved(true);
                 } else {
                     this.setMarkAsResolved(false);
                 }
             } else if (elementName.equals("displaycount")) {
-                if (Integer.parseInt(component.getContent()) == 1) {
+                if (Helper.parseInt(component.getContent()) == 1) {
                     this.setDisplayCount(true);
                 } else {
                     this.setDisplayCount(false);
                 }
             } else if (elementName.equals("triggersurvey")) {
-                if (Integer.parseInt(component.getContent()) == 1) {
+                if (Helper.parseInt(component.getContent()) == 1) {
                     this.setTriggerSurvey(true);
                 } else {
                     this.setTriggerSurvey(false);

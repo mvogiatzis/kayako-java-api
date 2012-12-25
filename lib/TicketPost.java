@@ -496,13 +496,13 @@ public class TicketPost extends KEntity {
                 break;
             }
             if (elementName.equals("id")) {
-                this.setId(Integer.parseInt(component.getContent()));
+                this.setId(Helper.parseInt(component.getContent()));
             } else if (elementName.equals("ticketid")) {
-                this.setTicketId(Integer.parseInt(component.getContent()));
+                this.setTicketId(Helper.parseInt(component.getContent()));
             } else if (elementName.equals("dateline")) {
-                this.setDateLine(Integer.parseInt(component.getContent()));
+                this.setDateLine(Helper.parseInt(component.getContent()));
             } else if (elementName.equals("userid")) {
-                this.setUserId(Integer.parseInt(component.getContent()));
+                this.setUserId(Helper.parseInt(component.getContent()));
             } else if (elementName.equals("fullname")) {
                 this.setFullName(component.getContent());
             } else if (elementName.equals("email")) {
@@ -512,23 +512,23 @@ public class TicketPost extends KEntity {
             } else if (elementName.equals("ipaddress")) {
                 this.setIPAddress(component.getContent());
             } else if (elementName.equals("hasattachment")) {
-                this.setHasAttachment(Integer.parseInt(component.getContent()) == 1);
+                this.setHasAttachment(Helper.parseInt(component.getContent()) == 1);
             } else if (elementName.equals("creator")) {
-                this.setCreator(Integer.parseInt(component.getContent()));
+                this.setCreator(Helper.parseInt(component.getContent()));
             } else if (elementName.equals("isthirdparty")) {
-                this.setThirdParty(Integer.parseInt(component.getContent()) == 1);
+                this.setThirdParty(Helper.parseInt(component.getContent()) == 1);
             } else if (elementName.equals("ishtml")) {
-                this.setHTML(Integer.parseInt(component.getContent()) == 1);
+                this.setHTML(Helper.parseInt(component.getContent()) == 1);
             } else if (elementName.equals("isemailed")) {
-                this.setEmailed(Integer.parseInt(component.getContent()) == 1);
+                this.setEmailed(Helper.parseInt(component.getContent()) == 1);
             } else if (elementName.equals("staffid")) {
-                this.setStaffId(Integer.parseInt(component.getContent()));
+                this.setStaffId(Helper.parseInt(component.getContent()));
             } else if (elementName.equals("issurveycomment")) {
-                this.setSurveyComment(Integer.parseInt(component.getContent()) == 1);
+                this.setSurveyComment(Helper.parseInt(component.getContent()) == 1);
             } else if (elementName.equals("contents")) {
                 this.setContents(component.getContent());
             } else if (elementName.equals("isprivate")) {
-                this.setPrivate(Integer.parseInt(component.getContent()) == 1);
+                this.setPrivate(Helper.parseInt(component.getContent()) == 1);
             }
 
         }
