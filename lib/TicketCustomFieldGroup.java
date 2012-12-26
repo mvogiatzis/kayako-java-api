@@ -41,18 +41,10 @@ public class TicketCustomFieldGroup extends CustomFieldGroup {
      * @return RawArrayElement
      */
     static public RawArrayElement getAll(int ticketId) {
-        /*objects = array();
-        if (array_key_exists( static::objectXmlName, result)){
-            foreach(result[ static::objectXmlName]as object_data){
-                objects[]=new static (ticket_id, object_data);
-            }
-        }
-        return new ResultSet(objects);*/
         ArrayList<String> params = new ArrayList<String>();
         params.add(Integer.toString(ticketId));
         RawArrayElement rawArrayElement = KEntity.getAll(controller, params);
         return rawArrayElement;
-
     }
 
     /**

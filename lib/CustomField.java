@@ -16,6 +16,8 @@ import java.util.HashMap;
  */
 public class CustomField extends KEntity {
 
+
+    static protected String objectXmlName = "field";
     /**
      * Field identifier.
      *
@@ -75,13 +77,6 @@ public class CustomField extends KEntity {
         this.customFieldGroup = customFieldGroup;
     }
 
-    //this function will populate the data of the ticket note instance when supplied with RawArrayElement derived from the xml
-    @Override
-    public CustomField populate(RawArrayElement rawArrayElement) throws KayakoException {
-
-        return this;
-    }
-
 
     public int getId() {
         return id;
@@ -92,15 +87,6 @@ public class CustomField extends KEntity {
         return this;
     }
 
-    public HashMap<String, String> buildHashMap() {
-        return buildHashMap(false);
-    }
-
-    public HashMap<String, String> buildHashMap(Boolean newCustomField) {
-        HashMap<String, String> customFieldHashMap = new HashMap<String, String>();
-
-        return customFieldHashMap;
-    }
 
     @Override
     public String toString() {
@@ -111,48 +97,54 @@ public class CustomField extends KEntity {
         return customFieldGroup;
     }
 
-    public void setCustomFieldGroup(CustomFieldGroup customFieldGroup) {
+    public CustomField setCustomFieldGroup(CustomFieldGroup customFieldGroup) {
         this.customFieldGroup = customFieldGroup;
+        return this;
     }
 
     public CustomFieldDefinition getDefinition() {
         return definition;
     }
 
-    public void setDefinition(CustomFieldDefinition definition) {
+    public CustomField setDefinition(CustomFieldDefinition definition) {
         this.definition = definition;
+        return this;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public CustomField setName(String name) {
         this.name = name;
+        return this;
     }
 
     public String getRawValue() {
         return rawValue;
     }
 
-    public void setRawValue(String rawValue) {
+    public CustomField setRawValue(String rawValue) {
         this.rawValue = rawValue;
+        return this;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
+    public CustomField setTitle(String title) {
         this.title = title;
+        return this;
     }
 
     public int getType() {
         return type;
     }
 
-    public void setType(int type) {
+    public CustomField setType(int type) {
         this.type = type;
+        return this;
     }
 
     public CustomFieldOption getOption(String value) {
@@ -163,5 +155,27 @@ public class CustomField extends KEntity {
         return this.getDefinition().getOptionById(id);
     }
 
-    //TODO a lot of functions like getAll etc, plus creating new attachments from here...
+    @Override
+    public CustomField populate(RawArrayElement rawArrayElement) throws KayakoException {
+        if (!rawArrayElement.getElementName().equals(objectXmlName)) {
+            throw new KayakoException();
+        }
+
+        //attribute =  title, id  , type, name
+        this.setTitle(rawArrayElement.getAttribute("title")).setId(Helper.parseInt(rawArrayElement.getAttribute("id")));
+        this.setName(rawArrayElement.getAttribute("name")).setType(Helper.parseInt(rawArrayElement.getAttribute("type")));
+        this.setRawValue(rawArrayElement.getContent());
+        return this;
+
+    }
+
+    public HashMap<String, String> buildHashMap() {
+        return buildHashMap(false);
+    }
+
+    public HashMap<String, String> buildHashMap(Boolean newCustomField) {
+        HashMap<String, String> customFieldHashMap = new HashMap<String, String>();
+        customFieldHashMap.put(this.getName(), this.getRawValue());
+        return customFieldHashMap;
+    }
 }

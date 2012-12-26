@@ -39,7 +39,7 @@ public class CustomFieldDefinition extends KEntity {
 
     static protected String controller = "/Base/CustomField";
 
-    static protected String object_xml_name = "customfield";
+    static protected String objectXmlName = "customfield";
 
     protected Boolean readOnly = true;
 
@@ -260,12 +260,12 @@ public class CustomFieldDefinition extends KEntity {
         this.name = name;
     }
 
-    public static String getObject_xml_name() {
-        return object_xml_name;
+    public static String getObjectXmlName() {
+        return objectXmlName;
     }
 
-    public static void setObject_xml_name(String object_xml_name) {
-        CustomFieldDefinition.object_xml_name = object_xml_name;
+    public static void setObjectXmlName(String objectXmlName) {
+        CustomFieldDefinition.objectXmlName = objectXmlName;
     }
 
     public ArrayList<CustomFieldOption> getOptions() {

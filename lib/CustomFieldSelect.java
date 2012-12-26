@@ -32,12 +32,12 @@ public class CustomFieldSelect extends CustomField {
         return selectedOption;
     }
 
-    public void setSelectedOption(CustomFieldOption selectedOption) {
+    public CustomFieldSelect setSelectedOption(CustomFieldOption selectedOption) {
         this.selectedOption = selectedOption;
         if (this.selectedOption != null) {
             this.setRawValue(this.selectedOption.getValue());
         }
-
+        return this;
     }
 
     //TODO - think about getvalue, setvalue and decide how to implement

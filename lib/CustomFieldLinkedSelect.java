@@ -1,5 +1,7 @@
 package lib;
 
+import java.util.HashMap;
+
 /**
  * ###############################################
  * Kayako App
@@ -12,16 +14,15 @@ package lib;
  * @link http://www.kayako.com
  * ###############################################
  */
-public class CustomFieldLinkedSelect extends CustomField{
-
+public class CustomFieldLinkedSelect extends CustomFieldSelect {
 
 
     /**
      * Separator of main and linked select values.
+     *
      * @var string
      */
-    public static final String PARENT_CHILD_SEPARATOR = "&gt;";
-
+    public static final String PARENT_CHILD_SEPARATOR = " &gt; ";
 
 
     public CustomFieldLinkedSelect(CustomFieldGroup customFieldGroup) {
@@ -30,18 +31,35 @@ public class CustomFieldLinkedSelect extends CustomField{
 
     @Override
     public CustomFieldLinkedSelect populate(RawArrayElement rawArrayElement) throws KayakoException {
-/*        if (!rawArrayElement.getElementName().equals(objectXmlName)) {
-            throw new KayakoException();
+        super.populate(rawArrayElement);
+        String[] values = rawArrayElement.getContent().split(PARENT_CHILD_SEPARATOR);
+        if (values.length > 1) {
+            this.setSelectedOption(this.getOption(values[1]));
+        }
+        return this;
+    }
+
+    @Override
+    public CustomFieldLinkedSelect setSelectedOption(CustomFieldOption customFieldOption) {
+        this.setSelectedOption(customFieldOption);
+        if (this.getSelectedOption() != null) {
+            this.setRawValue(this.getOption(this.getSelectedOption().getParentOptionId()).getValue() + PARENT_CHILD_SEPARATOR + this.getSelectedOption().getValue());
+        } else {
+            this.setRawValue(null);
         }
 
-        //content = timestamp
-        this.setId(Helper.parseInt(rawArrayElement.getAttribute("customfieldoptionid")));
-        this.setFieldId(Helper.parseInt(rawArrayElement.getAttribute("customfieldid")));
-
-        this.setValue(rawArrayElement.getAttribute("optionvalue"));
-        this.setDisplayOrder(Helper.parseInt(rawArrayElement.getAttribute("displayorder")));
-        this.setSelected(Helper.parseInt(rawArrayElement.getAttribute("isselected")) == 0 ? false : true);
-        this.setParentOptionId(Helper.parseInt(rawArrayElement.getAttribute("parentcustomfieldoptionid")));*/
         return this;
+    }
+
+    public HashMap<String, String> buildHashMap(Boolean newCustomFieldLinkedSelect) {
+        HashMap<String, String> hashMap = new HashMap<String, String>();
+        if (this.getSelectedOption().getParentOptionId() > 0) {
+            hashMap.put(this.getName() + "[0]", Integer.toString(this.getSelectedOption().getParentOptionId()));
+            hashMap.put(this.getName() + "[0][" + Integer.toString(this.getSelectedOption().getParentOptionId()) + "]", Integer.toString(this.getSelectedOption().getId()));
+        } else {
+            hashMap.put(this.getName() + "[0]", Integer.toString(this.getSelectedOption().getId()));
+        }
+
+        return hashMap;
     }
 }

@@ -1,5 +1,7 @@
 package lib;
 
+import java.util.ArrayList;
+
 /**
  * ###############################################
  * Kayako App
@@ -14,8 +16,38 @@ package lib;
  */
 public abstract class KEntityCustom extends KEntity {
 
+
+    /**
+     * Name of class representing object custom field group.
+     *
+     * @var string
+     */
+    static protected String customFieldGroupClass = null;
+
+    /**
+     * Name of URL parameter for sending object identifier.
+     *
+     * @var string
+     */
+    static protected String objectIdField = null;
+
+    /**
+     * For fast lookup of custom fields based on their name.
+     *
+     * @var array
+     */
+    protected ArrayList<CustomField> customFields = new ArrayList<CustomField>();
+
+    /**
+     * Object custom field groups.
+     *
+     * @var
+     */
+    protected RawArrayElement customFieldGroups = null;
+
+
     /*
-    * loadCustomFieldGroups
+   * loadCustomFieldGroups
     * initFields
     * getCustomFields
     * getCustomFieldGroups
@@ -24,6 +56,6 @@ public abstract class KEntityCustom extends KEntity {
     * setCustomFieldValue
     * setCustomFieldValuesFromPOST
     * updateCustomFields
-    * */
+   * */
 
 }
