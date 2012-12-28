@@ -19,7 +19,7 @@ package lib;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-interface RESTInterface {
+public interface RESTInterface {
 
     final static String METHOD_GET = "GET";
     final static String METHOD_POST = "POST";
@@ -48,7 +48,7 @@ interface RESTInterface {
 
     public RawArrayElement put(String controller, ArrayList<String> parameters, HashMap<String, String> data);
 
-    public RawArrayElement post(String controller, ArrayList<String> parameters, HashMap<String, String> data, HashMap<String, String> files);
+    public RawArrayElement post(String controller, ArrayList<String> parameters, HashMap<String, String> data, HashMap<String, HashMap<String, String>> files);
 
-    public RawArrayElement put(String controller, ArrayList<String> parameters, HashMap<String, String> data, HashMap<String, String> files);
+    public RawArrayElement put(String controller, ArrayList<String> parameters, HashMap<String, String> data, HashMap<String, HashMap<String, String>> files);
 }

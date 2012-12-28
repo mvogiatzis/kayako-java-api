@@ -22,6 +22,13 @@ public class Configuration {
     private static Configuration configuration = null;
     private String dateFormat = "MM/dd/yyyy";
 
+    /**
+     * REST client.
+     *
+     * @var RESTInterface
+     */
+    private RESTInterface restClient = null;
+
     public Configuration(String baseUrl, String apiKey, String secretKey, Boolean testMode) {
         //this("http://swift.local.com/api/index.php?", "80866fb4-b6e2-1584-a514-da071da37894", "ZWJiNTkzYzMtNmEwNS1iMGU0LTc1YmItYzhmMWRkNDVkYmY2ZmQwYjU4MjgtYzY0Mi04NGQ0LWJkZjktNWE3NmViZDRhMmFk");
         this.baseUrl = baseUrl;
@@ -92,5 +99,17 @@ public class Configuration {
 
     public void setDateFormat(String dateFormat) {
         this.dateFormat = dateFormat;
+    }
+
+    public RESTInterface getRestClient() {
+        if (this.restClient == null) {
+            this.restClient = new RESTClient().setConfig(this);
+        }
+        return this.restClient;
+    }
+
+    public Configuration setRestClient(RESTInterface restClient) {
+        this.restClient = restClient;
+        return this;
     }
 }

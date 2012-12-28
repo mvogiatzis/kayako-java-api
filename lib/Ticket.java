@@ -1151,6 +1151,11 @@ public class Ticket extends KEntityCustom {
     }
 
 
+    public Ticket updateCustomFields() {
+        return (Ticket) super.updateCustomFields(controller, objectIdField);
+    }
+
+
     /**
      * Sets default status, priority and type for newly created tickets.
      *

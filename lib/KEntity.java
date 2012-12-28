@@ -74,4 +74,9 @@ abstract public class KEntity {
 
     public abstract int getId();
 
+    public static RESTInterface getRESTClient() {
+        return new ConfigurationFactory().getConfiguration().getRestClient();
+
+    }
+
 }

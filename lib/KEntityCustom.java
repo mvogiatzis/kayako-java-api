@@ -1,6 +1,7 @@
 package lib;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * ###############################################
@@ -15,14 +16,6 @@ import java.util.ArrayList;
  * ###############################################
  */
 public abstract class KEntityCustom extends KEntity {
-
-
-    /**
-     * Name of class representing object custom field group.
-     *
-     * @var string
-     */
-    static protected String customFieldGroupClass = null;
 
     /**
      * Name of URL parameter for sending object identifier.
@@ -43,11 +36,35 @@ public abstract class KEntityCustom extends KEntity {
      *
      * @var
      */
-    protected RawArrayElement customFieldGroups = null;
+    protected ArrayList<CustomFieldGroup> customFieldGroups = new ArrayList<CustomFieldGroup>();
+
+
+    public ArrayList<CustomFieldGroup> getCustomFieldGroups() {
+        return customFieldGroups;
+    }
+
+    public void setCustomFieldGroups(ArrayList<CustomFieldGroup> customFieldGroups) {
+        this.customFieldGroups = customFieldGroups;
+    }
+
+    public ArrayList<CustomField> getCustomFields() {
+        return customFields;
+    }
+
+    public void setCustomFields(ArrayList<CustomField> customFields) {
+        this.customFields = customFields;
+    }
+
+    public static String getObjectIdField() {
+        return objectIdField;
+    }
+
+    public static void setObjectIdField(String objectIdField) {
+        KEntityCustom.objectIdField = objectIdField;
+    }
 
 
     /*
-   * loadCustomFieldGroups
     * initFields
     * getCustomFields
     * getCustomFieldGroups
@@ -55,7 +72,47 @@ public abstract class KEntityCustom extends KEntity {
     * getCustomFieldValue
     * setCustomFieldValue
     * setCustomFieldValuesFromPOST
-    * updateCustomFields
    * */
+
+    protected abstract ArrayList<CustomFieldGroup> loadCustomFieldGroups(Boolean refresh);
+
+
+    /**
+     * Prepares local array for custom field fast lookup based on its name.
+     * this function should populate this.customFields
+     */
+    protected abstract ArrayList<CustomField> loadCustomField(Boolean refresh);
+
+    //this method needs to be implemented in the derived class to basically call the overloaded method with correct arguments
+    public abstract KEntityCustom updateCustomFields();
+
+    public KEntityCustom updateCustomFields(String controller, String objectIdField) {
+        if (this.customFieldGroups == null) {
+            return this;
+        }
+
+
+        ArrayList<String> parameters = new ArrayList<String>();
+        HashMap<String, HashMap<String, String>> files = new HashMap<String, HashMap<String, String>>();
+        //prepare URL controller and parameters
+        //parameters.add(objectIdField);
+        parameters.add(Integer.toString(this.getId()));
+        //collect all field values into request data
+        //foreach custom field groups- call build data and merge
+        HashMap<String, String> data = new HashMap<String, String>();
+        for (CustomFieldGroup customFieldGroup : this.getCustomFieldGroups()) {
+            data.putAll(customFieldGroup.buildHashMap());
+            //get files from data
+            files.putAll(customFieldGroup.buildFilesHashMap());
+        }
+
+
+        //send request
+        KEntityCustom.getRESTClient().post(controller, parameters, data, files);
+
+        //reload custom fields from server
+        return this;
+
+    }
 
 }

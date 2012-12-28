@@ -178,4 +178,14 @@ public class CustomField extends KEntity {
         customFieldHashMap.put(this.getName(), this.getRawValue());
         return customFieldHashMap;
     }
+
+    public HashMap<String, HashMap<String, String>> buildFilesHashMap() {
+        return buildFilesHashMap(false);
+    }
+
+    public HashMap<String, HashMap<String, String>> buildFilesHashMap(Boolean newCustomFieldFile) {
+        HashMap<String, HashMap<String, String>> fileHashMap = new HashMap<String, HashMap<String, String>>();
+        //This function returns empty hashMap from here
+        return fileHashMap;
+    }
 }

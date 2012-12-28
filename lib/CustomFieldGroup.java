@@ -128,6 +128,11 @@ public abstract class CustomFieldGroup extends KEntity {
 
     }
 
+    public HashMap<String, String> buildHashMap() {
+        return this.buildHashMap(false);
+    }
+
+
     public HashMap<String, String> buildHashMap(Boolean newCustomFieldGroup) {
         HashMap<String, String> customFieldGroupHashMap = new HashMap<String, String>();
         for (CustomField customField : this.getFields()) {
@@ -135,6 +140,19 @@ public abstract class CustomFieldGroup extends KEntity {
         }
 
         return customFieldGroupHashMap;
+    }
+
+
+    public HashMap<String, HashMap<String, String>> buildFilesHashMap() {
+        return this.buildFilesHashMap(false);
+    }
+
+    public HashMap<String, HashMap<String, String>> buildFilesHashMap(Boolean newCustomFieldFile) {
+        HashMap<String, HashMap<String, String>> filesHashMap = new HashMap<String, HashMap<String, String>>();
+        for (CustomField customField : this.getFields()) {
+            filesHashMap.putAll(customField.buildFilesHashMap());
+        }
+        return filesHashMap;
     }
 
 }

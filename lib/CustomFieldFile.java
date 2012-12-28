@@ -110,13 +110,20 @@ public class CustomFieldFile extends CustomField {
 
     public HashMap<String, String> buildHashMap(Boolean newCustomFieldFile) {
         HashMap<String, String> hashMap = new HashMap<String, String>();
-        if (this.getChanged()) {
-            //TODO : This structure is to be taken care off in abstract custom entity class, changes might be required
-            //hashMap.put("name", this.ge());
-            hashMap.put(KEntity.FILES_DATA_NAME, this.getFileName());
-            hashMap.put(this.getFileName(), new String(this.getContents()));
-        }
+        //this function returns empty HashMap as functional method is buildFileHashMap here
         return hashMap;
+    }
+
+    public HashMap<String, HashMap<String, String>> buildFilesHashMap() {
+        return this.buildFilesHashMap(false);
+    }
+
+    public HashMap<String, HashMap<String, String>> buildFilesHashMap(Boolean newCustomFieldFile) {
+        HashMap<String, String> file = new HashMap<String, String>();
+        file.put(this.getFileName(), new String(this.getContents()));
+        HashMap<String, HashMap<String, String>> fileHashMap = new HashMap<String, HashMap<String, String>>();
+        fileHashMap.put(this.getName(), file);
+        return fileHashMap;
     }
 
 

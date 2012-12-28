@@ -16,13 +16,6 @@ package lib;
  * ###############################################
  */
 
-//import com.google.appengine.repackaged.com.google.common.util.Base64;
-//import com.google.common.util.Base64;
-
-//import org.apache.commons.codec.binary.Base64;
-//import com.sun.org.apache.xml.internal.security.utils.Base64;
-
-
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
@@ -32,18 +25,23 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLEncoder;
+import java.net.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
+import java.util.logging.Logger;
 import java.util.zip.GZIPInputStream;
 
 public class RESTClient implements RESTInterface {
 
     private Configuration config;
+    private static final Logger log = Logger.getLogger(RESTClient.class.getName());
+    private static String charset;
+
+    static {
+        charset = "UTF-8";
+    }
 
     public RESTClient initialize(Configuration config) {
         this.setConfig(config);
@@ -74,7 +72,7 @@ public class RESTClient implements RESTInterface {
 
     @Override
     public RawArrayElement get(String controller, ArrayList<String> parameters) {
-        return this.processRequest(controller, RESTClient.METHOD_GET, parameters, new HashMap<String, String>(), new HashMap<String, String>());
+        return this.processRequest(controller, RESTClient.METHOD_GET, parameters, new HashMap<String, String>(), new HashMap<String, HashMap<String, String>>());
     }
 
     @Override
@@ -89,27 +87,27 @@ public class RESTClient implements RESTInterface {
 
     @Override
     public RawArrayElement delete(String controller, ArrayList<String> parameters) {
-        return this.processRequest(controller, RESTClient.METHOD_DELETE, parameters, new HashMap<String, String>(), new HashMap<String, String>());
+        return this.processRequest(controller, RESTClient.METHOD_DELETE, parameters, new HashMap<String, String>(), new HashMap<String, HashMap<String, String>>());
     }
 
     @Override
     public RawArrayElement post(String controller, ArrayList<String> parameters, HashMap<String, String> data) {
-        return this.post(controller, parameters, data, new HashMap<String, String>());
+        return this.post(controller, parameters, data, new HashMap<String, HashMap<String, String>>());
 
     }
 
     @Override
     public RawArrayElement put(String controller, ArrayList<String> parameters, HashMap<String, String> data) {
-        return this.put(controller, parameters, data, new HashMap<String, String>());
+        return this.put(controller, parameters, data, new HashMap<String, HashMap<String, String>>());
     }
 
     @Override
-    public RawArrayElement post(String controller, ArrayList<String> parameters, HashMap<String, String> data, HashMap<String, String> files) {
+    public RawArrayElement post(String controller, ArrayList<String> parameters, HashMap<String, String> data, HashMap<String, HashMap<String, String>> files) {
         return this.processRequest(controller, RESTClient.METHOD_POST, parameters, data, files);
     }
 
     @Override
-    public RawArrayElement put(String controller, ArrayList<String> parameters, HashMap<String, String> data, HashMap<String, String> files) {
+    public RawArrayElement put(String controller, ArrayList<String> parameters, HashMap<String, String> data, HashMap<String, HashMap<String, String>> files) {
         return this.processRequest(controller, RESTClient.METHOD_PUT, parameters, data, files);
     }
 
@@ -123,8 +121,11 @@ public class RESTClient implements RESTInterface {
         return this;
     }
 
+    public RawArrayElement processRequestTest(String controller, String method, ArrayList<String> parameters, HashMap<String, String> data, HashMap<String, HashMap<String, String>> files) {
+        return this.processRequest(controller, method, parameters, data, files);
+    }
 
-    protected RawArrayElement processRequest(String controller, String method, ArrayList<String> parameters, HashMap<String, String> data, HashMap<String, String> files) {
+    protected RawArrayElement processRequest(String controller, String method, ArrayList<String> parameters, HashMap<String, String> data, HashMap<String, HashMap<String, String>> files) {
         RawArrayElement rawArrayElement = new RawArrayElement();
         try {
             String url = this.getRequestData(controller, method, parameters, data);
@@ -133,8 +134,17 @@ public class RESTClient implements RESTInterface {
             if (method.equals(RESTClient.METHOD_POST)) {
                 connection.setDoOutput(true);
                 connection.setRequestMethod("POST");
+                String postBody = "";
+                String boundary = Long.toHexString(System.currentTimeMillis());
+
+                if (files.size() > 0) {
+                    connection.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + boundary);
+
+                } else {
+                    connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                }
                 OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
-                writer.write(this.getPostBody(data));
+                writer.write(this.getPostBody(data, files, boundary));
                 writer.close();
             } else if (method.equals(RESTClient.METHOD_GET)) {
                 connection.setDoOutput(false);
@@ -144,9 +154,18 @@ public class RESTClient implements RESTInterface {
                 connection.setRequestMethod("DELETE");
             } else if (method.equals(RESTClient.METHOD_PUT)) {
                 connection.setDoOutput(true);
-                connection.setRequestMethod("POST");
+                connection.setRequestMethod("PUT");
+                String postBody = "";
+                String boundary = Long.toHexString(System.currentTimeMillis());
+
+                if (files.size() > 0) {
+                    connection.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + boundary);
+
+                } else {
+                    connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                }
                 OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
-                writer.write(this.getPostBody(data));
+                writer.write(this.getPostBody(data, files, boundary));
                 writer.close();
             } else throw new KayakoException();
 
@@ -157,10 +176,10 @@ public class RESTClient implements RESTInterface {
                 if (conEn != null && conEn.equals("gzip")) {
                     inputStream = new GZIPInputStream(inputStream);
                 }
-                InputStreamReader reader = new InputStreamReader(inputStream, "UTF-8");
+                InputStreamReader reader = new InputStreamReader(inputStream, charset);
 
                 InputSource is = new InputSource(reader);
-                is.setEncoding("UTF-8");
+                is.setEncoding(charset);
                 //resp.getWriter().println("Content Encoding : " + connection.getContentEncoding());
 
                 XMLHandler myHandler = new XMLHandler();
@@ -185,11 +204,11 @@ public class RESTClient implements RESTInterface {
                 if (conEn != null && conEn.equals("gzip")) {
                     inputStream = new GZIPInputStream(inputStream);
                 }
-                InputStreamReader reader = new InputStreamReader(inputStream, "UTF-8");
+                InputStreamReader reader = new InputStreamReader(inputStream, charset);
 
                 InputSource is = new InputSource(reader);
-                is.setEncoding("UTF-8");
-                BufferedReader bReader = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
+                is.setEncoding(charset);
+                BufferedReader bReader = new BufferedReader(new InputStreamReader(connection.getInputStream(), charset));
                 String line;
                 while ((line = bReader.readLine()) != null) {
                     rawArrayElement.setContent(rawArrayElement.getContent() + "\n" + line);
@@ -197,6 +216,7 @@ public class RESTClient implements RESTInterface {
 
             }
         } catch (Exception e) {
+            e.printStackTrace();
         }
         return rawArrayElement;
     }
@@ -208,13 +228,15 @@ public class RESTClient implements RESTInterface {
     private String getRequestData(String controller, String method, ArrayList<String> parameters, HashMap<String, String> data) throws UnsupportedEncodingException {
         Random rand = new Random();
         int salt = rand.nextInt();
+        //for debugging purpose, keep salt fixed and check the signature
+        //salt = 1244;
         String signature = "";
         String url;
         try {
             Mac mac = Mac.getInstance("HmacSHA256");
             SecretKeySpec secret = new SecretKeySpec(this.config.getSecretKey().getBytes(), "HmacSHA256");
             mac.init(secret);
-            signature = Base64.encodeBytes(mac.doFinal(Integer.toString(salt).getBytes("UTF-8")));
+            signature = Base64.encodeBytes(mac.doFinal(Integer.toString(salt).getBytes(charset)));
         } catch (Exception e) {
         }
         StringBuilder parameters_str = new StringBuilder();
@@ -236,51 +258,77 @@ public class RESTClient implements RESTInterface {
         } else {
             url += "&apikey=" + this.config.getApiKey() + "&salt=" + Integer.toString(salt) + "&signature=" + signature;
         }
+        if (this.config.isDebug()) {
+            log.warning("URL : " + url);
+        }
+
         return url;
     }
 
-    //TODO - remove when client is complete..this function is for use in testing only
     public String getRequestDataTest(String controller, String method, ArrayList<String> parameters, HashMap<String, String> data) throws UnsupportedEncodingException {
-        Random rand = new Random();
-        int salt = rand.nextInt();
-        salt = 1261155461;
-        String signature = "";
-        String url;
-        try {
-            Mac mac = Mac.getInstance("HmacSHA256");
-            SecretKeySpec secret = new SecretKeySpec(this.config.getSecretKey().getBytes("UTF-8"), "HmacSHA256");
-            mac.init(secret);
-            signature = Base64.encodeBytes(mac.doFinal(Integer.toString(salt).getBytes("UTF-8")));
-        } catch (Exception e) {
-        }
-        StringBuilder parameters_str = new StringBuilder();
-
-        for (String parameter : parameters) {
-            parameters_str.append("/" + parameter);
-        }
-        if (this.config.isStandardUrlType()) {
-            url = this.config.getBaseUrl() + controller + "/" + parameters_str.toString();
-        } else {
-            url = this.config.getBaseUrl() + "e=" + controller + "/" + parameters_str.toString();
-        }
-
-
-        if (method.equals(RESTClient.METHOD_POST) || method.equals(RESTClient.METHOD_PUT)) {
-            data.put("apikey", this.config.getApiKey());
-            data.put("salt", Integer.toString(salt));
-            data.put("signature", signature);
-        } else {
-            url += "&apikey=" + this.config.getApiKey() + "&salt=" + Integer.toString(salt) + "&signature=" + signature;
-        }
-        return url;
+        return this.getRequestData(controller, method, parameters, data);
     }
 
-
-    private String getPostBody(HashMap<String, String> data) {
-        return this.getPostBody(data, new HashMap<String, String>());
+    private String getPostBody(HashMap<String, String> data) throws UnsupportedEncodingException {
+        return this.getPostBody(data, new HashMap<String, HashMap<String, String>>(), "");
     }
 
-    private String getPostBody(HashMap<String, String> data, HashMap<String, String> files) {
-        return "";
+    private String getPostBody(HashMap<String, String> data, HashMap<String, HashMap<String, String>> files, String boundary) throws UnsupportedEncodingException {
+        String postBody = "";
+
+        //HttpPost httpPost = new HttpPost();
+        //String charset = "UTF-8";
+        if (files.size() > 0) {
+
+            String CRLF = "\r\n"; // Line separator required by multipart/form-data.
+
+
+            // Send normal param.
+            for (Map.Entry<String, String> attribute : data.entrySet()) {
+                postBody += "--" + boundary + CRLF;
+                postBody += "Content-Disposition: form-data; name=\"" + attribute.getKey() + "\"" + CRLF;
+                postBody += "Content-Type: text/plain; charset=" + charset + CRLF;
+                postBody += CRLF;
+                postBody += attribute.getValue() + CRLF;
+            }
+
+            for (Map.Entry<String, HashMap<String, String>> file : files.entrySet()) {
+                // Send binary file.
+                String fileName = "";
+                String fileContents = "";
+                for (Map.Entry<String, String> fileEntry : file.getValue().entrySet()) {
+                    fileName = fileEntry.getKey();
+                    fileContents = fileEntry.getValue();
+                }
+                postBody += "--" + boundary + CRLF;
+                postBody += "Content-Disposition: form-data; name=\"" + file.getKey() + "\"; filename=\"" + fileName + "\"" + CRLF;
+                postBody += "Content-Type: application/octet-stream" + CRLF;
+                postBody += "Content-Transfer-Encoding: binary" + CRLF;
+                postBody += fileContents;
+                postBody += CRLF;
+                postBody += "--" + boundary + "--" + CRLF;
+            }
+
+        } else {
+            //foreach hashMap data element , create query string
+            String query = "";
+            try {
+                for (Map.Entry<String, String> attribute : data.entrySet()) {
+                    if (query != "") {
+                        query += "&";
+                    }
+                    query += attribute.getKey() + "=" + URLEncoder.encode(attribute.getValue(), charset);
+                }
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            postBody = query;
+        }
+        if (this.config.isDebug()) {
+            log.warning("POST Body :: " + postBody);
+        }
+        return postBody;
     }
 }
