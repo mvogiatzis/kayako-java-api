@@ -563,6 +563,20 @@ public class Ticket extends KEntityCustom {
         Ticket.objectIdField = objectIdField;
     }
 
+    @Override
+    protected ArrayList<CustomFieldGroup> loadCustomFieldGroups(Boolean refresh) {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    /**
+     * Prepares local array for custom field fast lookup based on its name.
+     * this function should populate this.customFields
+     */
+    @Override
+    protected ArrayList<CustomField> loadCustomField(Boolean refresh) {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
     public static int getDefaultStatusId() {
         return defaultStatusId;
     }

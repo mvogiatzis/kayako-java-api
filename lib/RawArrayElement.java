@@ -3,6 +3,7 @@ package lib;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 /**
  * ###############################################
@@ -72,13 +73,32 @@ public class RawArrayElement {
     public ArrayList<RawArrayElement> getComponents(String elementName) {
         ArrayList<RawArrayElement> filteredComponents = new ArrayList<RawArrayElement>();
         for (int i = 0; i < this.components.size(); i++) {
-            if (this.components.get(i).elementName.equals(elementName)) {
+            if (this.components.get(i).elementName.equalsIgnoreCase(elementName)) {
                 filteredComponents.add(this.components.get(i));
             }
         }
         return filteredComponents;
     }
 
+    //this function can be used as a filter on RawArrayElement type, so as to act as a generic filter on all element types
+    public ArrayList<RawArrayElement> filterBy(String filterName, String value) throws KayakoException {
+        ArrayList<RawArrayElement> filteredComponents = new ArrayList<RawArrayElement>();
+        for (RawArrayElement component : this.getComponents()) {
+            ArrayList<RawArrayElement> filterComponents = component.getComponents(filterName);
+            if (filterComponents.size() == 0) {
+                throw new KayakoException("Supplied filter not available on this data.");
+            }
+            //there may be a case of multiple components to be used as a filter - any of the filtered attribute equals
+            for (RawArrayElement filterComponent : filterComponents) {
+                if (Pattern.compile(Pattern.quote(value), Pattern.CASE_INSENSITIVE).matcher(filterComponent.getContent()).find()) {
+                    filteredComponents.add(component);
+                    break;
+                }
+            }
+
+        }
+        return filteredComponents;
+    }
 
     public String get(String key) {
         return this.getAttribute(key);

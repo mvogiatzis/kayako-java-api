@@ -161,6 +161,10 @@ public class Department extends KEntity {
 
     }
 
+    private static Department get(int id) throws KayakoException {
+        return new Department().populate(KEntity.get(controller, id));
+    }
+
     public Department setParentDepartment(Department parentDepartment) {
         this.parentDepartment = parentDepartment;
         if (parentDepartment != null && parentDepartment.getId() > 0) {

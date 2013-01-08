@@ -23,7 +23,7 @@ public class CustomFieldMultiSelect extends CustomField {
      *
      * @var string
      */
-    public static final String VALUE_SEPARATOR = " ,";
+    public static final String VALUE_SEPARATOR = ", ";
 
     protected ArrayList<CustomFieldOption> options = new ArrayList<CustomFieldOption>();
 
@@ -50,6 +50,15 @@ public class CustomFieldMultiSelect extends CustomField {
         return this;
     }
 
+
+    //returns HashMap like (option.id => option.value)
+    public HashMap<String, String> getValues() {
+        HashMap<String, String> hashMap = new HashMap<String, String>();
+        for (CustomFieldOption option : this.options) {
+            hashMap.put(Integer.toString(option.getId()), option.getValue());
+        }
+        return hashMap;
+    }
 
     //TODO setValue, getValue
 

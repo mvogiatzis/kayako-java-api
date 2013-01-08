@@ -34,7 +34,7 @@ public class Configuration {
         this.baseUrl = baseUrl;
         this.apiKey = apiKey;
         this.secretKey = secretKey;
-        this.setDebug(testMode);
+        this.debug = testMode;
     }
 
     public Configuration(String baseUrl, String apiKey, String secretKey) {

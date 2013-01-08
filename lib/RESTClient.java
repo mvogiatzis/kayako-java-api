@@ -198,8 +198,11 @@ public class RESTClient implements RESTInterface {
                 connection.disconnect();
                 rawArrayElement = myHandler.getRawArrayElement();
             } else {
+
                 // Server returned HTTP error code.
-                InputStream inputStream = (InputStream) connection.getContent();
+                return null;
+                //TODO - this portion is to be reconsidered
+/*                InputStream inputStream = (InputStream) connection.getContent();
                 String conEn = connection.getContentEncoding();
                 if (conEn != null && conEn.equals("gzip")) {
                     inputStream = new GZIPInputStream(inputStream);
@@ -212,8 +215,7 @@ public class RESTClient implements RESTInterface {
                 String line;
                 while ((line = bReader.readLine()) != null) {
                     rawArrayElement.setContent(rawArrayElement.getContent() + "\n" + line);
-                }
-
+                }*/
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -281,7 +283,6 @@ public class RESTClient implements RESTInterface {
         if (files.size() > 0) {
 
             String CRLF = "\r\n"; // Line separator required by multipart/form-data.
-
 
             // Send normal param.
             for (Map.Entry<String, String> attribute : data.entrySet()) {

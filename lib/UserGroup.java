@@ -24,6 +24,9 @@ public class UserGroup extends KEntity {
     static protected String controller = "/Base/UserGroup";
     static protected String objectXmlName = "usergroup";
 
+    public UserGroup() {
+
+    }
 
     public UserGroup(String title) {
         this(title, TYPE_REGISTERED);
@@ -131,6 +134,10 @@ public class UserGroup extends KEntity {
 
     public void setMaster(Boolean master) {
         this.master = master;
+    }
+
+    public static UserGroup get(int id) throws KayakoException {
+        return new UserGroup().populate(KEntity.get(controller, id));
     }
 
     //this function will populate the data of the user Group instance when supplied with RawArrayElement derived from the xml
