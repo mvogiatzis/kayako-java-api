@@ -17,10 +17,12 @@ import java.util.HashMap;
  */
 public class StaffGroup extends KEntity {
 
-
     static protected String controller = "/Base/StaffGroup";
     static protected String objectXmlName = "staffgroup";
 
+    public StaffGroup(RawArrayElement rawArrayElement) throws KayakoException {
+        this.populate(rawArrayElement);
+    }
 
     public StaffGroup(String title) {
         this(title, false);
@@ -30,7 +32,6 @@ public class StaffGroup extends KEntity {
         this.setTitle(title);
         this.setAdmin(admin);
     }
-
 
     /**
      * Staff Group identifier.
@@ -48,7 +49,6 @@ public class StaffGroup extends KEntity {
      */
     protected String title;
 
-
     /**
      * Whether this staff group is admin group (built-in).
      *
@@ -56,7 +56,6 @@ public class StaffGroup extends KEntity {
      * @var bool
      */
     protected Boolean admin;
-
 
     public String getTitle() {
 
@@ -110,6 +109,10 @@ public class StaffGroup extends KEntity {
 
     public void setAdmin(Boolean admin) {
         this.admin = admin;
+    }
+
+    public static StaffGroup get(int id) throws KayakoException {
+        return new StaffGroup(KEntity.get(controller, id));
     }
 
     //this function will populate the data of the staff Group instance when supplied with RawArrayElement derived from the xml

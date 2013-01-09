@@ -20,7 +20,6 @@ import java.util.HashMap;
 
 abstract public class KEntity {
 
-
     static protected String controller;
     static protected String xmlName;
     protected Boolean readOnly;
@@ -51,7 +50,6 @@ abstract public class KEntity {
     public static RawArrayElement get(String controller, ArrayList<String> parameters) throws KayakoException {
         return KEntity.getRESTClient().get(controller, parameters);
     }
-
 
     public KEntity refresh(String controller) throws KayakoException {
         if (this.isNew()) {
@@ -133,7 +131,9 @@ abstract public class KEntity {
 
     public abstract KEntity populate(RawArrayElement rawArrayElement) throws KayakoException;
 
-    public abstract HashMap<String, String> buildHashMap();
+    public HashMap<String, String> buildHashMap() {
+        return new HashMap<String, String>();
+    }
 
     public HashMap<String, HashMap<String, String>> buildFilesHashMap() {
         return new HashMap<String, HashMap<String, String>>();

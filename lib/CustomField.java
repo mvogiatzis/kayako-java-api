@@ -1,5 +1,6 @@
 package lib;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -15,7 +16,6 @@ import java.util.HashMap;
  * ###############################################
  */
 public class CustomField extends KEntity {
-
 
     static protected String objectXmlName = "field";
     /**
@@ -72,11 +72,9 @@ public class CustomField extends KEntity {
      */
     protected CustomFieldDefinition definition = null;
 
-
     public CustomField(CustomFieldGroup customFieldGroup) {
         this.customFieldGroup = customFieldGroup;
     }
-
 
     public int getId() {
         return id;
@@ -87,6 +85,29 @@ public class CustomField extends KEntity {
         return this;
     }
 
+    public static CustomField get(int id) throws KayakoException {
+        throw new KayakoException("This method is not available for this type of objects.");
+    }
+
+    @Override
+    public KEntity create(String controller) throws KayakoException {
+        throw new KayakoException("This method is not available for this type of objects.");
+    }
+
+    @Override
+    public Boolean delete(String controller) throws KayakoException {
+        throw new KayakoException("This method is not available for this type of objects.");
+    }
+
+    @Override
+    public KEntity refresh(String controller) throws KayakoException {
+        throw new KayakoException("This method is not available for this type of objects.");
+    }
+
+    @Override
+    public KEntity update(String controller) throws KayakoException {
+        throw new KayakoException("This method is not available for this type of objects.");
+    }
 
     @Override
     public String toString() {
@@ -102,8 +123,15 @@ public class CustomField extends KEntity {
         return this;
     }
 
-    public CustomFieldDefinition getDefinition() {
-        return definition;
+    public CustomFieldDefinition getDefinition() throws KayakoException {
+        return this.getDefinition(false);
+    }
+
+    public CustomFieldDefinition getDefinition(Boolean refresh) throws KayakoException {
+        if (this.definition != null && !refresh) {
+            return this.definition;
+        }
+        return new CustomFieldDefinition(CustomFieldDefinition.getAll(CustomFieldDefinition.getController()).filterBy("fieldname", this.getName()).get(0));
     }
 
     public CustomField setDefinition(CustomFieldDefinition definition) {
@@ -147,11 +175,11 @@ public class CustomField extends KEntity {
         return this;
     }
 
-    public CustomFieldOption getOption(String value) {
+    public CustomFieldOption getOption(String value) throws KayakoException {
         return this.getDefinition().getOptionByValue(value);
     }
 
-    public CustomFieldOption getOption(int id) {
+    public CustomFieldOption getOption(int id) throws KayakoException {
         return this.getDefinition().getOptionById(id);
     }
 

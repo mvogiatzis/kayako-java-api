@@ -17,12 +17,15 @@ import java.util.HashMap;
  */
 public class Staff extends KEntity {
 
-
     static protected String controller = "/Base/Staff";
     static protected String objectXmlName = "staff";
     protected Boolean readOnly = true;
 
     public Staff() {
+    }
+
+    public Staff(RawArrayElement rawArrayElement) throws KayakoException {
+        this.populate(rawArrayElement);
     }
 
     public Staff(String firstName, String lastName, String userName, String email, StaffGroup staffGroup, String password) {
@@ -55,7 +58,6 @@ public class Staff extends KEntity {
      * @apiField
      * @var string
      */
-
 
     protected String firstName;
 
@@ -112,7 +114,6 @@ public class Staff extends KEntity {
     protected String password;
 
     private StaffGroup staffGroup = null;
-
 
     public String getFirstName() {
 
@@ -205,7 +206,6 @@ public class Staff extends KEntity {
         return signature;
     }
 
-
     public Staff setSignature(String signature) {
         this.signature = signature;
         return this;
@@ -240,7 +240,6 @@ public class Staff extends KEntity {
         return mobileNumber;
     }
 
-
     public Boolean isEnabled() {
         return enabled;
     }
@@ -266,7 +265,6 @@ public class Staff extends KEntity {
         this.password = password;
         return this;
     }
-
 
     public StaffGroup getStaffGroup() throws KayakoException {
         if (this.staffGroup == null) {
@@ -294,6 +292,10 @@ public class Staff extends KEntity {
     public Staff setMobileNumber(String mobileNumber) {
         this.mobileNumber = mobileNumber;
         return this;
+    }
+
+    public static Staff get(int id) throws KayakoException {
+        return new Staff(KEntity.get(controller, id));
     }
 
     //this function will populate the data of the staff instance when supplied with RawArrayElement derived from the xml
@@ -354,7 +356,6 @@ public class Staff extends KEntity {
         staffHashMap.put("enabledst", this.isDST() ? "1" : "0");
         return staffHashMap;
     }
-
 
     //TODO create ticket from here
 

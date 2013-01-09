@@ -1,5 +1,6 @@
 package lib;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -29,7 +30,7 @@ public abstract class KEntityCustom extends KEntity {
      *
      * @var array
      */
-    protected ArrayList<CustomField> customFields = new ArrayList<CustomField>();
+    protected HashMap<String, CustomField> customFieldHashMap = new HashMap<String, CustomField>();
 
     /**
      * Object custom field groups.
@@ -38,21 +39,35 @@ public abstract class KEntityCustom extends KEntity {
      */
     protected ArrayList<CustomFieldGroup> customFieldGroups = new ArrayList<CustomFieldGroup>();
 
+    public ArrayList<CustomFieldGroup> getCustomFieldGroups() throws KayakoException {
+        return getCustomFieldGroups(false);
+    }
 
-    public ArrayList<CustomFieldGroup> getCustomFieldGroups() {
-        return customFieldGroups;
+    public ArrayList<CustomFieldGroup> getCustomFieldGroups(Boolean refresh) throws KayakoException {
+        this.loadCustomFieldGroups(refresh);
+        return this.customFieldGroups;
     }
 
     public void setCustomFieldGroups(ArrayList<CustomFieldGroup> customFieldGroups) {
         this.customFieldGroups = customFieldGroups;
     }
 
-    public ArrayList<CustomField> getCustomFields() {
-        return customFields;
+    public HashMap<String, CustomField> getCustomFieldHashMap() throws KayakoException {
+        return this.getCustomFieldHashMap(false);
     }
 
-    public void setCustomFields(ArrayList<CustomField> customFields) {
-        this.customFields = customFields;
+    public HashMap<String, CustomField> getCustomFieldHashMap(Boolean refresh) throws KayakoException {
+        this.loadCustomFieldGroups(refresh);
+        return customFieldHashMap;
+    }
+
+    //This function will return ArrayList of custom fields
+    public ArrayList<CustomField> getCustomFields(Boolean refresh) throws KayakoException {
+        return new ArrayList<CustomField>(this.getCustomFieldHashMap(refresh).values());
+    }
+
+    public void setCustomFieldHashMap(HashMap<String, CustomField> customFieldHashMap) {
+        this.customFieldHashMap = customFieldHashMap;
     }
 
     public static String getObjectIdField() {
@@ -63,19 +78,30 @@ public abstract class KEntityCustom extends KEntity {
         KEntityCustom.objectIdField = objectIdField;
     }
 
+    public KEntityCustom update(String controller) throws KayakoException {
+        super.update(controller);
+        if (!this.isNew()) {
+            this.updateCustomFields(controller);
+        }
+        return this;
+    }
 
-    /*
-    * initFields
-    * getCustomFields
-    * getCustomFieldGroups
-    * getCustomField
-    * getCustomFieldValue
-    * setCustomFieldValue
-    * setCustomFieldValuesFromPOST
-   * */
+    /**
+     * Returns custom field based on its name.
+     *
+     * @param name Field name.
+     * @return CustomField
+     */
+    public CustomField getCustomField(String name) throws KayakoException {
+        this.loadCustomFieldGroups();
+        return this.getCustomFieldHashMap().get(name);
+    }
 
-    protected abstract ArrayList<CustomFieldGroup> loadCustomFieldGroups(Boolean refresh);
+    protected ArrayList<CustomFieldGroup> loadCustomFieldGroups() throws KayakoException {
+        return this.loadCustomFieldGroups(false);
+    }
 
+    protected abstract ArrayList<CustomFieldGroup> loadCustomFieldGroups(Boolean refresh) throws KayakoException;
 
     /**
      * Prepares local array for custom field fast lookup based on its name.
@@ -83,20 +109,33 @@ public abstract class KEntityCustom extends KEntity {
      */
     protected abstract ArrayList<CustomField> loadCustomField(Boolean refresh);
 
-    //this method needs to be implemented in the derived class to basically call the overloaded method with correct arguments
-    public abstract KEntityCustom updateCustomFields();
+    /**
+     * Prepares local array for custom field fast lookup based on its name.
+     */
+    protected void cacheFields() throws KayakoException {
+        for (CustomFieldGroup customFieldGroup : this.getCustomFieldGroups()) {
+            for (CustomField customField : customFieldGroup.getFields()) {
+                this.customFieldHashMap.put(customField.getName(), customField);
+            }
+        }
+    }
 
-    public KEntityCustom updateCustomFields(String controller, String objectIdField) {
+    //this method needs to be implemented in the derived class to basically call the overloaded method with correct arguments
+    public abstract KEntityCustom updateCustomFields() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, KayakoException;
+
+    /**
+     * Updates all custom fields values on Kayako server.
+     *
+     * @param customGroupController - This is the customGroupController of CustomGroupClass
+     * @return KEntityCustom
+     */
+    public KEntityCustom updateCustomFields(String customGroupController) throws KayakoException {
         if (this.customFieldGroups == null) {
             return this;
         }
-
-
-        ArrayList<String> parameters = new ArrayList<String>();
+        ArrayList<String> parameters = this.getIdArray();
         HashMap<String, HashMap<String, String>> files = new HashMap<String, HashMap<String, String>>();
-        //prepare URL controller and parameters
-        //parameters.add(objectIdField);
-        parameters.add(Integer.toString(this.getId()));
+        //prepare URL customGroupController and parameters
         //collect all field values into request data
         //foreach custom field groups- call build data and merge
         HashMap<String, String> data = new HashMap<String, String>();
@@ -106,9 +145,8 @@ public abstract class KEntityCustom extends KEntity {
             files.putAll(customFieldGroup.buildFilesHashMap());
         }
 
-
         //send request
-        KEntityCustom.getRESTClient().post(controller, parameters, data, files);
+        KEntityCustom.getRESTClient().post(customGroupController, parameters, data, files);
 
         //reload custom fields from server
         return this;

@@ -43,6 +43,10 @@ public class CustomFieldDefinition extends KEntity {
 
     protected Boolean readOnly = true;
 
+    public CustomFieldDefinition(RawArrayElement rawArrayElement) throws KayakoException {
+        this.populate(rawArrayElement);
+    }
+
     /**
      * Field identifier.
      *
@@ -161,7 +165,6 @@ public class CustomFieldDefinition extends KEntity {
      */
     static private ArrayList<CustomFieldDefinition> definitions = new ArrayList<CustomFieldDefinition>();
 
-
     @Override
     public KEntity populate(RawArrayElement rawArrayElement) throws KayakoException {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
@@ -271,7 +274,6 @@ public class CustomFieldDefinition extends KEntity {
     public ArrayList<CustomFieldOption> getOptions() {
         return options;
     }
-
 
     public void setOptions(ArrayList<CustomFieldOption> options) {
         this.options = options;

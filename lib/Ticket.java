@@ -1,5 +1,6 @@
 package lib;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -16,7 +17,6 @@ import java.util.HashMap;
  * ###############################################
  */
 public class Ticket extends KEntityCustom {
-
 
     static final int FLAG_NONE = 0;
     static final int FLAG_PURPLE = 1;
@@ -104,7 +104,8 @@ public class Ticket extends KEntityCustom {
     static final String SEARCH_TAGS = "tags";
     static protected String controller = "/Tickets/Ticket";
     static protected String objectXmlName = "ticket";
-    static protected String customFieldGroupClass = "TicketCustomFieldGroup";
+    //Custom Field Croup Class = TicketCustomFieldGroup is used extensively
+    static String customFieldGroupController = TicketCustomFieldGroup.getController();
     static protected String objectIdField = "ticketid";
     /**
      * Default status identifier for new tickets.
@@ -503,7 +504,6 @@ public class Ticket extends KEntityCustom {
         this.setCreatorAuto(creatorFullName, creatorEmail);
     }
 
-
     public Ticket setCreatorId(int creatorId, int creatorType) {
         switch (creatorType) {
             case CREATOR_STAFF:
@@ -547,12 +547,12 @@ public class Ticket extends KEntityCustom {
         Ticket.objectXmlName = objectXmlName;
     }
 
-    public static String getCustomFieldGroupClass() {
-        return customFieldGroupClass;
+    public static String getCustomFieldGroupController() {
+        return customFieldGroupController;
     }
 
-    public static void setCustomFieldGroupClass(String customFieldGroupClass) {
-        Ticket.customFieldGroupClass = customFieldGroupClass;
+    public static void setCustomFieldGroupController(String customFieldGroupController) {
+        Ticket.customFieldGroupController = customFieldGroupController;
     }
 
     public static String getObjectIdField() {
@@ -564,8 +564,21 @@ public class Ticket extends KEntityCustom {
     }
 
     @Override
-    protected ArrayList<CustomFieldGroup> loadCustomFieldGroups(Boolean refresh) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    protected ArrayList<CustomFieldGroup> loadCustomFieldGroups(Boolean refresh) throws KayakoException {
+        if (this.isNew()) {
+            throw new KayakoException("Custom fields are not available for new objects. Save the object before accessing its custom fields.");
+        }
+        ArrayList<CustomFieldGroup> customFieldGroups = this.getCustomFieldGroups();
+        if (customFieldGroups.size() == 0 && !refresh) {
+            return customFieldGroups;
+        }
+        RawArrayElement rawArrayElement = TicketCustomFieldGroup.getAll(Ticket.getCustomFieldGroupController());
+        for (RawArrayElement component : rawArrayElement.getComponents()) {
+            customFieldGroups.add(new TicketCustomFieldGroup(component));
+        }
+        this.setCustomFieldGroups(customFieldGroups);
+        this.cacheFields();
+        return this.getCustomFieldGroups();
     }
 
     /**
@@ -1102,7 +1115,6 @@ public class Ticket extends KEntityCustom {
         Ticket.statistics = statistics;
     }
 
-
     public static RawArrayElement getAll(Department department) throws KayakoException {
         return Ticket.getAll(department.getId());
     }
@@ -1120,7 +1132,6 @@ public class Ticket extends KEntityCustom {
         }
         return Ticket.getAll(departments, new ArrayList<Integer>(), new ArrayList<Integer>(), new ArrayList<Integer>());
     }
-
 
     public static RawArrayElement getAll(ArrayList<?> departments, ArrayList<?> ticketStatuses, ArrayList<?> owners, ArrayList<?> users) throws KayakoException {
         ArrayList<String> searchParams = new ArrayList<String>();
@@ -1164,11 +1175,9 @@ public class Ticket extends KEntityCustom {
         return KEntity.getAll(Ticket.controller, searchParams);
     }
 
-
-    public Ticket updateCustomFields() {
-        return (Ticket) super.updateCustomFields(controller, objectIdField);
+    public Ticket updateCustomFields() throws KayakoException {
+        return (Ticket) super.updateCustomFields(getCustomFieldGroupController());
     }
-
 
     /**
      * Sets default status, priority and type for newly created tickets.
@@ -1279,7 +1288,6 @@ public class Ticket extends KEntityCustom {
         }
         return this;
     }
-
 
     public HashMap<String, String> buildHashMap() {
         HashMap<String, String> ticketHashMap = buildHashMap();

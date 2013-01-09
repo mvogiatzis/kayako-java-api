@@ -17,13 +17,12 @@ import java.util.HashMap;
  */
 public abstract class CustomFieldGroup extends KEntity {
 
-
     static final int TYPE_TICKET = 0;
     static final int TYPE_USER = 1;
     static final int TYPE_USER_ORGANIZATION = 2;
     static final int TYPE_USER_LIVECHAT = 3;
     static final int TYPE_USER_TIME_TRACK = 4;
-
+    static protected String controller;
     static protected String objectXmlName = "group";
     protected Boolean readOnly = true;
 
@@ -57,7 +56,6 @@ public abstract class CustomFieldGroup extends KEntity {
      * @see CustomFieldGroup::TYPE constants
      */
     protected int type;
-
 
     public ArrayList<CustomField> getFields() {
         return fields;
@@ -94,6 +92,14 @@ public abstract class CustomFieldGroup extends KEntity {
         return this;
     }
 
+    public static String getController() {
+        return controller;
+    }
+
+    public static void setController(String controller) {
+        CustomFieldGroup.controller = controller;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -113,7 +119,12 @@ public abstract class CustomFieldGroup extends KEntity {
     }
 
     public static CustomFieldGroup get(int id) throws KayakoException {
-        throw new KayakoException();
+        throw new KayakoException("This method is not available for this type of objects.");
+    }
+
+    @Override
+    public CustomFieldGroup refresh(String controller) throws KayakoException {
+        throw new KayakoException("This method is not available for this type of objects.");
     }
 
     @Override
@@ -132,7 +143,6 @@ public abstract class CustomFieldGroup extends KEntity {
         return this.buildHashMap(false);
     }
 
-
     public HashMap<String, String> buildHashMap(Boolean newCustomFieldGroup) {
         HashMap<String, String> customFieldGroupHashMap = new HashMap<String, String>();
         for (CustomField customField : this.getFields()) {
@@ -141,7 +151,6 @@ public abstract class CustomFieldGroup extends KEntity {
 
         return customFieldGroupHashMap;
     }
-
 
     public HashMap<String, HashMap<String, String>> buildFilesHashMap() {
         return this.buildFilesHashMap(false);

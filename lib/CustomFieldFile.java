@@ -20,7 +20,6 @@ import java.util.HashMap;
  */
 public class CustomFieldFile extends CustomField {
 
-
     static protected String objectXmlName = "field";
 
     /**
@@ -45,7 +44,6 @@ public class CustomFieldFile extends CustomField {
      */
     protected Boolean isChanged = false;
 
-
     public byte[] getContents() {
         return contents;
     }
@@ -57,13 +55,16 @@ public class CustomFieldFile extends CustomField {
         this.contents = contents;
     }
 
-
     public CustomFieldFile setContentFromFile(File file) {
         try {
             this.contents = Helper.readBytesFromFile(file);
         } catch (IOException e) {
             e.printStackTrace();
         }
+        if (this.getFileName().equals(null)) {
+            this.setFileName(file.getName());
+        }
+        this.setRawValue(Base64.encodeBytes(this.contents));
         return this;
     }
 
@@ -89,7 +90,6 @@ public class CustomFieldFile extends CustomField {
     public CustomFieldFile(CustomFieldGroup customFieldGroup) {
         super(customFieldGroup);
     }
-
 
     @Override
     public CustomFieldFile populate(RawArrayElement rawArrayElement) throws KayakoException {
@@ -125,6 +125,5 @@ public class CustomFieldFile extends CustomField {
         fileHashMap.put(this.getName(), file);
         return fileHashMap;
     }
-
 
 }
