@@ -17,7 +17,6 @@ import java.util.HashMap;
  */
 public class Department extends KEntity {
 
-
     static final String TYPE_PUBLIC = "public";
     static final String TYPE_PRIVATE = "private";
     /**
@@ -33,7 +32,6 @@ public class Department extends KEntity {
      * @var string
      */
     static final String APP_LIVECHAT = "tickets";
-
 
     static protected String controller = "/Base/Department";
     static protected String objectXmlName = "department";
@@ -56,7 +54,6 @@ public class Department extends KEntity {
         this.setType(type);
         this.setApp(app);
     }
-
 
     /**
      * Department identifier.
@@ -100,7 +97,6 @@ public class Department extends KEntity {
      */
     protected String displayIcon;
 
-
     /**
      * If this department is visible to specific user groups only.
      *
@@ -108,7 +104,6 @@ public class Department extends KEntity {
      * @var bool
      */
     protected Boolean userVisibilityCustom;
-
 
     /**
      * Identifiers of user groups which can change department to this status.
@@ -123,7 +118,7 @@ public class Department extends KEntity {
      *
      * @var UserGroup[]
      */
-    private ArrayList<UserGroup> userGroups = new ArrayList<UserGroup>();
+    private HashMap<Integer, UserGroup> userGroups = new HashMap<Integer, UserGroup>();
 
     /**
      * Type of department.
@@ -134,7 +129,6 @@ public class Department extends KEntity {
      */
     protected String type;
 
-
     /**
      * Department app.
      *
@@ -143,7 +137,6 @@ public class Department extends KEntity {
      */
 
     protected String app;
-
 
     /**
      * Parent department.
@@ -154,10 +147,18 @@ public class Department extends KEntity {
     protected Department parentDepartment = null;
 
     public Department getParentDepartment() throws KayakoException {
-        if (parentDepartment != null) {
+        return this.getParentDepartment(false);
+    }
+
+    public Department getParentDepartment(Boolean refresh) throws KayakoException {
+        if (parentDepartment != null && !refresh) {
             return parentDepartment;
         }
-        return (Department) Department.get(this.getParentDepartmentId());
+        if (this.getParentDepartmentId() <= 0) {
+            return null;
+        }
+        this.parentDepartment = (Department) Department.get(this.getParentDepartmentId());
+        return this.parentDepartment;
 
     }
 
@@ -182,7 +183,6 @@ public class Department extends KEntity {
         this.userVisibilityCustom = userVisibilityCustom;
         return this;
     }
-
 
     public String getDisplayIcon() {
 
@@ -263,19 +263,23 @@ public class Department extends KEntity {
 
     }
 
-
-    public ArrayList<UserGroup> getUserGroups() throws KayakoException {
-        for (Integer userGroupId : this.userGroupIds) {
-            this.userGroups.add((UserGroup) UserGroup.get(userGroupId.intValue()));
-        }
-        return this.userGroups;
+    public HashMap<Integer, UserGroup> getUserGroups() throws KayakoException {
+        return getUserGroups(false);
     }
 
-    public Department setUserGroups(ArrayList<UserGroup> userGroups) {
+    public HashMap<Integer, UserGroup> getUserGroups(Boolean refresh) throws KayakoException {
+        for (int userGroupId : this.getUserGroupIds()) {
+            if (!userGroups.containsKey(userGroupId) || refresh) {
+                userGroups.put(userGroupId, UserGroup.get(userGroupId));
+            }
+        }
+        return userGroups;
+    }
+
+    public Department setUserGroups(HashMap<Integer, UserGroup> userGroups) {
         this.userGroups = userGroups;
         return this;
     }
-
 
     public String getType() {
         return type;
@@ -285,7 +289,6 @@ public class Department extends KEntity {
         this.type = type;
         return this;
     }
-
 
     public ArrayList<Integer> getUserGroupIds() {
         return userGroupIds;
@@ -297,8 +300,12 @@ public class Department extends KEntity {
     }
 
     public Department addUserGroup(UserGroup userGroup) {
-        this.userGroups.add(userGroup);
+        if (userGroupIds.contains(userGroup.getId())) {
+            return this;
+        }
+        this.userGroups.put(userGroup.getId(), userGroup);
         this.userGroupIds.add(userGroup.getId());
+        this.setUserVisibilityCustom(true);
         return this;
     }
 
@@ -313,7 +320,6 @@ public class Department extends KEntity {
         return this.isVisibleToUserGroup(userGroup.getId());
     }
 
-
     public String getApp() {
         return app;
     }
@@ -323,6 +329,9 @@ public class Department extends KEntity {
         return this;
     }
 
+    public Ticket createAutoTicket(String creatorFullName, String email, String contents, String subject) {
+        return new Ticket(this, creatorFullName, email, contents, subject);
+    }
 
     /**
      * Creates new subdepartment in this department. Module of new department will be the same as parent department's module.
@@ -400,23 +409,5 @@ public class Department extends KEntity {
             }
         }
         return departmentHashMap;
-    }
-
-    public RawArrayElement buildRawArrayElement() {
-        RawArrayElement department = new RawArrayElement(objectXmlName);
-        department.put(new RawArrayElement("title", this.getTitle()));
-        department.put(new RawArrayElement("type", this.getType()));
-        department.put(new RawArrayElement("app", this.getApp()));
-        department.put(new RawArrayElement("displayorder", Integer.toString(this.getDisplayOrder())));
-        department.put(new RawArrayElement("parentdepartmentid", Integer.toString(this.getParentDepartmentId())));
-        department.put(new RawArrayElement("uservisibilitycustom", this.isUserVisibilityCustom() ? "1" : "0"));
-        if (this.isUserVisibilityCustom()) {
-            RawArrayElement userGroups = new RawArrayElement("usergroups");
-            for (Integer id : this.getUserGroupIds()) {
-                userGroups.put(new RawArrayElement("id", id.toString()));
-            }
-            department.put(userGroups);
-        }
-        return department;
     }
 }

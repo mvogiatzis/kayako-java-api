@@ -23,7 +23,6 @@ public class CustomFieldSelect extends CustomField {
      */
     protected CustomFieldOption selectedOption;
 
-
     public CustomFieldSelect(CustomFieldGroup customFieldGroup) {
         super(customFieldGroup);
     }
@@ -32,15 +31,31 @@ public class CustomFieldSelect extends CustomField {
         return selectedOption;
     }
 
-    public CustomFieldSelect setSelectedOption(CustomFieldOption selectedOption) {
+    public CustomFieldSelect setSelectedOption(CustomFieldOption selectedOption) throws KayakoException {
         this.selectedOption = selectedOption;
         if (this.selectedOption != null) {
             this.setRawValue(this.selectedOption.getValue());
+        } else {
+            this.setRawValue(null);
         }
         return this;
     }
 
-    //TODO - think about getvalue, setvalue and decide how to implement
+    /**
+     * Sets the option for this field.
+     *
+     * @param value
+     * @return CustomFieldSelect
+     */
+    public CustomFieldSelect setValue(String value) throws KayakoException {
+        int id = Helper.parseInt(value);
+        if (id == 0) {
+            this.setSelectedOption(this.getOption(value));
+        } else {
+            this.setSelectedOption(this.getOption(id));
+        }
+        return this;
+    }
 
     @Override
     public CustomFieldSelect populate(RawArrayElement rawArrayElement) throws KayakoException {
@@ -54,7 +69,6 @@ public class CustomFieldSelect extends CustomField {
 
         return this;
     }
-
 
     public HashMap<String, String> buildHashMap(Boolean newCustomFieldSelect) {
         HashMap<String, String> hashMap = new HashMap<String, String>();

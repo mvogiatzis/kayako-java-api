@@ -65,9 +65,12 @@ public class RawArrayElement {
         return this.getContent();
     }
 
-
     public ArrayList<RawArrayElement> getComponents() {
         return this.components;
+    }
+
+    public void setComponents(ArrayList<RawArrayElement> components) {
+        this.components = components;
     }
 
     public ArrayList<RawArrayElement> getComponents(String elementName) {
@@ -81,7 +84,7 @@ public class RawArrayElement {
     }
 
     //this function can be used as a filter on RawArrayElement type, so as to act as a generic filter on all element types
-    public ArrayList<RawArrayElement> filterBy(String filterName, String value) throws KayakoException {
+    private ArrayList<RawArrayElement> filterBy(String filterName, String value) throws KayakoException {
         ArrayList<RawArrayElement> filteredComponents = new ArrayList<RawArrayElement>();
         for (RawArrayElement component : this.getComponents()) {
             ArrayList<RawArrayElement> filterComponents = component.getComponents(filterName);
@@ -97,6 +100,20 @@ public class RawArrayElement {
             }
         }
         return filteredComponents;
+    }
+
+    public RawArrayElement filterByComponentAttribute(String attributeName, String attributeValue) {
+        for (RawArrayElement component : this.getComponents()) {
+            if (!Pattern.compile(Pattern.quote(attributeValue), Pattern.CASE_INSENSITIVE).matcher(component.getAttribute(attributeName)).find()) {
+                this.components.remove(component);
+            }
+        }
+        return this;
+    }
+
+    public RawArrayElement filterByComponentValue(String componentName, String componentValue) throws KayakoException {
+        this.setComponents(this.filterBy(componentName, componentValue));
+        return this;
     }
 
     public String get(String key) {
@@ -118,7 +135,6 @@ public class RawArrayElement {
     public String getAttribute(String key) {
         return this.attributes.get(key);
     }
-
 
     public RawArrayElement setAttribute(String key, String value) {
         this.attributes.put(key, value);

@@ -167,12 +167,34 @@ public class CustomFieldDefinition extends KEntity {
 
     @Override
     public KEntity populate(RawArrayElement rawArrayElement) throws KayakoException {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        if (!rawArrayElement.getElementName().equals(objectXmlName)) {
+            throw new KayakoException();
+        }
+        //attribute =  title, id  , type, name
+        this.setId(Helper.parseInt(rawArrayElement.getAttribute("customfieldid")));
+        this.setGroupId(Helper.parseInt(rawArrayElement.getAttribute("customfieldgroupid")));
+        this.setType(Helper.parseInt(rawArrayElement.getAttribute("fieldtype")));
+        this.setName(rawArrayElement.getAttribute("fieldname"));
+        this.setTitle(rawArrayElement.getAttribute("title"));
+        this.setDefaultValue(rawArrayElement.getAttribute("defaultvalue"));
+        this.setRequired(Helper.parseInt(rawArrayElement.getAttribute("isrequired")) == 1);
+        this.setUserEditable(Helper.parseInt(rawArrayElement.getAttribute("usereditable")) == 1);
+        this.setStaffEditable(Helper.parseInt(rawArrayElement.getAttribute("staffeditable")) == 1);
+        this.setRegexpValidate(rawArrayElement.getAttribute("regexpvalidate"));
+        this.setDisplayOrder(Helper.parseInt(rawArrayElement.getAttribute("displayorder")));
+        this.setEncrypted(Helper.parseInt(rawArrayElement.getAttribute("encryptindb")) == 1);
+        this.setDescription(rawArrayElement.getAttribute("description"));
+        return this;
     }
 
     @Override
     public int getId() {
         return this.id;
+    }
+
+    public CustomFieldDefinition setId(int id) {
+        this.id = id;
+        return this;
     }
 
     public static String getController() {
@@ -188,6 +210,10 @@ public class CustomFieldDefinition extends KEntity {
     }
 
     public void setDefaultValue(String defaultValue) {
+        /* Date formatting if required
+        if(this.getType() == TYPE_DATE){
+            //
+        }*/
         this.defaultValue = defaultValue;
     }
 
@@ -259,8 +285,9 @@ public class CustomFieldDefinition extends KEntity {
         return name;
     }
 
-    public void setName(String name) {
+    public CustomFieldDefinition setName(String name) {
         this.name = name;
+        return this;
     }
 
     public static String getObjectXmlName() {
@@ -271,15 +298,61 @@ public class CustomFieldDefinition extends KEntity {
         CustomFieldDefinition.objectXmlName = objectXmlName;
     }
 
-    public ArrayList<CustomFieldOption> getOptions() {
-        return options;
+    public ArrayList<CustomFieldOption> getOptions() throws KayakoException {
+        return this.getOptions(false);
     }
 
-    public void setOptions(ArrayList<CustomFieldOption> options) {
+    public ArrayList<CustomFieldOption> getOptions(Boolean refresh) throws KayakoException {
+        if (this.options.size() == 0 || refresh) {
+            switch (this.getType()) {
+                case TYPE_CHECKBOX:
+                case TYPE_LINKED_SELECT:
+                case TYPE_MULTI_SELECT:
+                case TYPE_RADIO:
+                case TYPE_SELECT:
+                    ArrayList<RawArrayElement> optionsRaw = CustomFieldOption.getAll().getComponents();
+                    for (RawArrayElement optionRaw : optionsRaw) {
+                        this.addOption(new CustomFieldOption().populate(optionRaw));
+                    }
+                    break;
+                default:
+                    this.setOptions(new ArrayList<CustomFieldOption>());
+            }
+        }
+        return this.options;
+    }
+
+    public ArrayList<CustomFieldOption> getDefaultOptions(Boolean refresh) throws KayakoException {
+        if (this.options.size() == 0 || refresh) {
+            switch (this.getType()) {
+                case TYPE_CHECKBOX:
+                case TYPE_LINKED_SELECT:
+                case TYPE_MULTI_SELECT:
+                case TYPE_RADIO:
+                case TYPE_SELECT:
+                    ArrayList<RawArrayElement> optionsRaw = CustomFieldOption.getAll().filterByComponentAttribute("isselected", "0").getComponents();
+                    for (RawArrayElement optionRaw : optionsRaw) {
+                        this.addOption(new CustomFieldOption().populate(optionRaw));
+                    }
+                    break;
+                default:
+                    this.setOptions(new ArrayList<CustomFieldOption>());
+            }
+        }
+        return this.options;
+    }
+
+    public CustomFieldDefinition setOptions(ArrayList<CustomFieldOption> options) {
         this.options = options;
+        return this;
     }
 
-    public CustomFieldOption getOptionById(int id) {
+    public CustomFieldDefinition addOption(CustomFieldOption customFieldOption) {
+        this.options.add(customFieldOption);
+        return this;
+    }
+
+    public CustomFieldOption getOptionById(int id) throws KayakoException {
         for (CustomFieldOption customFieldOption : this.getOptions()) {
             if (customFieldOption.getId() == id) {
                 return customFieldOption;
@@ -288,7 +361,7 @@ public class CustomFieldDefinition extends KEntity {
         return null;
     }
 
-    public CustomFieldOption getOptionByValue(String value) {
+    public CustomFieldOption getOptionByValue(String value) throws KayakoException {
         for (CustomFieldOption customFieldOption : this.getOptions()) {
             if (customFieldOption.getValue() == value) {
                 return customFieldOption;
@@ -310,16 +383,18 @@ public class CustomFieldDefinition extends KEntity {
         return regexpValidate;
     }
 
-    public void setRegexpValidate(String regexpValidate) {
+    public CustomFieldDefinition setRegexpValidate(String regexpValidate) {
         this.regexpValidate = regexpValidate;
+        return this;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
+    public CustomFieldDefinition setTitle(String title) {
         this.title = title;
+        return this;
     }
 
     public int getType() {
@@ -328,5 +403,21 @@ public class CustomFieldDefinition extends KEntity {
 
     public void setType(int type) {
         this.type = type;
+    }
+
+    static public RawArrayElement getAll(ArrayList<String> parameters) {
+        return KEntity.getAll(controller, parameters);
+    }
+
+    static public void clearCache() {
+        setDefinitions(new ArrayList<CustomFieldDefinition>());
+    }
+
+    public static CustomFieldDefinition get(int id) throws KayakoException {
+        throw new KayakoException("This method is not available for this type of objects.");
+    }
+
+    public CustomFieldDefinition refresh() throws KayakoException {
+        throw new KayakoException("This method is not available for this type of objects.");
     }
 }

@@ -1,6 +1,7 @@
 package lib;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * ###############################################
@@ -15,7 +16,6 @@ import java.util.ArrayList;
  * ###############################################
  */
 public class TicketStatus extends KEntity {
-
 
     final String TYPE_PUBLIC = "public";
     final String TYPE_PRIVATE = "private";
@@ -83,7 +83,6 @@ public class TicketStatus extends KEntity {
      */
     protected Boolean staffVisibilityCustom;
 
-
     /**
      * Identifiers of staff groups which can change ticket status to this status.
      *
@@ -103,7 +102,7 @@ public class TicketStatus extends KEntity {
      *
      * @var StaffGroup[]
      */
-    private ArrayList<StaffGroup> staffGroups = new ArrayList<StaffGroup>();
+    private HashMap<Integer, StaffGroup> staffGroups = new HashMap<Integer, StaffGroup>();
     /**
      * Background color associated with this ticket status in GUI.
      * <p/>
@@ -171,7 +170,6 @@ public class TicketStatus extends KEntity {
      */
 
     protected Boolean displayInMainList;
-
 
     public Department getDepartment() {
         return department;
@@ -280,11 +278,20 @@ public class TicketStatus extends KEntity {
         return color;
     }
 
-    public ArrayList<StaffGroup> getStaffGroups() {
+    public HashMap<Integer, StaffGroup> getStaffGroups() throws KayakoException {
+        return getStaffGroups(false);
+    }
+
+    public HashMap<Integer, StaffGroup> getStaffGroups(Boolean refresh) throws KayakoException {
+        for (int staffGroupId : this.getStaffGroupIds()) {
+            if (!staffGroups.containsKey(staffGroupId) || refresh) {
+                staffGroups.put(staffGroupId, StaffGroup.get(staffGroupId));
+            }
+        }
         return staffGroups;
     }
 
-    public void setStaffGroups(ArrayList<StaffGroup> staffGroups) {
+    public void setStaffGroups(HashMap<Integer, StaffGroup> staffGroups) {
         this.staffGroups = staffGroups;
     }
 
@@ -332,7 +339,6 @@ public class TicketStatus extends KEntity {
         this.triggerSurvey = triggerSurvey;
     }
 
-
     public void setMarkAsResolved(Boolean markAsResolved) {
         this.markAsResolved = markAsResolved;
     }
@@ -345,7 +351,6 @@ public class TicketStatus extends KEntity {
         this.staffGroupIds = staffGroupIds;
     }
 
-
     public Boolean getDisplayInMainList() {
         return displayInMainList;
     }
@@ -354,7 +359,6 @@ public class TicketStatus extends KEntity {
         this.displayInMainList = displayInMainList;
         return this;
     }
-
 
     public Boolean isVisibleToStaffGroup(int staffGroupId) {
         if (!isStaffVisibilityCustom()) {

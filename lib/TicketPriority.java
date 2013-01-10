@@ -1,6 +1,7 @@
 package lib;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * ###############################################
@@ -15,7 +16,6 @@ import java.util.ArrayList;
  * ###############################################
  */
 public class TicketPriority extends KEntity {
-
 
     static final String TYPE_PUBLIC = "public";
     static final String TYPE_PRIVATE = "private";
@@ -47,7 +47,6 @@ public class TicketPriority extends KEntity {
      * @var int
      */
     protected int displayOrder;
-
 
     /**
      * Path to icon displayed in GUI for this ticket priority.
@@ -88,7 +87,6 @@ public class TicketPriority extends KEntity {
      * @var Department
      */
 
-
     /**
      * Background color associated with this ticket priority in GUI.
      * <p/>
@@ -106,8 +104,7 @@ public class TicketPriority extends KEntity {
      * @var string
      */
     protected String color;
-    private ArrayList<UserGroup> userGroups = null;
-
+    private HashMap<Integer, UserGroup> userGroups = new HashMap<Integer, UserGroup>();
 
     public Boolean isUserVisibilityCustom() {
 
@@ -119,7 +116,6 @@ public class TicketPriority extends KEntity {
         return this;
     }
 
-
     public String getDisplayIcon() {
 
         return displayIcon;
@@ -129,7 +125,6 @@ public class TicketPriority extends KEntity {
         this.displayIcon = displayIcon;
         return this;
     }
-
 
     public int getDisplayOrder() {
 
@@ -191,7 +186,6 @@ public class TicketPriority extends KEntity {
         TicketPriority.controller = controller;
     }
 
-
     public String getType() {
         return type;
     }
@@ -210,15 +204,23 @@ public class TicketPriority extends KEntity {
         return this;
     }
 
-    public ArrayList<UserGroup> getUserGroups() {
+    public HashMap<Integer, UserGroup> getUserGroups() throws KayakoException {
+        return getUserGroups(false);
+    }
+
+    public HashMap<Integer, UserGroup> getUserGroups(Boolean refresh) throws KayakoException {
+        for (int userGroupId : this.getUserGroupIds()) {
+            if (!userGroups.containsKey(userGroupId) || refresh) {
+                userGroups.put(userGroupId, UserGroup.get(userGroupId));
+            }
+        }
         return userGroups;
     }
 
-    public TicketPriority setUserGroups(ArrayList<UserGroup> userGroups) {
+    public TicketPriority setUserGroups(HashMap<Integer, UserGroup> userGroups) {
         this.userGroups = userGroups;
         return this;
     }
-
 
     public Boolean isVisibleToUserGroup(int userGroupId) {
         if (!isUserVisibilityCustom()) {

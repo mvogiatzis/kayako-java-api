@@ -15,6 +15,9 @@ package lib;
 public interface ConfigurationFactoryInterface {
 
     //This function needs to be overridden in class ConfigurationFactory
+
+    //call Configuration constructor in implementation
+    // A simple implementation can be return new Configuration("url", "apikey", "secretKey");
     public Configuration getConfiguration();
 
 }

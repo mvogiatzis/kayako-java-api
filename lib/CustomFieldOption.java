@@ -66,7 +66,6 @@ public class CustomFieldOption extends KEntity {
      */
     protected int parentOptionId;
 
-
     public static String getController() {
         return controller;
     }
@@ -146,19 +145,29 @@ public class CustomFieldOption extends KEntity {
         return this;
     }
 
+    public static RawArrayElement getAll() throws KayakoException {
+        return KEntity.getAll(controller);
+    }
+
+    public static CustomFieldOption get(int id) throws KayakoException {
+        throw new KayakoException("This method is not available for this type of objects.");
+    }
+
+    public CustomFieldOption refresh() throws KayakoException {
+        throw new KayakoException("This method is not available for this type of objects.");
+    }
+
     @Override
     public CustomFieldOption populate(RawArrayElement rawArrayElement) throws KayakoException {
         if (!rawArrayElement.getElementName().equals(objectXmlName)) {
             throw new KayakoException();
         }
-
         //content = timestamp
         this.setId(Helper.parseInt(rawArrayElement.getAttribute("customfieldoptionid")));
         this.setFieldId(Helper.parseInt(rawArrayElement.getAttribute("customfieldid")));
-
         this.setValue(rawArrayElement.getAttribute("optionvalue"));
         this.setDisplayOrder(Helper.parseInt(rawArrayElement.getAttribute("displayorder")));
-        this.setSelected(Helper.parseInt(rawArrayElement.getAttribute("isselected")) == 0 ? false : true);
+        this.setSelected(Helper.parseInt(rawArrayElement.getAttribute("isselected")) > 0);
         this.setParentOptionId(Helper.parseInt(rawArrayElement.getAttribute("parentcustomfieldoptionid")));
         return this;
     }

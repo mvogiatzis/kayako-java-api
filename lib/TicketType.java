@@ -1,6 +1,7 @@
 package lib;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * ###############################################
@@ -15,7 +16,6 @@ import java.util.ArrayList;
  * ###############################################
  */
 public class TicketType extends KEntity {
-
 
     final String TYPE_PUBLIC = "public";
     final String TYPE_PRIVATE = "private";
@@ -98,8 +98,7 @@ public class TicketType extends KEntity {
      */
     private Department department = null;
 
-    private ArrayList<UserGroup> userGroups = null;
-
+    private HashMap<Integer, UserGroup> userGroups = new HashMap<Integer, UserGroup>();
 
     public Department getDepartment() {
         return department;
@@ -208,15 +207,23 @@ public class TicketType extends KEntity {
         this.userGroupIds = userGroupIds;
     }
 
+    public HashMap<Integer, UserGroup> getUserGroups() throws KayakoException {
+        return getUserGroups(false);
+    }
 
-    public ArrayList<UserGroup> getUserGroups() {
+    public HashMap<Integer, UserGroup> getUserGroups(Boolean refresh) throws KayakoException {
+        for (int userGroupId : this.getUserGroupIds()) {
+            if (!userGroups.containsKey(userGroupId) || refresh) {
+                userGroups.put(userGroupId, UserGroup.get(userGroupId));
+            }
+        }
         return userGroups;
     }
 
-    public void setUserGroups(ArrayList<UserGroup> userGroups) {
+    public TicketType setUserGroups(HashMap<Integer, UserGroup> userGroups) {
         this.userGroups = userGroups;
+        return this;
     }
-
 
     public Boolean isVisibleToUserGroup(int userGroupId) {
         if (!isUserVisibilityCustom()) {

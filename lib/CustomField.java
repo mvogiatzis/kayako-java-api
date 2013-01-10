@@ -131,7 +131,7 @@ public class CustomField extends KEntity {
         if (this.definition != null && !refresh) {
             return this.definition;
         }
-        return new CustomFieldDefinition(CustomFieldDefinition.getAll(CustomFieldDefinition.getController()).filterBy("fieldname", this.getName()).get(0));
+        return new CustomFieldDefinition(CustomFieldDefinition.getAll(CustomFieldDefinition.getController()).filterByComponentAttribute("fieldname", this.getName()).getComponents().get(0));
     }
 
     public CustomField setDefinition(CustomFieldDefinition definition) {
@@ -176,6 +176,10 @@ public class CustomField extends KEntity {
     }
 
     public CustomFieldOption getOption(String value) throws KayakoException {
+        int id = Helper.parseInt(value);
+        if (id > 0) {
+            return this.getOption(id);
+        }
         return this.getDefinition().getOptionByValue(value);
     }
 

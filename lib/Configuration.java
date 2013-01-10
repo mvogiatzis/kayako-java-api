@@ -21,6 +21,7 @@ public class Configuration {
     private Boolean standardUrlType = true;
     private static Configuration configuration = null;
     private String dateFormat = "MM/dd/yyyy";
+    private String dateTimeFormat = "Y-m-d H:i:s";
 
     /**
      * REST client.
@@ -30,7 +31,7 @@ public class Configuration {
     private RESTInterface restClient = null;
 
     public Configuration(String baseUrl, String apiKey, String secretKey, Boolean testMode) {
-        //this("http://swift.local.com/api/index.php?", "80866fb4-b6e2-1584-a514-da071da37894", "ZWJiNTkzYzMtNmEwNS1iMGU0LTc1YmItYzhmMWRkNDVkYmY2ZmQwYjU4MjgtYzY0Mi04NGQ0LWJkZjktNWE3NmViZDRhMmFk");
+        //this("http://swift.kayako.com/api/index.php?", "80866fb4-b6e2-1584-a51sfda37894", "ZWJiNTkzYzMtNmEwNS1dfgfdgdfghdhYzhmMWRkNDVkYmY2ZmQwYjU4MjgtYzY0ghfGQ0LWJkZjktNWE3NmViZDRhMmFk");
         this.baseUrl = baseUrl;
         this.apiKey = apiKey;
         this.secretKey = secretKey;
@@ -99,6 +100,15 @@ public class Configuration {
 
     public void setDateFormat(String dateFormat) {
         this.dateFormat = dateFormat;
+    }
+
+    public String getDateTimeFormat() {
+        return dateTimeFormat;
+    }
+
+    public Configuration setDateTimeFormat(String dateTimeFormat) {
+        this.dateTimeFormat = dateTimeFormat;
+        return this;
     }
 
     public RESTInterface getRestClient() {

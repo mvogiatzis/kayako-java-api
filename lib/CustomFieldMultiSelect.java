@@ -17,7 +17,6 @@ import java.util.HashMap;
  */
 public class CustomFieldMultiSelect extends CustomField {
 
-
     /**
      * Separator of main and linked select values.
      *
@@ -45,11 +44,16 @@ public class CustomFieldMultiSelect extends CustomField {
         return this;
     }
 
+    public CustomFieldMultiSelect setOptions(CustomFieldOption option) {
+        ArrayList<CustomFieldOption> arrayList = new ArrayList<CustomFieldOption>();
+        arrayList.add(option);
+        return this.setOptions(arrayList);
+    }
+
     public CustomFieldMultiSelect addToOptions(CustomFieldOption customFieldOption) {
         this.options.add(customFieldOption);
         return this;
     }
-
 
     //returns HashMap like (option.id => option.value)
     public HashMap<String, String> getValues() {
@@ -71,7 +75,6 @@ public class CustomFieldMultiSelect extends CustomField {
         }
         return this;
     }
-
 
     public HashMap<String, String> buildHashMap(Boolean newCustomFieldMultiSelect) {
         HashMap<String, String> hashMap = new HashMap<String, String>();

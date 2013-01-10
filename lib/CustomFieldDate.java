@@ -26,7 +26,7 @@ public class CustomFieldDate extends CustomField {
      * @var Timestamp
      */
     private Timestamp timestamp;
-    static String objectXmlName = "customfield";
+    static String objectXmlName = "field";
 
     public CustomFieldDate(CustomFieldGroup customFieldGroup) {
         super(customFieldGroup);
@@ -49,13 +49,16 @@ public class CustomFieldDate extends CustomField {
      */
     public CustomFieldDate setTimestamp(Timestamp timestamp) {
         this.timestamp = timestamp;
+        Date date = new Date(this.getTimestamp().getTime());
+        Format formatter = new SimpleDateFormat(new ConfigurationFactory().getConfiguration().getDateFormat());
+        String dateStr = formatter.format(date);
+        this.setRawValue(dateStr);
         return this;
     }
 
     public String getDate() {
         return getDate(new ConfigurationFactory().getConfiguration().getDateFormat());
     }
-
 
     public String getDate(String dateFormat) {
         Date date = new Date(this.getTimestamp().getTime());
@@ -71,7 +74,6 @@ public class CustomFieldDate extends CustomField {
         this.setTimestamp(new Timestamp(time));
         return this;
     }
-
 
     public String getValue() {
         return this.getDate();

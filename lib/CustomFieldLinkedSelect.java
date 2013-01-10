@@ -16,14 +16,12 @@ import java.util.HashMap;
  */
 public class CustomFieldLinkedSelect extends CustomFieldSelect {
 
-
     /**
      * Separator of main and linked select values.
      *
      * @var string
      */
     public static final String PARENT_CHILD_SEPARATOR = " &gt; ";
-
 
     public CustomFieldLinkedSelect(CustomFieldGroup customFieldGroup) {
         super(customFieldGroup);
@@ -40,7 +38,7 @@ public class CustomFieldLinkedSelect extends CustomFieldSelect {
     }
 
     @Override
-    public CustomFieldLinkedSelect setSelectedOption(CustomFieldOption customFieldOption) {
+    public CustomFieldLinkedSelect setSelectedOption(CustomFieldOption customFieldOption) throws KayakoException {
         this.setSelectedOption(customFieldOption);
         if (this.getSelectedOption() != null) {
             this.setRawValue(this.getOption(this.getSelectedOption().getParentOptionId()).getValue() + PARENT_CHILD_SEPARATOR + this.getSelectedOption().getValue());
