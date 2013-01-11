@@ -14,6 +14,7 @@ package lib;
  */
 public class CustomFieldValue {
 
+    //This file is not being used - think on this
     String rawValue;
     Boolean isFile = false;
     String fileName = "";
