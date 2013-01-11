@@ -19,43 +19,41 @@ public class TicketPost extends KEntity {
 
     /**
      * Post creator type - staff user.
-     *
-     * @var int
      */
     static final int CREATOR_STAFF = 1;
 
     /**
      * Post creator type - user.
      *
-     * @var int
+     * @param int
      */
     static final int CREATOR_USER = 2;
 
     /**
      * Post creator type - user.
      *
-     * @var int
+     * @param int
      */
     static final int CREATOR_CLIENT = 2;
 
     /**
      * Post creator type - owner of e-mail marked as CC in ticket properties.
      *
-     * @var int
+     * @param int
      */
     static final int CREATOR_CC = 3;
 
     /**
      * Post creator type - owner of e-mail marked as BCC in ticket properties.
      *
-     * @var int
+     * @param int
      */
     static final int CREATOR_BCC = 4;
 
     /**
      * Post creator type - owner of e-mail marked as Third Party in ticket properties.
      *
-     * @var int
+     * @param int
      */
     static final int CREATOR_THIRDPARTY = 5;
 
@@ -65,23 +63,22 @@ public class TicketPost extends KEntity {
     /**
      * Ticket post identifier.
      *
-     * @apiField
-     * @var int
+     * @param int
      */
     protected int id;
     /**
      * Ticket identifier.
+     * <p/>
+     * required_create=true
      *
-     * @apiField required_create=true
-     * @var int
+     * @param int
      */
     protected int ticketId;
 
     /**
      * Timestamp of creation date and time.
      *
-     * @apiField
-     * @var int
+     * @param int
      */
     protected int dateLine;
 
@@ -90,24 +87,21 @@ public class TicketPost extends KEntity {
      * <p/>
      * Applicable if the post was created by a known user through an email queue or through the web interface.
      *
-     * @apiField
-     * @var int
+     * @param int
      */
-    protected int userId;
+    protected int userId = 0;
 
     /**
      * The full name of the person who created the ticket post.
      *
-     * @apiField
-     * @var String
+     * @param String
      */
     protected String fullName;
 
     /**
      * The email address of the person who created the ticket post.
      *
-     * @apiField
-     * @var string
+     * @param string
      */
     protected String email;
 
@@ -116,32 +110,30 @@ public class TicketPost extends KEntity {
      * <p/>
      * Applicable when the 'send email' option is used by the a staff user when creating the ticket post.
      *
-     * @apiField
-     * @var string
+     * @param string
      */
     protected String emailTo;
 
     /**
      * IP address from which this post was created.
      *
-     * @apiField
-     * @var string
+     * @param string
      */
     protected String IPAddress;
 
     /**
      * Whether this ticket post has attachments.
      *
-     * @apiField
-     * @var bool
+     * @param bool
      */
     protected Boolean hasAttachment;
 
     /**
      * Type of this ticket post creator.
+     * <p/>
+     * getter=getCreatorType
      *
-     * @apiField getter=getCreatorType
-     * @var int
+     * @param int
      * @see TicketPost::CREATOR constants.
      */
     protected int creator;
@@ -149,24 +141,21 @@ public class TicketPost extends KEntity {
     /**
      * Whether this post was created by owner of e-mail marked as Third Party in ticket properties.
      *
-     * @apiField
-     * @var bool
+     * @param bool
      */
     protected Boolean isThirdParty;
 
     /**
      * Whether this ticket post contains HTML data.
      *
-     * @apiField
-     * @var bool
+     * @param bool
      */
     protected Boolean isHTML;
 
     /**
      * Whether this post was created through an email queue.
      *
-     * @apiField
-     * @var bool
+     * @param bool
      */
     protected Boolean isEmailed;
 
@@ -175,24 +164,23 @@ public class TicketPost extends KEntity {
      * <p/>
      * Applicable if the post was created by staff user.
      *
-     * @apiField
-     * @var int
+     * @param int
      */
-    protected int staffId;
+    protected int staffId = 0;
 
     /**
      * Whether this post is a survey comment.
      *
-     * @apiField
-     * @var bool
+     * @param bool
      */
     protected Boolean isSurveyComment;
 
     /**
      * Ticket post contents.
+     * <p/>
+     * required_create=true
      *
-     * @apiField required_create=true
-     * @var string
+     * @param string
      */
     protected String contents;
 
@@ -201,30 +189,28 @@ public class TicketPost extends KEntity {
      * <p/>
      * If the ticket post was created through an e-mail queue this is subject of the email message that resulted in the creation of the post.
      *
-     * @apiField
-     * @var string
+     * @param string
      */
     protected String subject = "";
 
     /**
      * Whether the ticket post should be created as private (hidden from the customer) or not.
      *
-     * @apiField
-     * @var bool
+     * @param bool
      */
     protected Boolean isPrivate = false;
 
     /**
      * Ticket post attachments.
      *
-     * @var TicketAttachment[]
+     * @param TicketAttachment[]
      */
     private ArrayList<TicketAttachment> attachments = new ArrayList<TicketAttachment>();
 
     /**
      * User, the creator of this post.
      *
-     * @var User
+     * @param User
      */
     private User user = null;
 
@@ -233,16 +219,24 @@ public class TicketPost extends KEntity {
      * <p/>
      * Applicable if the post was created by staff user.
      *
-     * @var Staff
+     * @param Staff
      */
     private Staff staff = null;
 
     /**
      * Ticket that this post is connected to.
      *
-     * @var Ticket
+     * @param Ticket
      */
     private Ticket ticket = null;
+
+    @Override
+    public ArrayList<String> getIdArray() {
+        ArrayList<String> ids = new ArrayList<String>();
+        ids.add(Integer.toString(this.getTicketId()));
+        ids.add(Integer.toString(this.getId()));
+        return ids;
+    }
 
     public int getId() {
 
@@ -290,6 +284,7 @@ public class TicketPost extends KEntity {
 
     public TicketPost setTicketId(int ticketId) {
         this.ticketId = ticketId;
+        this.ticket = null;
         return this;
     }
 
@@ -308,7 +303,15 @@ public class TicketPost extends KEntity {
 
     public TicketPost setUserId(int userId) {
         this.userId = userId;
+        if (userId > 0) {
+            this.creator = CREATOR_USER;
+            this.staffId = 0;
+            this.staff = null;
+            return this;
+        }
+        this.user = null;
         return this;
+
     }
 
     public int getDateLine() {
@@ -360,8 +363,30 @@ public class TicketPost extends KEntity {
         return creator;
     }
 
+    public TicketPost setCreator(int creatorId, int type) {
+        switch (type) {
+            case CREATOR_USER:
+                this.setUserId(creatorId);
+                break;
+            case CREATOR_STAFF:
+                this.setStaffId(creatorId);
+                break;
+        }
+        return this;
+    }
+
     public TicketPost setCreator(int creator) {
         this.creator = creator;
+        return this;
+    }
+
+    public TicketPost setCreator(Staff creator) {
+        this.setStaff(creator);
+        return this;
+    }
+
+    public TicketPost setCreator(User creator) {
+        this.setUser(creator);
         return this;
     }
 
@@ -398,6 +423,13 @@ public class TicketPost extends KEntity {
 
     public TicketPost setStaffId(int staffId) {
         this.staffId = staffId;
+        if (staffId > 0) {
+            this.creator = CREATOR_STAFF;
+            this.user = null;
+            this.userId = 0;
+            return this;
+        }
+        this.staff = null;
         return this;
     }
 
@@ -446,12 +478,21 @@ public class TicketPost extends KEntity {
         return this;
     }
 
-    public User getUser() {
-        return user;
+    public User getUser() throws KayakoException {
+        return this.getUser(false);
     }
 
+    public User getUser(Boolean refresh) throws KayakoException {
+        if((refresh || this.user == null) && this.getUserId() > 0){
+            this.user = User.get(this.getUserId());
+        }
+        return user;
+    }
     public TicketPost setUser(User user) {
         this.user = user;
+        this.staff = null;
+        this.setUserId(user.getId());
+        this.staffId = 0;
         return this;
     }
 
@@ -461,18 +502,46 @@ public class TicketPost extends KEntity {
 
     public TicketPost setStaff(Staff staff) {
         this.staff = staff;
+        this.setStaffId(staff.getId());
+        this.userId = 0;
+        this.user = null;
         return this;
     }
 
-    public Ticket getTicket() {
+    public RawArrayElement get(int ticketId, int id) throws KayakoException {
+        ArrayList<String> params = new ArrayList<String>();
+        params.add(Integer.toString(ticketId));
+        params.add(Integer.toString(id));
+        return KEntity.get(controller, params);
+    }
+
+    public TicketPost update() throws KayakoException {
+        throw new KayakoException("This method is not available for this type of objects.");
+    }
+
+    public Boolean delete() throws KayakoException {
+        return super.delete(controller);
+    }
+
+    public Ticket getTicket() throws KayakoException {
+        return this.getTicket(false);
+    }
+
+    public Ticket getTicket(Boolean refresh) throws KayakoException {
+        if (this.ticket == null || refresh) {
+            if (this.getTicketId() == 0) {
+                return null;
+            }
+            this.ticket = new Ticket().populate(Ticket.get(Ticket.getController(), this.getTicketId()));
+        }
         return ticket;
     }
 
     public TicketPost setTicket(Ticket ticket) {
         this.ticket = ticket;
+        this.setTicketId(ticket.getId());
         return this;
     }
-
 
     public static RawArrayElement getAll(int ticketId) {
         ArrayList<String> searchParams = new ArrayList<String>();
@@ -481,6 +550,21 @@ public class TicketPost extends KEntity {
         return KEntity.getAll(controller, searchParams);
     }
 
+    public static TicketPost createNew(Ticket ticket, String contents, Staff creator) {
+        TicketPost ticketPost = new TicketPost();
+        ticketPost.setTicket(ticket);
+        ticketPost.setContents(contents);
+        ticketPost.setCreator(creator);
+        return ticketPost;
+    }
+
+    public static TicketPost createNew(Ticket ticket, String contents, User creator) {
+        TicketPost ticketPost = new TicketPost();
+        ticketPost.setTicket(ticket);
+        ticketPost.setContents(contents);
+        ticketPost.setCreator(creator);
+        return ticketPost;
+    }
 
     //this function will populate the data of the ticket post instance when supplied with RawArrayElement derived from the xml
     @Override
@@ -536,7 +620,6 @@ public class TicketPost extends KEntity {
         return this;
     }
 
-
     public HashMap<String, String> buildHashMap() {
         return buildHashMap(false);
     }
@@ -564,7 +647,6 @@ public class TicketPost extends KEntity {
     public String toString() {
         return super.toString();
     }
-
 
     //TODO a lot of functions like getAll etc, plus creating new attachments from here...
 }

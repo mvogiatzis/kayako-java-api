@@ -17,13 +17,11 @@ import java.util.HashMap;
  */
 public class UserOrganization extends KEntity {
 
-
     static final String TYPE_RESTRICTED = "restricted";
     static final String TYPE_SHARED = "shared";
 
     static protected String controller = "/Base/UserOrganization";
     static protected String objectXmlName = "userorganization";
-
 
     /**
      * User Organization identifier.
@@ -41,7 +39,6 @@ public class UserOrganization extends KEntity {
      */
     protected String name;
 
-
     /**
      * Type of user Organization.
      *
@@ -50,7 +47,6 @@ public class UserOrganization extends KEntity {
      * @see UserOrganization::TYPE constants.
      */
     protected String type = TYPE_RESTRICTED;
-
 
     /**
      * User organization address.
@@ -148,7 +144,6 @@ public class UserOrganization extends KEntity {
      */
     protected int SLAPlanExpiry;
 
-
     public String getName() {
 
         return name;
@@ -196,7 +191,6 @@ public class UserOrganization extends KEntity {
     public static void setController(String controller) {
         UserOrganization.controller = controller;
     }
-
 
     public String getType() {
         return type;
@@ -320,13 +314,16 @@ public class UserOrganization extends KEntity {
         return this;
     }
 
+    public static UserOrganization get(int id) throws KayakoException {
+        return new UserOrganization().populate(KEntity.get(controller, id));
+    }
+
     //this function will populate the data of the user Organization instance when supplied with RawArrayElement derived from the xml
     @Override
     public UserOrganization populate(RawArrayElement rawArrayElement) throws KayakoException {
         if (!rawArrayElement.getElementName().equals(objectXmlName)) {
             throw new KayakoException();
         }
-
 
         ArrayList<RawArrayElement> components = rawArrayElement.getComponents();
         for (RawArrayElement component : components) {

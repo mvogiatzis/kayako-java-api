@@ -111,7 +111,7 @@ public class Staff extends KEntity {
      */
     protected Boolean DST = false;
 
-    protected String password;
+    protected String password = "";
 
     private StaffGroup staffGroup = null;
 
@@ -170,6 +170,7 @@ public class Staff extends KEntity {
 
     public Staff setStaffGroupId(int staffGroupId) {
         this.staffGroupId = staffGroupId;
+        this.staffGroup = null;
         return this;
     }
 
@@ -267,7 +268,11 @@ public class Staff extends KEntity {
     }
 
     public StaffGroup getStaffGroup() throws KayakoException {
-        if (this.staffGroup == null) {
+        return this.getStaffGroup(false);
+    }
+
+    public StaffGroup getStaffGroup(Boolean refresh) throws KayakoException {
+        if ((this.staffGroup == null || refresh) && this.getStaffGroupId() > 0) {
             this.staffGroup = (StaffGroup) StaffGroup.get(this.getStaffGroupId());
         }
         return this.staffGroup;
@@ -313,6 +318,8 @@ public class Staff extends KEntity {
             }
             if (elementName.equals("id")) {
                 this.setId(Helper.parseInt(component.getContent()));
+            } else if (elementName.equals("staffgroupid")) {
+                this.setStaffGroupId(Helper.parseInt(component.getContent()));
             } else if (elementName.equals("firstname")) {
                 this.setFirstName(component.getContent());
             } else if (elementName.equals("lastName")) {
@@ -335,6 +342,8 @@ public class Staff extends KEntity {
                 this.setDST(Helper.parseInt(component.getContent()) == 1);
             } else if (elementName.equals("signature")) {
                 this.setSignature(component.getContent());
+            } else if (elementName.equals("timezone")) {
+                this.setTimeZone(component.getContent());
             }
         }
         return this;
@@ -346,10 +355,15 @@ public class Staff extends KEntity {
         staffHashMap.put("lastname", this.getLastName());
         staffHashMap.put("fullname", this.getFullName());
         staffHashMap.put("username", this.getUserName());
+        if (this.getPassword().length() > 0) {
+            staffHashMap.put("password", this.getPassword());
+        }
         staffHashMap.put("email", this.getEmail());
         staffHashMap.put("designation", this.getDesignation());
         staffHashMap.put("mobilenumber", this.getMobileNumber());
-        staffHashMap.put("staffsignature", this.getSignature());
+        if (this.getSignature().length() > 0) {
+            staffHashMap.put("staffsignature", this.getSignature());
+        }
         staffHashMap.put("greeting", this.getGreeting());
         staffHashMap.put("staffgroupid", Integer.toString(this.getStaffGroupId()));
         staffHashMap.put("isenabled", this.isEnabled() ? "1" : "0");
@@ -357,6 +371,8 @@ public class Staff extends KEntity {
         return staffHashMap;
     }
 
-    //TODO create ticket from here
+    public Ticket createTicket(Department department, String content, String subject) {
+        return new Ticket(department, this, content, subject);
+    }
 
 }

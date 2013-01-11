@@ -53,7 +53,6 @@ public class User extends KEntity {
      */
     protected int userGroupId = 0;
 
-
     /**
      * User role.
      *
@@ -63,7 +62,6 @@ public class User extends KEntity {
      */
     protected String userRole = ROLE_USER;
     protected int userOrganizationId = 0;
-
 
     /**
      * User salutation.
@@ -112,7 +110,6 @@ public class User extends KEntity {
      * @var bool
      */
     protected Boolean DST = false;
-
 
     private UserGroup userGroup = null;
 
@@ -163,19 +160,17 @@ public class User extends KEntity {
 
     public User setUserGroupId(int userGroupId) {
         this.userGroupId = userGroupId;
+        this.userGroup = null;
         return this;
     }
-
 
     public String getFullName() {
         return fullName;
     }
 
-
     public String getEmail() {
         return emails.get(0);
     }
-
 
     public User setEmail(String email) {
         this.emails.add(email);
@@ -191,7 +186,6 @@ public class User extends KEntity {
         return phone;
     }
 
-
     public String getTimeZone() {
         return timeZone;
     }
@@ -200,9 +194,12 @@ public class User extends KEntity {
         return DST;
     }
 
-
     public UserGroup getUserGroup() throws KayakoException {
-        if (this.userGroup == null) {
+        return this.getUserGroup(false);
+    }
+
+    public UserGroup getUserGroup(Boolean refresh) throws KayakoException {
+        if ((this.userGroup == null || refresh) && this.getUserGroupId() > 0) {
             this.userGroup = (UserGroup) UserGroup.get(this.getUserGroupId());
         }
         return this.userGroup;
@@ -265,6 +262,11 @@ public class User extends KEntity {
         return this;
     }
 
+    public User addEmail(String email) {
+        this.getEmails().add(email);
+        return this;
+    }
+
     public int getUserExpiry() {
         return userExpiry;
     }
@@ -280,6 +282,7 @@ public class User extends KEntity {
 
     public User setUserOrganizationId(int userOrganizationId) {
         this.userOrganizationId = userOrganizationId;
+        this.userOrganization = null;
         return this;
     }
 
@@ -346,16 +349,24 @@ public class User extends KEntity {
         return this;
     }
 
-    public UserOrganization getUserOrganization() {
-        return userOrganization;
+    public UserOrganization getUserOrganization() throws KayakoException {
+        return this.getUserOrganization(false);
+    }
+
+    public UserOrganization getUserOrganization(Boolean refresh) throws KayakoException {
+        if ((this.userOrganization == null || refresh) && this.getUserOrganizationId() > 0) {
+            this.userOrganization = (UserOrganization) UserOrganization.get(this.getUserOrganizationId());
+        }
+        return this.userOrganization;
     }
 
     public User setUserOrganization(UserOrganization userOrganization) {
+        this.setUserOrganizationId(userOrganization.getId());
         this.userOrganization = userOrganization;
         return this;
     }
 
-    public static RawArrayElement getAll(String controller) throws KayakoException {
+    public static RawArrayElement getAll() throws KayakoException {
         ArrayList<String> searchParams = new ArrayList<String>();
         searchParams.add("Filter");
         return KEntity.getAll(controller, searchParams);
@@ -373,6 +384,32 @@ public class User extends KEntity {
         return KEntity.getAll(controller, searchParams);
     }
 
+    public static ArrayList<User> getAllUsers() throws KayakoException {
+        return User.refineToArray(User.getAll());
+    }
+
+    public static ArrayList<User> getAllUsers(int startingUserId) throws KayakoException {
+        return User.getAllUsers(startingUserId, DEFAULT_MAX_USERS);
+    }
+
+    private static ArrayList<User> refineToArray(RawArrayElement rawArrayElement) throws KayakoException {
+        ArrayList<User> users = new ArrayList<User>();
+        for (RawArrayElement rawArrayElementUser : rawArrayElement.getComponents()) {
+            users.add(new User().populate(rawArrayElementUser));
+        }
+        return users;
+    }
+
+    public static ArrayList<User> getAllUsers(int startingUserId, int maxItems) throws KayakoException {
+        return User.refineToArray(User.getAll(startingUserId, maxItems));
+
+    }
+
+    public static ArrayList<User> search(String query) throws KayakoException {
+        HashMap<String, String> data = new HashMap<String, String>();
+        data.put("query", query);
+        return refineToArray(KEntity.getRESTClient().post("/Base/UserSearch", new ArrayList<String>(), data).filterByComponentName(objectXmlName));
+    }
 
     //this function will populate the data of the user instance when supplied with RawArrayElement derived from the xml
     @Override
@@ -426,6 +463,9 @@ public class User extends KEntity {
         return this;
     }
 
+    public static User get(int id) throws KayakoException {
+        return new User().populate(KEntity.get(controller, id));
+    }
 
     public HashMap<String, String> buildHashMap() {
         return buildHashMap(false);
@@ -455,7 +495,8 @@ public class User extends KEntity {
         return userHashMap;
     }
 
-
-    //TODO create ticket from here
+    public Ticket createTicket(Department department, String content, String subject) {
+        return new Ticket(department, this, content, subject);
+    }
 
 }

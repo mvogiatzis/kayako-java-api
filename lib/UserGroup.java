@@ -17,7 +17,6 @@ import java.util.HashMap;
  */
 public class UserGroup extends KEntity {
 
-
     final static String TYPE_REGISTERED = "registered";
     final static String TYPE_GUEST = "guest";
 
@@ -37,7 +36,6 @@ public class UserGroup extends KEntity {
         this.setType(type);
     }
 
-
     /**
      * User Group identifier.
      *
@@ -53,7 +51,6 @@ public class UserGroup extends KEntity {
      * @var string
      */
     protected String title;
-
 
     /**
      * Type of user Group.
@@ -71,7 +68,6 @@ public class UserGroup extends KEntity {
      * @var bool
      */
     protected Boolean master;
-
 
     public String getTitle() {
 
@@ -118,7 +114,6 @@ public class UserGroup extends KEntity {
     public static void setController(String controller) {
         UserGroup.controller = controller;
     }
-
 
     public String getType() {
         return type;
@@ -173,5 +168,7 @@ public class UserGroup extends KEntity {
         return userGroupHashMap;
     }
 
-    //TODO - create new user
+    public User createUser(String fullName, String email, String password) {
+        return new User(fullName, email, this, password);
+    }
 }

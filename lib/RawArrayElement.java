@@ -116,6 +116,11 @@ public class RawArrayElement {
         return this;
     }
 
+    public RawArrayElement filterByComponentName(String componentName) throws KayakoException {
+        this.setComponents(this.getComponents(componentName));
+        return this;
+    }
+
     public String get(String key) {
         return this.getAttribute(key);
     }

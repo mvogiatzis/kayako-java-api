@@ -146,5 +146,7 @@ public class StaffGroup extends KEntity {
         return staffGroupHashMap;
     }
 
-    //TODO - create new staff
+    public Staff createStaff(String firstname, String lastName, String userName, String email, String password) {
+        return new Staff(firstname, lastName, userName, email, this, password);
+    }
 }

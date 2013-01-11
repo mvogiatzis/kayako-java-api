@@ -499,6 +499,16 @@ public class Ticket extends KEntityCustom {
         this.setCreator(creator);
     }
 
+    public Ticket(Department department, Staff creator, String contents, String subject) {
+        this(department, contents, subject);
+        this.setCreator(creator);
+    }
+
+    public Ticket(Department department, User creator, String contents, String subject) {
+        this(department, contents, subject);
+        this.setCreator(creator);
+    }
+
     public Ticket(Department department, String creatorFullName, String creatorEmail, String contents, String subject) {
         this(department, contents, subject);
         this.setCreatorAuto(creatorFullName, creatorEmail);

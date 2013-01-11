@@ -334,7 +334,7 @@ public class Department extends KEntity {
     }
 
     /**
-     * Creates new subdepartment in this department. Module of new department will be the same as parent department's module.
+     * Creates new subDepartment in this department. Module of new department will be the same as parent department's module.
      * WARNING: Data is not sent to Kayako unless you explicitly call create() on this method's result.
      *
      * @param title Title of new department.
