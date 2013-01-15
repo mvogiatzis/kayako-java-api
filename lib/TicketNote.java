@@ -201,6 +201,13 @@ public class TicketNote extends KEntity {
      */
     private UserOrganization userOrganization = null;
 
+    public TicketNote() {
+    }
+
+    public TicketNote(Ticket ticket, Staff creatorStaff, String contents) {
+        this.setTicket(ticket).setCreatorStaff(creatorStaff).setContents(contents);
+    }
+
     public int getId() {
         return id;
     }
@@ -241,16 +248,26 @@ public class TicketNote extends KEntity {
     }
 
     public int getTicketId() {
-        return ticketId;
+        if (this.getType().equals(TYPE_TICKET)) {
+            return ticketId;
+        } else {
+            return 0;
+        }
     }
 
     public TicketNote setTicketId(int ticketId) {
         this.ticketId = ticketId;
+        this.ticket = null;
+        if (ticketId > 0) {
+            this.type = TYPE_TICKET;
+        }
         return this;
     }
 
-
     public int getUserId() {
+        if (!this.getType().equals(TYPE_USER)) {
+            return 0;
+        }
         return userId;
     }
 
@@ -258,7 +275,6 @@ public class TicketNote extends KEntity {
         this.userId = userId;
         return this;
     }
-
 
     public String getContents() {
         return contents;
@@ -269,31 +285,58 @@ public class TicketNote extends KEntity {
         return this;
     }
 
+    public User getUser() throws KayakoException {
+        return this.getUser(false);
+    }
 
-    public User getUser() {
+    public User getUser(Boolean refresh) throws KayakoException {
+        if (!this.getType().equals(TYPE_USER)) {
+            return null;
+        }
+        if ((this.user == null || refresh) && this.getUserId() > 0) {
+            this.user = User.get(this.getUserId());
+        }
         return user;
     }
 
     public TicketNote setUser(User user) {
         this.user = user;
+        this.userId = user.getId();
+        this.type = TYPE_USER;
         return this;
     }
 
-    public Ticket getTicket() {
+    public Ticket getTicket() throws KayakoException {
+        return this.getTicket(false);
+    }
+
+    public Ticket getTicket(Boolean refresh) throws KayakoException {
+        if (!this.getType().equals(TYPE_TICKET)) {
+            return null;
+        }
+        if ((this.ticket == null || refresh) && this.getTicketId() > 0) {
+            this.ticket = Ticket.get(this.getTicketId());
+        }
         return ticket;
     }
 
     public TicketNote setTicket(Ticket ticket) {
         this.ticket = ticket;
+        this.ticketId = ticket.getId();
+        this.type = TYPE_TICKET;
         return this;
     }
 
     public int getUserOrganizationId() {
+        if (!this.getType().equals(TYPE_USER_ORGANIZATION)) {
+            return 0;
+        }
         return userOrganizationId;
     }
 
     public TicketNote setUserOrganizationId(int userOrganizationId) {
         this.userOrganizationId = userOrganizationId;
+        this.userOrganization = null;
         return this;
     }
 
@@ -339,6 +382,7 @@ public class TicketNote extends KEntity {
 
     public TicketNote setForStaffId(int forStaffId) {
         this.forStaffId = forStaffId;
+        this.forStaff = null;
         return this;
     }
 
@@ -363,11 +407,39 @@ public class TicketNote extends KEntity {
 
     public TicketNote setCreatorStaff(Staff creatorStaff) {
         this.creatorStaff = creatorStaff;
+        this.creatorStaffId = creatorStaff.getId();
+        this.setCreatorStaffName(creatorStaff.getFullName());
         return this;
     }
 
+    public TicketNote setCreator(Staff staff) {
+        return this.setCreatorStaff(staff);
+    }
+
+    public TicketNote setCreator(int id) {
+        return this.setCreatorStaffId(id);
+    }
+
+    public TicketNote setCreator(String creatorString) {
+        this.creatorStaff = null;
+        this.creatorStaffId = 0;
+        this.creatorStaffName = creatorString;
+        return this;
+    }
+
+    /**
+     * Returns the staff who this note is for.
+     * <p/>
+     * Result is cached.
+     *
+     * @return Staff
+     */
     public Staff getForStaff() throws KayakoException {
-        if (this.forStaff == null) {
+        return this.getForStaff(false);
+    }
+
+    public Staff getForStaff(Boolean refresh) throws KayakoException {
+        if (this.forStaff == null || refresh) {
             this.forStaff = (Staff) Staff.get(this.getForStaffId());
         }
         return forStaff;
@@ -375,24 +447,82 @@ public class TicketNote extends KEntity {
 
     public TicketNote setForStaff(Staff forStaff) {
         this.forStaff = forStaff;
+        this.forStaffId = forStaff.getId();
         return this;
     }
 
-    public UserOrganization getUserOrganization() {
+    public UserOrganization getUserOrganization() throws KayakoException {
+        return this.getUserOrganization(false);
+    }
+
+    public UserOrganization getUserOrganization(Boolean refresh) throws KayakoException {
+        if ((userOrganization == null || refresh) && userOrganizationId > 0) {
+            userOrganization = UserOrganization.get(this.userOrganizationId);
+        }
         return userOrganization;
     }
 
     public TicketNote setUserOrganization(UserOrganization userOrganization) {
         this.userOrganization = userOrganization;
+        this.userOrganizationId = userOrganization.getId();
         return this;
     }
-
 
     public static RawArrayElement getAll(int ticketId) {
         ArrayList<String> searchParams = new ArrayList<String>();
         searchParams.add("ListAll");
         searchParams.add(Integer.toString(ticketId));
         return KEntity.getAll(controller, searchParams);
+    }
+
+    private static ArrayList<TicketNote> refineToArray(RawArrayElement rawArrayElement) throws KayakoException {
+        ArrayList<TicketNote> TicketNotes = new ArrayList<TicketNote>();
+        for (RawArrayElement rawArrayElementTicketNote : rawArrayElement.getComponents()) {
+            TicketNotes.add(new TicketNote().populate(rawArrayElementTicketNote));
+        }
+        return TicketNotes;
+    }
+
+    public static ArrayList<TicketNote> getAllNotes(int ticketId) throws KayakoException {
+        return refineToArray(getAll(ticketId));
+    }
+
+    public static TicketNote get(int ticketId, int id) throws KayakoException {
+        ArrayList<String> arrayList = new ArrayList<String>();
+        arrayList.add(Integer.toString(ticketId));
+        arrayList.add(Integer.toString(id));
+        return new TicketNote().populate(KEntity.get(controller, arrayList));
+    }
+
+    @Override
+    public KEntity update(String controller) throws KayakoException {
+        throw new KayakoException("This method is not available on this type of objects.");
+    }
+
+    public TicketNote create() throws KayakoException {
+        if (!this.getType().equals(TYPE_TICKET)) {
+            throw new KayakoException("Ticket note creation is for type ticket only.");
+        }
+        return (TicketNote) super.create(controller);
+    }
+
+    public Boolean delete() throws KayakoException {
+        return KEntity.getRESTClient().delete(controller, this.getIdArray()) != null;
+    }
+
+    public ArrayList<String> getIdArray() {
+        ArrayList<String> arrayList = new ArrayList<String>();
+
+        if (this.getType().equals(TYPE_TICKET)) {
+            arrayList.add(Integer.toString(this.getTicketId()));
+        } else if (this.getType().equals(TYPE_USER)) {
+            arrayList.add(Integer.toString(this.getUserId()));
+        } else if (this.getType().equals(TYPE_USER_ORGANIZATION)) {
+            arrayList.add(Integer.toString(this.getUserOrganizationId()));
+        }
+
+        arrayList.add(Integer.toString(this.getId()));
+        return arrayList;
     }
 
     //this function will populate the data of the ticket note instance when supplied with RawArrayElement derived from the xml
@@ -418,7 +548,6 @@ public class TicketNote extends KEntity {
         return this;
     }
 
-
     public HashMap<String, String> buildHashMap() {
         return buildHashMap(false);
     }
@@ -442,6 +571,4 @@ public class TicketNote extends KEntity {
         return super.toString();
     }
 
-
-    //TODO a lot of functions like getAll etc, plus creating new attachments from here...
 }

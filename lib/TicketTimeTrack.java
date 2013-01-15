@@ -18,40 +18,39 @@ import java.util.HashMap;
 public class TicketTimeTrack extends KEntity {
 
     /**
-     * Color of timetrack - yellow.
+     * Color of time track - yellow.
      *
      * @var int
      */
     static final int COLOR_YELLOW = 1;
 
     /**
-     * Color of timetrack - purple.
+     * Color of time track - purple.
      *
      * @var int
      */
     static final int COLOR_PURPLE = 2;
 
     /**
-     * Color of timetrack - blue.
+     * Color of time track - blue.
      *
      * @var int
      */
     static final int COLOR_BLUE = 3;
 
     /**
-     * Color of timetrack - green.
+     * Color of time track - green.
      *
      * @var int
      */
     static final int COLOR_GREEN = 4;
 
     /**
-     * Color of timetrack - red.
+     * Color of time track - red.
      *
      * @var int
      */
     static final int COLOR_RED = 5;
-
 
     static protected String controller = "/Tickets/TicketTimeTrack";
     static protected String objectXmlName = "timetrack";
@@ -174,14 +173,17 @@ public class TicketTimeTrack extends KEntity {
      */
     private Staff creatorStaff = null;
 
-
     public TicketTimeTrack() {
     }
 
     public TicketTimeTrack(Ticket ticket, String contents, Staff staff, int timeWorked, int timeBillable) {
         this.setTicketId(ticket.getId()).setContents(contents).setCreatorStaffId(staff.getId());
-        this.setTimeWorked(timeWorked).setTimeBillable(timeBillable);
+        this.setTimeWorked(timeWorked).setTimeBillable(timeBillable).setWorkerStaff(staff);
+    }
 
+    public TicketTimeTrack(Ticket ticket, String contents, Staff staff, String timeWorked, String timeBillable) {
+        this.setTicketId(ticket.getId()).setContents(contents).setCreatorStaffId(staff.getId());
+        this.setTimeWorked(timeWorked).setTimeBillable(timeBillable).setWorkerStaff(staff);
     }
 
     public int getId() {
@@ -229,19 +231,29 @@ public class TicketTimeTrack extends KEntity {
 
     public TicketTimeTrack setTicketId(int ticketId) {
         this.ticketId = ticketId;
+        this.ticket = null;
         return this;
     }
 
+    public Ticket getTicket() throws KayakoException {
+        return this.getTicket(false);
+    }
 
-    public Ticket getTicket() {
+    public Ticket getTicket(Boolean refresh) throws KayakoException {
+        if (this.ticket == null || refresh) {
+            if (this.getTicketId() == 0) {
+                return null;
+            }
+            this.ticket = new Ticket().populate(Ticket.get(Ticket.getController(), this.getTicketId()));
+        }
         return ticket;
     }
 
     public TicketTimeTrack setTicket(Ticket ticket) {
         this.ticket = ticket;
+        this.ticketId = ticket.getId();
         return this;
     }
-
 
     public int getCreatorStaffId() {
         return creatorStaffId;
@@ -261,7 +273,6 @@ public class TicketTimeTrack extends KEntity {
         return this;
     }
 
-
     public Staff getCreatorStaff() throws KayakoException {
         if (this.getCreatorStaffId() == 0) {
             return null;
@@ -274,6 +285,8 @@ public class TicketTimeTrack extends KEntity {
 
     public TicketTimeTrack setCreatorStaff(Staff creatorStaff) {
         this.creatorStaff = creatorStaff;
+        this.setCreatorStaffId(creatorStaff.getId());
+        this.setCreatorStaffName(creatorStaff.getFullName());
         return this;
     }
 
@@ -286,12 +299,28 @@ public class TicketTimeTrack extends KEntity {
         return this;
     }
 
+    public TicketTimeTrack setTimeWorked(String timeWorked) {
+        this.setTimeWorked(stringToSeconds(timeWorked));
+        return this;
+    }
+
+    //input String as "12:10" (hh:mm)
+    private static int stringToSeconds(String timeWorked) {
+        String[] timeArray = timeWorked.split(":");
+        return (Helper.parseInt(timeArray[0]) * 60 * 60) + (Helper.parseInt(timeArray[1]) * 60);
+    }
+
     public int getTimeBillable() {
         return timeBillable;
     }
 
     public TicketTimeTrack setTimeBillable(int timeBillable) {
         this.timeBillable = timeBillable;
+        return this;
+    }
+
+    public TicketTimeTrack setTimeBillable(String time) {
+        this.setTimeBillable(stringToSeconds(time));
         return this;
     }
 
@@ -319,6 +348,7 @@ public class TicketTimeTrack extends KEntity {
 
     public TicketTimeTrack setWorkerStaffId(int workerStaffId) {
         this.workerStaffId = workerStaffId;
+        this.workerStaff = null;
         return this;
     }
 
@@ -349,12 +379,21 @@ public class TicketTimeTrack extends KEntity {
         return this;
     }
 
-    public Staff getWorkerStaff() {
+    public Staff getWorkerStaff() throws KayakoException {
+        return this.getWorkerStaff(false);
+    }
+
+    public Staff getWorkerStaff(Boolean refresh) throws KayakoException {
+        if (this.workerStaff == null || refresh) {
+            this.workerStaff = Staff.get(this.getWorkerStaffId());
+            this.setWorkerStaffName(this.workerStaff.getFullName());
+        }
         return workerStaff;
     }
 
     public TicketTimeTrack setWorkerStaff(Staff workerStaff) {
         this.workerStaff = workerStaff;
+        this.setWorkerStaffId(workerStaff.getId());
         return this;
     }
 
@@ -365,7 +404,35 @@ public class TicketTimeTrack extends KEntity {
         return KEntity.getAll(controller, searchParams);
     }
 
-    //this function will populate the data of the ticket timetrack instance when supplied with RawArrayElement derived from the xml
+    private static ArrayList<TicketTimeTrack> refineToArray(RawArrayElement rawArrayElement) throws KayakoException {
+        ArrayList<TicketTimeTrack> TicketTimeTracks = new ArrayList<TicketTimeTrack>();
+        for (RawArrayElement rawArrayElementTicketTimeTrack : rawArrayElement.getComponents()) {
+            TicketTimeTracks.add(new TicketTimeTrack().populate(rawArrayElementTicketTimeTrack));
+        }
+        return TicketTimeTracks;
+    }
+
+    public static ArrayList<TicketTimeTrack> getAllTimeTracks(int ticketId) throws KayakoException {
+        return refineToArray(getAll(ticketId));
+    }
+
+    public static TicketTimeTrack get(int ticketId, int id) throws KayakoException {
+        ArrayList<String> arrayList = new ArrayList<String>();
+        arrayList.add(Integer.toString(ticketId));
+        arrayList.add(Integer.toString(id));
+        return new TicketTimeTrack().populate(KEntity.get(controller, arrayList));
+    }
+
+    @Override
+    public KEntity update(String controller) throws KayakoException {
+        throw new KayakoException("This method is not available on this type of objects.");
+    }
+
+    public TicketTimeTrack create() throws KayakoException {
+        return (TicketTimeTrack) super.create(controller);
+    }
+
+    //this function will populate the data of the ticket time track instance when supplied with RawArrayElement derived from the xml
     @Override
     public TicketTimeTrack populate(RawArrayElement rawArrayElement) throws KayakoException {
         if (!rawArrayElement.getElementName().equals(objectXmlName)) {
@@ -381,7 +448,6 @@ public class TicketTimeTrack extends KEntity {
         return this;
     }
 
-
     public HashMap<String, String> buildHashMap() {
         return buildHashMap(false);
     }
@@ -389,6 +455,7 @@ public class TicketTimeTrack extends KEntity {
     public HashMap<String, String> buildHashMap(Boolean newTicketTimeTrack) {
         HashMap<String, String> ticketTimeTrackHashMap = new HashMap<String, String>();
         ticketTimeTrackHashMap.put("ticketid", Integer.toString(this.getTicketId()));
+        ticketTimeTrackHashMap.put("staffid", Integer.toString(this.getCreatorStaffId()));
         ticketTimeTrackHashMap.put("contents", this.getContents());
         ticketTimeTrackHashMap.put("worktimeline", Integer.toString(this.getWorkDate()));
         ticketTimeTrackHashMap.put("billtimeline", Integer.toString(this.getBillDate()));
@@ -405,6 +472,5 @@ public class TicketTimeTrack extends KEntity {
     public String toString() {
         return super.toString();
     }
-
 
 }

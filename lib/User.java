@@ -495,7 +495,7 @@ public class User extends KEntity {
         return userHashMap;
     }
 
-    public Ticket createTicket(Department department, String content, String subject) {
+    public Ticket createTicket(Department department, String content, String subject) throws KayakoException {
         return new Ticket(department, this, content, subject);
     }
 

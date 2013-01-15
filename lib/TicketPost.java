@@ -1,5 +1,6 @@
 package lib;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -230,6 +231,10 @@ public class TicketPost extends KEntity {
      */
     private Ticket ticket = null;
 
+    TicketPost() {
+
+    }
+
     @Override
     public ArrayList<String> getIdArray() {
         ArrayList<String> ids = new ArrayList<String>();
@@ -360,6 +365,12 @@ public class TicketPost extends KEntity {
     }
 
     public int getCreator() {
+        switch (this.creator) {
+            case CREATOR_USER:
+                return this.userId;
+            case CREATOR_STAFF:
+                return this.staffId;
+        }
         return creator;
     }
 
@@ -469,7 +480,18 @@ public class TicketPost extends KEntity {
         return this;
     }
 
-    public ArrayList<TicketAttachment> getAttachments() {
+    public ArrayList<TicketAttachment> getAttachments() throws KayakoException {
+        return this.getAttachments(false);
+    }
+
+    public ArrayList<TicketAttachment> getAttachments(Boolean refresh) throws KayakoException {
+        if ((this.attachments.size() == 0 || refresh) && this.hasAttachment) {
+            for (TicketAttachment attachment : TicketAttachment.getAllAttachments(this.getTicketId())) {
+                if (attachment.getTicketPostId() == this.getId()) {
+                    attachments.add(attachment);
+                }
+            }
+        }
         return attachments;
     }
 
@@ -483,36 +505,45 @@ public class TicketPost extends KEntity {
     }
 
     public User getUser(Boolean refresh) throws KayakoException {
-        if((refresh || this.user == null) && this.getUserId() > 0){
+        if ((refresh || this.user == null) && this.getUserId() > 0) {
             this.user = User.get(this.getUserId());
         }
         return user;
     }
+
     public TicketPost setUser(User user) {
         this.user = user;
         this.staff = null;
-        this.setUserId(user.getId());
+        this.userId = user.getId();
         this.staffId = 0;
+        this.creator = CREATOR_USER;
         return this;
     }
 
-    public Staff getStaff() {
+    public Staff getStaff() throws KayakoException {
+        return this.getStaff(false);
+    }
+
+    public Staff getStaff(Boolean refresh) throws KayakoException {
+        if ((this.staff == null || refresh) && this.staffId > 0) {
+            staff = Staff.get(this.staffId);
+        }
         return staff;
     }
 
     public TicketPost setStaff(Staff staff) {
         this.staff = staff;
-        this.setStaffId(staff.getId());
+        this.staffId = staff.getId();
         this.userId = 0;
         this.user = null;
         return this;
     }
 
-    public RawArrayElement get(int ticketId, int id) throws KayakoException {
+    public static TicketPost get(int ticketId, int id) throws KayakoException {
         ArrayList<String> params = new ArrayList<String>();
         params.add(Integer.toString(ticketId));
         params.add(Integer.toString(id));
-        return KEntity.get(controller, params);
+        return new TicketPost().populate(KEntity.get(controller, params));
     }
 
     public TicketPost update() throws KayakoException {
@@ -520,7 +551,7 @@ public class TicketPost extends KEntity {
     }
 
     public Boolean delete() throws KayakoException {
-        return super.delete(controller);
+        return KEntity.getRESTClient().delete(controller, this.getIdArray()) != null;
     }
 
     public Ticket getTicket() throws KayakoException {
@@ -539,7 +570,7 @@ public class TicketPost extends KEntity {
 
     public TicketPost setTicket(Ticket ticket) {
         this.ticket = ticket;
-        this.setTicketId(ticket.getId());
+        this.ticketId = ticket.getId();
         return this;
     }
 
@@ -548,6 +579,18 @@ public class TicketPost extends KEntity {
         searchParams.add("ListAll");
         searchParams.add(Integer.toString(ticketId));
         return KEntity.getAll(controller, searchParams);
+    }
+
+    private static ArrayList<TicketPost> refineToArray(RawArrayElement rawArrayElement) throws KayakoException {
+        ArrayList<TicketPost> TicketPosts = new ArrayList<TicketPost>();
+        for (RawArrayElement rawArrayElementTicketPost : rawArrayElement.getComponents()) {
+            TicketPosts.add(new TicketPost().populate(rawArrayElementTicketPost));
+        }
+        return TicketPosts;
+    }
+
+    public static ArrayList<TicketPost> getAllPosts(int ticketId) throws KayakoException {
+        return refineToArray(getAll(ticketId));
     }
 
     public static TicketPost createNew(Ticket ticket, String contents, Staff creator) {
@@ -648,5 +691,11 @@ public class TicketPost extends KEntity {
         return super.toString();
     }
 
-    //TODO a lot of functions like getAll etc, plus creating new attachments from here...
+    public TicketAttachment createTicketAttachment(byte[] contents, String fileName) throws KayakoException {
+        return TicketAttachment.createTicketAttachment(this, contents, fileName);
+    }
+
+    public TicketAttachment createTicketAttachment(File file) throws KayakoException {
+        return TicketAttachment.createTicketAttachment(this, file);
+    }
 }

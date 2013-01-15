@@ -357,9 +357,9 @@ public class UserOrganization extends KEntity {
                 this.setDateline(Helper.parseInt(component.getContent()));
             } else if (elementName.equals("lastupdate")) {
                 this.setLastUpdate(Helper.parseInt(component.getContent()));
-            } else if (elementName.equals("SLAplanid")) {
+            } else if (elementName.equals("slaplanid")) {
                 this.setSLAPlanID(Helper.parseInt(component.getContent()));
-            } else if (elementName.equals("SLAplanexpiry")) {
+            } else if (elementName.equals("slaplanexpiry")) {
                 this.setSLAPlanExpiry(Helper.parseInt(component.getContent()));
             }
         }
@@ -378,8 +378,8 @@ public class UserOrganization extends KEntity {
         userOrganizationHashMap.put("phone", this.getPhone());
         userOrganizationHashMap.put("fax", this.getFax());
         userOrganizationHashMap.put("website", this.getWebsite());
-        userOrganizationHashMap.put("SLAplanid", Integer.toString(this.getSLAPlanID()));
-        userOrganizationHashMap.put("SLAplanexpiry", Integer.toString(this.getSLAPlanExpiry()));
+        userOrganizationHashMap.put("slaplanid", Integer.toString(this.getSLAPlanID()));
+        userOrganizationHashMap.put("slaplanexpiry", Integer.toString(this.getSLAPlanExpiry()));
 
         return userOrganizationHashMap;
     }

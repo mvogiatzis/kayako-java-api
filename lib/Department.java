@@ -329,7 +329,7 @@ public class Department extends KEntity {
         return this;
     }
 
-    public Ticket createAutoTicket(String creatorFullName, String email, String contents, String subject) {
+    public Ticket createAutoTicket(String creatorFullName, String email, String contents, String subject) throws KayakoException {
         return new Ticket(this, creatorFullName, email, contents, subject);
     }
 

@@ -1,6 +1,5 @@
 package lib;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -41,67 +40,67 @@ public class Ticket extends KEntityCustom {
      *
      * @var string
      */
-    static final String SEARCH_TICKET_ID = "ticketid";
+    public static final String SEARCH_TICKET_ID = "ticketid";
     /**
      * Flag for searching using query - search the Ticket Post Contents.
      *
      * @var string
      */
-    static final String SEARCH_CONTENTS = "contents";
+    public static final String SEARCH_CONTENTS = "contents";
     /**
      * Flag for searching using query - search the Full Name & Email.
      *
      * @var string
      */
-    static final String SEARCH_AUTHOR = "author";
+    public static final String SEARCH_AUTHOR = "author";
     /**
      * Flag for searching using query - search the Email Address (Ticket & Posts).
      *
      * @var string
      */
-    static final String SEARCH_EMAIL = "email";
+    public static final String SEARCH_EMAIL = "email";
     /**
      * Flag for searching using query - search the Email Address (only Tickets).
      *
      * @var string
      */
-    static final String SEARCH_CREATOR_EMAIL = "creatoremail";
+    public static final String SEARCH_CREATOR_EMAIL = "creatoremail";
     /**
      * Flag for searching using query - search the Full Name.
      *
      * @var string
      */
-    static final String SEARCH_FULL_NAME = "fullname";
+    public static final String SEARCH_FULL_NAME = "fullname";
     /**
      * Flag for searching using query - search the Ticket Notes.
      *
      * @var string
      */
-    static final String SEARCH_NOTES = "notes";
+    public static final String SEARCH_NOTES = "notes";
     /**
      * Flag for searching using query - search the User Group.
      *
      * @var string
      */
-    static final String SEARCH_USER_GROUP = "usergroup";
+    public static final String SEARCH_USER_GROUP = "usergroup";
     /**
      * Flag for searching using query - search the User Organization.
      *
      * @var string
      */
-    static final String SEARCH_USER_ORGANIZATION = "userorganization";
+    public static final String SEARCH_USER_ORGANIZATION = "userorganization";
     /**
      * Flag for searching using query - search the User (Full Name, Email).
      *
      * @var string
      */
-    static final String SEARCH_USER = "user";
+    public static final String SEARCH_USER = "user";
     /**
      * Flag for searching using query - search the Ticket Tags.
      *
      * @var string
      */
-    static final String SEARCH_TAGS = "tags";
+    public static final String SEARCH_TAGS = "tags";
     static protected String controller = "/Tickets/Ticket";
     static protected String objectXmlName = "ticket";
     //Custom Field Croup Class = TicketCustomFieldGroup is used extensively
@@ -487,7 +486,7 @@ public class Ticket extends KEntityCustom {
     public Ticket() {
     }
 
-    public Ticket(Department department, String contents, String subject) {
+    private Ticket(Department department, String contents, String subject) {
         this.setDepartment(department);
         this.setContents(contents).setSubject(subject);
         this.setTypeId(getDefaultTypeId()).setPriorityId(getDefaultPriorityId()).setStatusId(getDefaultStatusId());
@@ -499,22 +498,34 @@ public class Ticket extends KEntityCustom {
         this.setCreator(creator);
     }
 
+    /**
+     * Creates new ticket with implicit staff as creator.
+     * WARNING: Data is not sent to Kayako unless you explicitly call create() on this method's result.
+     */
     public Ticket(Department department, Staff creator, String contents, String subject) {
         this(department, contents, subject);
         this.setCreator(creator);
     }
 
-    public Ticket(Department department, User creator, String contents, String subject) {
+    /**
+     * Creates new ticket with implicit user as creator.
+     * WARNING: Data is not sent to Kayako unless you explicitly call create() on this method's result.
+     */
+    public Ticket(Department department, User creator, String contents, String subject) throws KayakoException {
         this(department, contents, subject);
         this.setCreator(creator);
     }
 
-    public Ticket(Department department, String creatorFullName, String creatorEmail, String contents, String subject) {
+    /**
+     * Creates new ticket with creator user automatically created by server using provided name and e-mail.
+     * WARNING: Data is not sent to Kayako unless you explicitly call create() on this method's result.
+     */
+    public Ticket(Department department, String creatorFullName, String creatorEmail, String contents, String subject) throws KayakoException {
         this(department, contents, subject);
         this.setCreatorAuto(creatorFullName, creatorEmail);
     }
 
-    public Ticket setCreatorId(int creatorId, int creatorType) {
+    public Ticket setCreatorId(int creatorId, int creatorType) throws KayakoException {
         switch (creatorType) {
             case CREATOR_STAFF:
                 this.setStaffId(creatorId);
@@ -525,7 +536,7 @@ public class Ticket extends KEntityCustom {
         return this;
     }
 
-    public Ticket setCreator(User user) {
+    public Ticket setCreator(User user) throws KayakoException {
         this.setUser(user);
         return this;
     }
@@ -535,7 +546,7 @@ public class Ticket extends KEntityCustom {
         return this;
     }
 
-    public Ticket setCreatorAuto(String fullName, String email) {
+    public Ticket setCreatorAuto(String fullName, String email) throws KayakoException {
         this.setFullName(fullName).setEmail(email).setCreator(CREATOR_AUTO);
         this.setUser(null).setUserId(0).setStaff(null).setStaffId(0);
         return this;
@@ -699,7 +710,15 @@ public class Ticket extends KEntityCustom {
         return userId;
     }
 
-    public Ticket setUserId(int userId) {
+    public Ticket setUserId(int userId) throws KayakoException {
+        if (userId > 0) {
+            this.creator = CREATOR_USER;
+            this.staff = null;
+            this.staffId = 0;
+            this.user = User.get(userId);
+            this.fullName = user.getFullName();
+            this.email = user.getEmail();
+        }
         this.userId = userId;
         return this;
     }
@@ -961,8 +980,16 @@ public class Ticket extends KEntityCustom {
         return staffId;
     }
 
-    public Ticket setStaffId(int staffId) {
-        this.staffId = staffId;
+    public Ticket setStaffId(int staffId) throws KayakoException {
+        if (staffId > 0) {
+            this.staffId = staffId;
+            this.creator = CREATOR_STAFF;
+            this.user = null;
+            this.staff = Staff.get(staffId);
+            this.userId = 0;
+            this.fullName = staff.getFullName();
+            this.email = staff.getEmail();
+        }
         return this;
     }
 
@@ -1011,19 +1038,40 @@ public class Ticket extends KEntityCustom {
         return this;
     }
 
-    public User getUser() {
+    public User getUser() throws KayakoException {
+        return this.getUser(false);
+    }
+
+    public User getUser(Boolean refresh) throws KayakoException {
+        if ((refresh || this.user == null) && this.getUserId() > 0) {
+            this.user = User.get(this.getUserId());
+        }
         return user;
     }
 
-    public Ticket setUser(User user) {
+    public Ticket setUser(User user) throws KayakoException {
         if (user != null) {
             this.setUserId(user.getId());
             this.user = user;
+            this.userId = user.getId();
+            this.fullName = user.getFullName();
+            this.email = user.getEmail();
+            this.creator = CREATOR_USER;
+            this.staffId = 0;
+            this.staff = null;
+
         }
         return this;
     }
 
-    public UserOrganization getUserOrganization() {
+    public UserOrganization getUserOrganization() throws KayakoException {
+        return this.getUserOrganization(false);
+    }
+
+    public UserOrganization getUserOrganization(Boolean refresh) throws KayakoException {
+        if ((userOrganization == null || refresh) && userOrganizationId > 0) {
+            userOrganization = UserOrganization.get(this.userOrganizationId);
+        }
         return userOrganization;
     }
 
@@ -1035,14 +1083,24 @@ public class Ticket extends KEntityCustom {
         return this;
     }
 
-    public Staff getStaff() {
+    public Staff getStaff() throws KayakoException {
+        return this.getStaff(false);
+    }
+
+    public Staff getStaff(Boolean refresh) throws KayakoException {
+        if ((this.staff == null || refresh) && this.staffId > 0) {
+            staff = Staff.get(this.staffId);
+        }
         return staff;
     }
 
     public Ticket setStaff(Staff staff) {
         if (staff != null) {
-            this.setStaffId(staff.getId());
+            this.staffId = staff.getId();
             this.staff = staff;
+            this.creator = CREATOR_STAFF;
+            this.userId = 0;
+            this.user = null;
         }
         return this;
     }
@@ -1053,7 +1111,7 @@ public class Ticket extends KEntityCustom {
 
     public Ticket setOwnerStaff(Staff ownerStaff) {
         if (ownerStaff != null) {
-            this.setOwnerStaffId(ownerStaff.getId());
+            this.ownerStaffId = ownerStaff.getId();
             this.ownerStaff = ownerStaff;
         }
         return this;
@@ -1065,7 +1123,7 @@ public class Ticket extends KEntityCustom {
 
     public Ticket setDepartment(Department department) {
         if (department != null) {
-            this.setDepartmentId(department.getId());
+            this.departmentId = department.getId();
             this.department = department;
         }
         return this;
@@ -1108,7 +1166,16 @@ public class Ticket extends KEntityCustom {
         return this;
     }
 
-    public ArrayList<TicketAttachment> getAttachments() {
+    public ArrayList<TicketAttachment> getAttachments() throws KayakoException {
+        return this.getAttachments(false);
+    }
+
+    public ArrayList<TicketAttachment> getAttachments(Boolean refresh) throws KayakoException {
+        if ((this.attachments.size() == 0 || refresh)) {
+            for (TicketAttachment attachment : TicketAttachment.getAllAttachments(this.getId())) {
+                attachments.add(attachment);
+            }
+        }
         return attachments;
     }
 
@@ -1151,9 +1218,9 @@ public class Ticket extends KEntityCustom {
             throw new KayakoException();
         }
         String departmentString = Integer.toString(KEntity.getId(departments.remove(0)));
-        String ticketStatusString = "";
-        String ownerString = "";
-        String userString = "";
+        String ticketStatusString = "-1";
+        String ownerString = "-1";
+        String userString = "-1";
         for (Object department : departments) {
             departmentString += "," + Integer.toString(KEntity.getId(department));
         }
@@ -1185,6 +1252,36 @@ public class Ticket extends KEntityCustom {
         return KEntity.getAll(Ticket.controller, searchParams);
     }
 
+    private static ArrayList<Ticket> refineToArray(RawArrayElement rawArrayElement) throws KayakoException {
+        ArrayList<Ticket> Tickets = new ArrayList<Ticket>();
+        for (RawArrayElement rawArrayElementTicket : rawArrayElement.getComponents()) {
+            Tickets.add(new Ticket().populate(rawArrayElementTicket));
+        }
+        return Tickets;
+    }
+
+    public static ArrayList<Ticket> getAllTickets(int departmentId) throws KayakoException {
+        return refineToArray(getAll(departmentId));
+    }
+
+    public static ArrayList<Ticket> getAllTickets(Department department) throws KayakoException {
+        return getAllTickets(department.getId());
+    }
+
+    public static Ticket get(int id) throws KayakoException {
+        return new Ticket().populate(KEntity.get(controller, id));
+    }
+
+    public static ArrayList<Ticket> search(String query, ArrayList<String> areas) throws KayakoException {
+        HashMap<String, String> data = new HashMap<String, String>();
+        data.put("query", query);
+        for (String area : areas) {
+            data.put(area, "1");
+        }
+        RawArrayElement rawTickets = KEntity.getRESTClient().post("/Tickets/TicketSearch", new ArrayList<String>(), data);
+        return refineToArray(rawTickets);
+    }
+
     public Ticket updateCustomFields() throws KayakoException {
         return (Ticket) super.updateCustomFields(getCustomFieldGroupController());
     }
@@ -1204,6 +1301,23 @@ public class Ticket extends KEntityCustom {
         Ticket.setDefaultTypeId(typeId);
         Ticket.setAutoCreateUser(autoCreateUser);
     }
+
+    public TicketPost createTicketPost(User creator, String contents) {
+        return TicketPost.createNew(this, contents, creator);
+    }
+
+    public TicketPost createTicketPost(Staff creator, String contents) {
+        return TicketPost.createNew(this, contents, creator);
+    }
+
+    public TicketNote createTicketNote(Staff creator, String contents) {
+        return new TicketNote(this, creator, contents);
+    }
+
+    public TicketTimeTrack createTicketTimeTrack(String contents, Staff staff, String timeWorked, String timeBillable) {
+        return new TicketTimeTrack(this, contents, staff, timeWorked, timeWorked);
+    }
+    //TODO - Statistics
 
     @Override
     public Ticket populate(RawArrayElement rawArrayElement) throws KayakoException {
@@ -1307,8 +1421,9 @@ public class Ticket extends KEntityCustom {
     public HashMap<String, String> buildHashMap(Boolean newTicket) {
         HashMap<String, String> ticketHashMap = new HashMap<String, String>();
         ticketHashMap.put("subject", this.getSubject());
+        ticketHashMap.put("fullname", this.getFullName());
         ticketHashMap.put("email", this.getEmail());
-        ticketHashMap.put("contents", this.getContents());
+
         ticketHashMap.put("departmentid", Integer.toString(this.getDepartmentId()));
         ticketHashMap.put("ticketstatusid", Integer.toString(this.getStaffId()));
         ticketHashMap.put("ticketpriorityid", Integer.toString(this.getPriorityId()));
@@ -1328,7 +1443,7 @@ public class Ticket extends KEntityCustom {
                     ticketHashMap.put("autouserid", Integer.toString(1));
                     break;
             }
-            ticketHashMap.put("content", this.getContents());
+            ticketHashMap.put("contents", this.getContents());
             ticketHashMap.put("type", Integer.toString(this.getCreationType()));
             ticketHashMap.put("ignoreautoresponder", this.getIgnoreAutoResponder() ? "1" : "0");
 
