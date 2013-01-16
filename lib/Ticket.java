@@ -595,7 +595,7 @@ public class Ticket extends KEntityCustom {
         }
         RawArrayElement rawArrayElement = TicketCustomFieldGroup.getAll(Ticket.getCustomFieldGroupController());
         for (RawArrayElement component : rawArrayElement.getComponents()) {
-            customFieldGroups.add(new TicketCustomFieldGroup(component));
+            customFieldGroups.add(new TicketCustomFieldGroup(this.getId(), component));
         }
         this.setCustomFieldGroups(customFieldGroups);
         this.cacheFields();

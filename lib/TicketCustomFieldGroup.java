@@ -23,7 +23,9 @@ public class TicketCustomFieldGroup extends CustomFieldGroup {
      */
     protected int ticketId;
 
-    public TicketCustomFieldGroup(RawArrayElement rawArrayElement) throws KayakoException {
+    public TicketCustomFieldGroup(int ticketId, RawArrayElement rawArrayElement) throws KayakoException {
+        this.ticketId = ticketId;
+        this.type = CustomFieldGroup.TYPE_TICKET;
         this.populate(rawArrayElement);
     }
 
