@@ -162,7 +162,7 @@ public class Department extends KEntity {
 
     }
 
-    private static Department get(int id) throws KayakoException {
+    public static Department get(int id) throws KayakoException {
         return new Department().populate(KEntity.get(controller, id));
     }
 

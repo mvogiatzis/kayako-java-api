@@ -251,6 +251,10 @@ public class TicketPriority extends KEntity {
         return this;
     }
 
+    public static TicketPriority get(int id) throws KayakoException {
+        return new TicketPriority().populate(KEntity.get(controller, id));
+    }
+
     //this function will populate the data of the ticket priority instance when supplied with RawArrayElement derived from the xml
     @Override
     public TicketPriority populate(RawArrayElement rawArrayElement) throws KayakoException {

@@ -382,6 +382,10 @@ public class TicketStatus extends KEntity {
         return this.isAvailableInDepartment(department.getId());
     }
 
+    public static TicketStatus get(int id) throws KayakoException {
+        return new TicketStatus().populate(KEntity.get(controller, id));
+    }
+
     //this function will populate the data of the ticket Status instance when supplied with RawArrayElement derived from the xml
     @Override
     public TicketStatus populate(RawArrayElement rawArrayElement) throws KayakoException {

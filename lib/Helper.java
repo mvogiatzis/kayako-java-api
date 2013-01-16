@@ -4,6 +4,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * ###############################################
@@ -53,7 +56,6 @@ public class Helper {
         return bytes;
     }
 
-
     public static int parseInt(String string) {
         try {
             return Integer.parseInt(string);
@@ -61,4 +63,16 @@ public class Helper {
             return 0;
         }
     }
+
+    public static String getDateString(long timeStamp) {
+        return getDateString(timeStamp, new ConfigurationFactory().getConfiguration().getDateFormat());
+    }
+
+    public static String getDateString(long timeStamp, String format) {
+        Date date = new Date(timeStamp);
+        Format formatter = new SimpleDateFormat(format);
+        String dateStr = formatter.format(date);
+        return dateStr;
+    }
+
 }

@@ -247,6 +247,10 @@ public class TicketType extends KEntity {
         return this.isAvailableInDepartment(department.getId());
     }
 
+    public static TicketType get(int id) throws KayakoException {
+        return new TicketType().populate(KEntity.get(controller, id));
+    }
+
     //this function will populate the data of the ticket type instance when supplied with RawArrayElement derived from the xml
     @Override
     public TicketType populate(RawArrayElement rawArrayElement) throws KayakoException {

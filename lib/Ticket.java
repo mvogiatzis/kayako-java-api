@@ -375,14 +375,14 @@ public class Ticket extends KEntityCustom {
      * @apiField
      * @var HashMap<id, full name></>
      */
-    protected HashMap<Integer, String> watchers;
+    protected HashMap<Integer, String> watchers = new HashMap<Integer, String>();
     /**
      * Ticket workflows.
      *
      * @apiField
      * @var HashMap <id, title></>
      */
-    protected HashMap<Integer, String> workflows;
+    protected HashMap<Integer, String> workflows = new HashMap<Integer, String>();
     /**
      * Identifier os staff user who will create this ticket.
      *
@@ -676,6 +676,7 @@ public class Ticket extends KEntityCustom {
 
     public Ticket setDepartmentId(int departmentId) {
         this.departmentId = departmentId;
+        this.department = null;
         return this;
     }
 
@@ -685,6 +686,7 @@ public class Ticket extends KEntityCustom {
 
     public Ticket setStatusId(int statusId) {
         this.statusId = statusId;
+        this.status = null;
         return this;
     }
 
@@ -694,6 +696,7 @@ public class Ticket extends KEntityCustom {
 
     public Ticket setPriorityId(int priorityId) {
         this.priorityId = priorityId;
+        this.priority = null;
         return this;
     }
 
@@ -703,6 +706,7 @@ public class Ticket extends KEntityCustom {
 
     public Ticket setTypeId(int typeId) {
         this.typeId = typeId;
+        this.type = null;
         return this;
     }
 
@@ -723,6 +727,11 @@ public class Ticket extends KEntityCustom {
         return this;
     }
 
+    /**
+     * Returns name of organization the user who created the ticket belongs to.
+     *
+     * @return userOrganizationName
+     */
     public String getUserOrganizationName() {
         return userOrganizationName;
     }
@@ -731,6 +740,12 @@ public class Ticket extends KEntityCustom {
         this.userOrganizationName = userOrganizationName;
         return this;
     }
+
+    /**
+     * Returns identifier of organization the user who created the ticket belongs to.
+     *
+     * @return userOrganizationId
+     */
 
     public int getUserOrganizationId() {
         return userOrganizationId;
@@ -741,15 +756,25 @@ public class Ticket extends KEntityCustom {
         return this;
     }
 
+    /**
+     * Returns identifier of the staff user, owner of this ticket.
+     */
     public int getOwnerStaffId() {
         return ownerStaffId;
     }
 
+    /**
+     * Sets identifier of the staff user, owner of this ticket.
+     */
     public Ticket setOwnerStaffId(int ownerStaffId) {
         this.ownerStaffId = ownerStaffId;
+        this.ownerStaff = null;
         return this;
     }
 
+    /**
+     * Returns full name of the staff user, owner of this ticket.
+     */
     public String getOwnerStaffName() {
         return ownerStaffName;
     }
@@ -877,7 +902,25 @@ public class Ticket extends KEntityCustom {
     }
 
     public int getCreator() {
+        switch (this.creator) {
+            case CREATOR_USER:
+                return this.userId;
+            case CREATOR_STAFF:
+                return this.staffId;
+        }
         return creator;
+    }
+
+    public Ticket setCreator(int creatorId, int type) throws KayakoException {
+        switch (type) {
+            case CREATOR_USER:
+                this.setUserId(creatorId);
+                break;
+            case CREATOR_STAFF:
+                this.setStaffId(creatorId);
+                break;
+        }
+        return this;
     }
 
     public Ticket setCreator(int creator) {
@@ -927,6 +970,7 @@ public class Ticket extends KEntityCustom {
 
     public Ticket setTemplateGroupId(int templateGroupId) {
         this.templateGroupId = templateGroupId;
+        this.templateGroupName = null;
         return this;
     }
 
@@ -936,7 +980,16 @@ public class Ticket extends KEntityCustom {
 
     public Ticket setTemplateGroupName(String templateGroupName) {
         this.templateGroupName = templateGroupName;
+        this.templateGroupId = 0;
         return this;
+    }
+
+    public Ticket setTemplateGroup(int id) {
+        return this.setTemplateGroupId(id);
+    }
+
+    public Ticket setTemplateGroup(String name) {
+        return this.setTemplateGroupName(name);
     }
 
     public String getTags() {
@@ -948,6 +1001,7 @@ public class Ticket extends KEntityCustom {
         return this;
     }
 
+    //HashMap staffId => Full Name
     public HashMap<Integer, String> getWatchers() {
         return watchers;
     }
@@ -980,6 +1034,9 @@ public class Ticket extends KEntityCustom {
         return staffId;
     }
 
+    /**
+     * Sets identifier of staff user, the creator of this ticket.
+     */
     public Ticket setStaffId(int staffId) throws KayakoException {
         if (staffId > 0) {
             this.staffId = staffId;
@@ -1011,33 +1068,68 @@ public class Ticket extends KEntityCustom {
         return this;
     }
 
-    public TicketStatus getStatus() {
+    public TicketStatus getStatus() throws KayakoException {
+        return this.getStatus(false);
+    }
+
+    public TicketStatus getStatus(Boolean refresh) throws KayakoException {
+        if ((this.status == null || refresh) && this.statusId > 0) {
+            status = TicketStatus.get(this.statusId);
+        }
         return status;
     }
 
     public Ticket setStatus(TicketStatus status) {
-        this.status = status;
+        if (status != null) {
+            this.statusId = status.getId();
+            this.status = status;
+        }
         return this;
     }
 
-    public TicketPriority getPriority() {
+    public TicketPriority getPriority() throws KayakoException {
+        return this.getPriority(false);
+    }
+
+    public TicketPriority getPriority(Boolean refresh) throws KayakoException {
+        if ((this.priority == null || refresh) && this.priorityId > 0) {
+            priority = TicketPriority.get(this.priorityId);
+        }
         return priority;
     }
 
     public Ticket setPriority(TicketPriority priority) {
-        this.priority = priority;
+        if (priority != null) {
+            this.priorityId = priority.getId();
+            this.priority = priority;
+        }
         return this;
     }
 
-    public TicketType getType() {
+    public TicketType getType() throws KayakoException {
+        return this.getType(false);
+    }
+
+    public TicketType getType(Boolean refresh) throws KayakoException {
+        if ((this.type == null || refresh) && this.typeId > 0) {
+            type = TicketType.get(this.typeId);
+        }
         return type;
     }
 
     public Ticket setType(TicketType type) {
-        this.type = type;
+        if (type != null) {
+            this.typeId = type.getId();
+            this.type = type;
+        }
         return this;
     }
 
+    /**
+     * Returns user, the creator of this ticket.
+     * <p/>
+     * Result is cached until the end of script.
+     */
     public User getUser() throws KayakoException {
         return this.getUser(false);
     }
@@ -1049,6 +1141,9 @@ public class Ticket extends KEntityCustom {
         return user;
     }
 
+    /**
+     * Sets user, the creator of this post.
+     */
     public Ticket setUser(User user) throws KayakoException {
         if (user != null) {
             this.setUserId(user.getId());
@@ -1064,6 +1159,11 @@ public class Ticket extends KEntityCustom {
         return this;
     }
 
+    /**
+     * Return organization the user who created the ticket belongs to.
+     * <p/>
+     * Result is cached until the end of script.
+     */
     public UserOrganization getUserOrganization() throws KayakoException {
         return this.getUserOrganization(false);
     }
@@ -1077,7 +1177,7 @@ public class Ticket extends KEntityCustom {
 
     public Ticket setUserOrganization(UserOrganization userOrganization) {
         if (userOrganization != null) {
-            this.setUserOrganizationId(userOrganization.getId());
+            this.userOrganizationId = userOrganization.getId();
             this.userOrganization = userOrganization;
         }
         return this;
@@ -1094,6 +1194,9 @@ public class Ticket extends KEntityCustom {
         return staff;
     }
 
+    /**
+     * Sets staff user, the creator of this ticket.
+     */
     public Ticket setStaff(Staff staff) {
         if (staff != null) {
             this.staffId = staff.getId();
@@ -1101,14 +1204,33 @@ public class Ticket extends KEntityCustom {
             this.creator = CREATOR_STAFF;
             this.userId = 0;
             this.user = null;
+            this.fullName = staff.getFullName();
+            this.email = staff.getEmail();
         }
         return this;
     }
 
-    public Staff getOwnerStaff() {
+    /**
+     * Return staff user, owner of this ticket.
+     * <p/>
+     * Result is cached until the end of script.
+     *
+     * @return Staff
+     */
+    public Staff getOwnerStaff() throws KayakoException {
+        return this.getOwnerStaff(false);
+    }
+
+    public Staff getOwnerStaff(Boolean refresh) throws KayakoException {
+        if ((this.ownerStaff == null || refresh) && this.ownerStaffId > 0) {
+            ownerStaff = Staff.get(this.ownerStaffId);
+        }
         return ownerStaff;
     }
 
+    /**
+     * Sets staff user, owner of this ticket.
+     */
     public Ticket setOwnerStaff(Staff ownerStaff) {
         if (ownerStaff != null) {
             this.ownerStaffId = ownerStaff.getId();
@@ -1117,7 +1239,14 @@ public class Ticket extends KEntityCustom {
         return this;
     }
 
-    public Department getDepartment() {
+    public Department getDepartment() throws KayakoException {
+        return this.getDepartment(false);
+    }
+
+    public Department getDepartment(Boolean refresh) throws KayakoException {
+        if ((this.department == null || refresh) && this.departmentId > 0) {
+            department = Department.get(this.departmentId);
+        }
         return department;
     }
 
@@ -1129,7 +1258,16 @@ public class Ticket extends KEntityCustom {
         return this;
     }
 
-    public ArrayList<TicketNote> getNotes() {
+    public ArrayList<TicketNote> getNotes() throws KayakoException {
+        return this.getNotes(false);
+    }
+
+    public ArrayList<TicketNote> getNotes(Boolean refresh) throws KayakoException {
+        if ((this.notes.size() == 0 || refresh)) {
+            for (TicketNote note : TicketNote.getAllNotes(this.getId())) {
+                notes.add(note);
+            }
+        }
         return notes;
     }
 
@@ -1143,7 +1281,16 @@ public class Ticket extends KEntityCustom {
         return this;
     }
 
-    public ArrayList<TicketTimeTrack> getTimeTracks() {
+    public ArrayList<TicketTimeTrack> getTimeTracks() throws KayakoException {
+        return this.getTimeTracks(false);
+    }
+
+    public ArrayList<TicketTimeTrack> getTimeTracks(Boolean refresh) throws KayakoException {
+        if ((this.timeTracks.size() == 0 || refresh)) {
+            for (TicketTimeTrack timeTrack : TicketTimeTrack.getAllTimeTracks(this.getId())) {
+                timeTracks.add(timeTrack);
+            }
+        }
         return timeTracks;
     }
 
@@ -1152,8 +1299,25 @@ public class Ticket extends KEntityCustom {
         return this;
     }
 
-    public ArrayList<TicketPost> getPosts() {
+    public ArrayList<TicketPost> getPosts() throws KayakoException {
+        return this.getPosts(false);
+    }
+
+    public ArrayList<TicketPost> getPosts(Boolean refresh) throws KayakoException {
+        if ((this.posts.size() == 0 || refresh)) {
+            for (TicketPost post : TicketPost.getAllPosts(this.getId())) {
+                posts.add(post);
+            }
+        }
         return posts;
+    }
+
+    public TicketPost getFirstPost() throws KayakoException {
+        ArrayList<TicketPost> posts = this.getPosts();
+        if (posts.size() == 0) {
+            return null;
+        }
+        return posts.get(0);
     }
 
     public Ticket setPosts(ArrayList<TicketPost> posts) {
@@ -1317,6 +1481,7 @@ public class Ticket extends KEntityCustom {
     public TicketTimeTrack createTicketTimeTrack(String contents, Staff staff, String timeWorked, String timeBillable) {
         return new TicketTimeTrack(this, contents, staff, timeWorked, timeWorked);
     }
+
     //TODO - Statistics
 
     @Override
