@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.DateFormat;
 import java.text.Format;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -16,12 +18,19 @@ import java.util.Date;
  * @author Rajat Garg
  * @package lib
  * @copyright Copyright (c) 2001-2012, Kayako
- * @license http://www.kayako.com/license
- * @link http://www.kayako.com
+ * @license http ://www.kayako.com/license
+ * @link http ://www.kayako.com
  * ###############################################
  */
 public class Helper {
 
+    /**
+     * Read bytes from file.
+     *
+     * @param file the file
+     * @return the byte [ ]
+     * @throws IOException the iO exception
+     */
     public static byte[] readBytesFromFile(File file) throws IOException {
         InputStream is = new FileInputStream(file);
 
@@ -56,6 +65,12 @@ public class Helper {
         return bytes;
     }
 
+    /**
+     * Parse int.
+     *
+     * @param string the string
+     * @return the int
+     */
     public static int parseInt(String string) {
         try {
             return Integer.parseInt(string);
@@ -64,10 +79,49 @@ public class Helper {
         }
     }
 
+    /**
+     * Gets date string.
+     *
+     * @param timeStamp the time stamp
+     * @return the date string
+     */
     public static String getDateString(long timeStamp) {
         return getDateString(timeStamp, new ConfigurationFactory().getConfiguration().getDateFormat());
     }
 
+    /**
+     * Gets time stamp from date string.
+     *
+     * @param dateString the date string
+     * @return the time stamp from date string
+     * @throws ParseException the parse exception
+     */
+    public static long getTimeStampFromDateString(String dateString) throws ParseException {
+        return getTimeStampFromDateString(dateString, new ConfigurationFactory().getConfiguration().getDateFormat());
+    }
+
+    /**
+     * Gets time stamp from date string.
+     *
+     * @param dateString the date string
+     * @param format     the format
+     * @return the time stamp from date string
+     * @throws ParseException the parse exception
+     */
+    public static long getTimeStampFromDateString(String dateString, String format) throws ParseException {
+        DateFormat dateFormat = new SimpleDateFormat(format);
+        Date date = dateFormat.parse(dateString);
+        return date.getTime();
+    }
+
+    /**
+     * Gets date string.
+     *
+     * @param timeStamp the time stamp
+     * @param format    the format
+     * @return the date string
+     *///String format can be anything workable with SimpleDateFormat constructor
+    // ref: http://docs.oracle.com/javase/6/docs/api/java/text/SimpleDateFormat.html
     public static String getDateString(long timeStamp, String format) {
         Date date = new Date(timeStamp);
         Format formatter = new SimpleDateFormat(format);

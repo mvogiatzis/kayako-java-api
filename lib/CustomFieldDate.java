@@ -1,11 +1,7 @@
 package lib;
 
 import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.Format;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * ###############################################
@@ -15,8 +11,8 @@ import java.util.Date;
  * @author Rajat Garg
  * @package lib
  * @copyright Copyright (c) 2001-2012, Kayako
- * @license http://www.kayako.com/license
- * @link http://www.kayako.com
+ * @license http ://www.kayako.com/license
+ * @link http ://www.kayako.com
  * ###############################################
  */
 public class CustomFieldDate extends CustomField {
@@ -28,6 +24,11 @@ public class CustomFieldDate extends CustomField {
     private Timestamp timestamp;
     static String objectXmlName = "field";
 
+    /**
+     * Instantiates a new Custom field date.
+     *
+     * @param customFieldGroup the custom field group
+     */
     public CustomFieldDate(CustomFieldGroup customFieldGroup) {
         super(customFieldGroup);
     }
@@ -35,7 +36,7 @@ public class CustomFieldDate extends CustomField {
     /**
      * Returns field value as timestamp.
      *
-     * @return Timestamp
+     * @return Timestamp timestamp
      */
     public Timestamp getTimestamp() {
         return timestamp;
@@ -45,40 +46,61 @@ public class CustomFieldDate extends CustomField {
      * Sets the date using timestamp.
      *
      * @param timestamp Timestamp.
-     * @return CustomFieldDate
+     * @return CustomFieldDate timestamp
      */
     public CustomFieldDate setTimestamp(Timestamp timestamp) {
         this.timestamp = timestamp;
-        Date date = new Date(this.getTimestamp().getTime());
-        Format formatter = new SimpleDateFormat(new ConfigurationFactory().getConfiguration().getDateFormat());
-        String dateStr = formatter.format(date);
-        this.setRawValue(dateStr);
+        this.setRawValue(Helper.getDateString(timestamp.getTime()));
         return this;
     }
 
+    /**
+     * Gets date.
+     *
+     * @return the date
+     */
     public String getDate() {
         return getDate(new ConfigurationFactory().getConfiguration().getDateFormat());
     }
 
+    /**
+     * Gets date.
+     *
+     * @param dateFormat the date format String
+     * @return the date String
+     */
     public String getDate(String dateFormat) {
-        Date date = new Date(this.getTimestamp().getTime());
-        Format formatter = new SimpleDateFormat(new ConfigurationFactory().getConfiguration().getDateFormat());
-        String dateStr = formatter.format(date);
-        return dateStr;
+        return Helper.getDateString(this.getTimestamp().getTime(), dateFormat);
     }
 
+    /**
+     * Sets date.
+     *
+     * @param dateStr the date str
+     * @return the date
+     * @throws ParseException the parse exception
+     */
     public CustomFieldDate setDate(String dateStr) throws ParseException {
-        DateFormat dateFormat = new SimpleDateFormat(new ConfigurationFactory().getConfiguration().getDateFormat());
-        Date date = dateFormat.parse(dateStr);
-        long time = date.getTime();
-        this.setTimestamp(new Timestamp(time));
+        this.setTimestamp(new Timestamp(Helper.getTimeStampFromDateString(dateStr)));
         return this;
     }
 
+    /**
+     * Gets value.
+     *
+     * @return the value
+     */
     public String getValue() {
         return this.getDate();
     }
 
+    /**
+     * Sets value.
+     *
+     * @param value the value
+     * @return the value
+     * @throws KayakoException the kayako exception
+     */
     public CustomFieldDate setValue(String value) throws KayakoException {
         try {
             return this.setDate(value);

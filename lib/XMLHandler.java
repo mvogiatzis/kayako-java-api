@@ -1,9 +1,9 @@
 package lib;
 
-import org.xml.sax.*;
-import org.xml.sax.helpers.*;
+import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
+import org.xml.sax.helpers.DefaultHandler;
 
-import javax.xml.parsers.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
@@ -17,8 +17,8 @@ import java.util.Stack;
  * @author Rajat Garg
  * @package lib
  * @copyright Copyright (c) 2001-2012, Kayako
- * @license http://www.kayako.com/license
- * @link http://www.kayako.com
+ * @license http ://www.kayako.com/license
+ * @link http ://www.kayako.com
  * <p/>
  * ###############################################
  */
@@ -32,13 +32,12 @@ public class XMLHandler extends DefaultHandler {
     private Stack<RawArrayElement> objectStack = new Stack<RawArrayElement>();
 
     /**
-     * Called when tag starts ( ex:- <name>AndroidPeople</name>
+     * Called when tag starts ( ex:- <name>KayakoPeople</name>
      * -- <name> )
      */
     @Override
     public void startElement(String uri, String localName, String qName,
                              Attributes attributes) throws SAXException {
-
 
         Map<String, String> attributeMap = new HashMap<String, String>();
 
@@ -61,7 +60,7 @@ public class XMLHandler extends DefaultHandler {
     }
 
     /**
-     * Called when tag closing ( ex:- <name>AndroidPeople</name>
+     * Called when tag closing ( ex:- <name>kayakoPeople</name>
      * -- </name> )
      */
     @Override
@@ -74,8 +73,8 @@ public class XMLHandler extends DefaultHandler {
     }
 
     /**
-     * Called to get tag characters ( ex:- <name>AndroidPeople</name>
-     * -- to get AndroidPeople Character )
+     * Called to get tag characters ( ex:- <name>kayakoPeople</name>
+     * -- to get kayakoPeople Character )
      */
     @Override
     public void characters(char[] ch, int start, int length)
@@ -90,6 +89,11 @@ public class XMLHandler extends DefaultHandler {
 
     }
 
+    /**
+     * Gets raw array element.
+     *
+     * @return the raw array element
+     */
     public RawArrayElement getRawArrayElement() {
         return rawArrayElement;
     }
@@ -97,6 +101,5 @@ public class XMLHandler extends DefaultHandler {
     private RawArrayElement getCurrentElement() {
         return this.rawArrayElement;
     }
-
 
 }

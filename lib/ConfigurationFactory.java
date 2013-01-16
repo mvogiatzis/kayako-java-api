@@ -1,7 +1,7 @@
 package lib;
 
-import com.google.appengine.api.users.User;
 import com.google.appengine.api.datastore.*;
+import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 
@@ -81,4 +81,5 @@ public class ConfigurationFactory implements ConfigurationFactoryInterface {
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         Configuration.setConfiguration(new Configuration((String) configuration.getProperty("apiurl"), (String) configuration.getProperty("apikey"), (String) configuration.getProperty("secretkey")));
     }
+
 }

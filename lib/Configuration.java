@@ -8,8 +8,8 @@ package lib;
  * @author Rajat Garg
  * @package lib
  * @copyright Copyright (c) 2001-2012, Kayako
- * @license http://www.kayako.com/license
- * @link http://www.kayako.com
+ * @license http ://www.kayako.com/license
+ * @link http ://www.kayako.com
  * ###############################################
  */
 
@@ -30,6 +30,14 @@ public class Configuration {
      */
     private RESTInterface restClient = null;
 
+    /**
+     * Instantiates a new Configuration.
+     *
+     * @param baseUrl the base url
+     * @param apiKey the api key
+     * @param secretKey the secret key
+     * @param testMode the test mode
+     */
     public Configuration(String baseUrl, String apiKey, String secretKey, Boolean testMode) {
         //this("http://swift.kayako.com/api/index.php?", "80866fb4-b6e2-1584-a51sfda37894", "ZWJiNTkzYzMtNmEwNS1dfgfdgdfghdhYzhmMWRkNDVkYmY2ZmQwYjU4MjgtYzY0ghfGQ0LWJkZjktNWE3NmViZDRhMmFk");
         this.baseUrl = baseUrl;
@@ -38,79 +46,176 @@ public class Configuration {
         this.debug = testMode;
     }
 
+    /**
+     * Instantiates a new Configuration.
+     *
+     * @param baseUrl the base url
+     * @param apiKey the api key
+     * @param secretKey the secret key
+     */
     public Configuration(String baseUrl, String apiKey, String secretKey) {
         this(baseUrl, apiKey, secretKey, false);
     }
 
+    /**
+     * Gets configuration.
+     *
+     * @return the configuration
+     */
     public static Configuration getConfiguration() {
         return configuration;
     }
 
+    /**
+     * Sets configuration.
+     *
+     * @param configuration the configuration
+     */
     public static void setConfiguration(Configuration configuration) {
         Configuration.configuration = configuration;
     }
 
+    /**
+     * Gets base url.
+     *
+     * @return the base url
+     */
     public String getBaseUrl() {
         return this.baseUrl;
     }
 
+    /**
+     * Sets base url.
+     *
+     * @param baseUrl the base url
+     * @return the base url
+     */
     public Configuration setBaseUrl(String baseUrl) {
         this.baseUrl = baseUrl;
         return this;
     }
 
+    /**
+     * Gets secret key.
+     *
+     * @return the secret key
+     */
     public String getSecretKey() {
         return this.secretKey;
     }
 
+    /**
+     * Sets secret key.
+     *
+     * @param secretKey the secret key
+     * @return the secret key
+     */
     public Configuration setSecretKey(String secretKey) {
         this.secretKey = secretKey;
         return this;
     }
 
+    /**
+     * Gets api key.
+     *
+     * @return the api key
+     */
     public String getApiKey() {
         return this.apiKey;
     }
 
+    /**
+     * Sets api key.
+     *
+     * @param apiKey the api key
+     * @return the api key
+     */
     public Configuration setApiKey(String apiKey) {
         this.apiKey = apiKey;
         return this;
     }
 
+    /**
+     * Sets debug.
+     *
+     * @param debug the debug
+     * @return the debug
+     */
     public Configuration setDebug(Boolean debug) {
         this.debug = debug;
         return this;
     }
 
+    /**
+     * Is debug.
+     *
+     * @return the boolean
+     */
     public Boolean isDebug() {
         return this.debug;
     }
 
+    /**
+     * Is standard url type.
+     *
+     * @return the boolean
+     */
     public Boolean isStandardUrlType() {
         return standardUrlType;
     }
 
+    /**
+     * Sets standard url type.
+     *
+     * @param standardUrlType the standard url type
+     */
     public void setStandardUrlType(Boolean standardUrlType) {
         this.standardUrlType = standardUrlType;
     }
 
+    /**
+     * Gets date format.
+     *
+     * @return the date format
+     */
     public String getDateFormat() {
         return dateFormat;
     }
 
+    /**
+     * Sets date format.
+     *
+     * @param dateFormat the date format
+     */
     public void setDateFormat(String dateFormat) {
         this.dateFormat = dateFormat;
     }
 
+    /**
+     * Gets date time format.
+     *
+     * @return the date time format
+     */
     public String getDateTimeFormat() {
         return dateTimeFormat;
     }
 
+    /**
+     * Sets date time format.
+     *
+     * @param dateTimeFormat the date time format
+     * @return the date time format
+     */
     public Configuration setDateTimeFormat(String dateTimeFormat) {
         this.dateTimeFormat = dateTimeFormat;
         return this;
     }
 
+    /**
+     * Gets rest client.
+     *
+     * @return the rest client
+     */
     public RESTInterface getRestClient() {
         if (this.restClient == null) {
             this.restClient = new RESTClient().setConfig(this);
@@ -118,6 +223,12 @@ public class Configuration {
         return this.restClient;
     }
 
+    /**
+     * Sets rest client.
+     *
+     * @param restClient the rest client
+     * @return the rest client
+     */
     public Configuration setRestClient(RESTInterface restClient) {
         this.restClient = restClient;
         return this;
