@@ -3,16 +3,12 @@ package lib;
 import java.util.HashMap;
 
 /**
- * ###############################################
- * Kayako App
- * _______________________________________________
- *
+ * The type Custom field select.
  * @author Rajat Garg
  * @package lib
  * @copyright Copyright (c) 2001-2012, Kayako
- * @license http://www.kayako.com/license
- * @link http://www.kayako.com
- * ###############################################
+ * @license http ://www.kayako.com/license
+ * @link http ://www.kayako.com
  */
 public class CustomFieldSelect extends CustomField {
 
@@ -23,14 +19,31 @@ public class CustomFieldSelect extends CustomField {
      */
     protected CustomFieldOption selectedOption;
 
+    /**
+     * Instantiates a new Custom field select.
+     *
+     * @param customFieldGroup the custom field group
+     */
     public CustomFieldSelect(CustomFieldGroup customFieldGroup) {
         super(customFieldGroup);
     }
 
+    /**
+     * Gets selected option.
+     *
+     * @return the selected option
+     */
     public CustomFieldOption getSelectedOption() {
         return selectedOption;
     }
 
+    /**
+     * Sets selected option.
+     *
+     * @param selectedOption the selected option
+     * @return the selected option
+     * @throws KayakoException the kayako exception
+     */
     public CustomFieldSelect setSelectedOption(CustomFieldOption selectedOption) throws KayakoException {
         this.selectedOption = selectedOption;
         if (this.selectedOption != null) {
@@ -44,8 +57,9 @@ public class CustomFieldSelect extends CustomField {
     /**
      * Sets the option for this field.
      *
-     * @param value
-     * @return CustomFieldSelect
+     * @param value the value
+     * @return CustomFieldSelect value
+     * @throws KayakoException the kayako exception
      */
     public CustomFieldSelect setValue(String value) throws KayakoException {
         int id = Helper.parseInt(value);

@@ -4,24 +4,29 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * ###############################################
- * Kayako App
- * _______________________________________________
- *
+ * The type Ticket status.
  * @author Rajat Garg
  * @package lib
  * @copyright Copyright (c) 2001-2012, Kayako
- * @license http://www.kayako.com/license
- * @link http://www.kayako.com
- * ###############################################
+ * @license http ://www.kayako.com/license
+ * @link http ://www.kayako.com
  */
 public class TicketStatus extends KEntity {
 
     final String TYPE_PUBLIC = "public";
     final String TYPE_PRIVATE = "private";
 
+    /**
+     * The Controller.
+     */
     static protected String controller = "/Tickets/TicketStatus";
+    /**
+     * The Object xml name.
+     */
     static protected String objectXmlName = "ticketstatus";
+    /**
+     * The Read only.
+     */
     protected Boolean readOnly = true;
 
     /**
@@ -71,7 +76,7 @@ public class TicketStatus extends KEntity {
      *
      * @apiField
      * @var string
-     * @see TicketStatus::Status constants.
+     * @see  ::Status constants.
      */
     protected String Status;
 
@@ -125,7 +130,7 @@ public class TicketStatus extends KEntity {
      *
      * @apiField
      * @var string
-     * @see TicketStatus::TYPE constants.
+     * @see  ::TYPE constants.
      */
     protected String type;
 
@@ -171,64 +176,134 @@ public class TicketStatus extends KEntity {
 
     protected Boolean displayInMainList;
 
+    /**
+     * Gets department.
+     *
+     * @return the department
+     */
     public Department getDepartment() {
         return department;
     }
 
+    /**
+     * Sets department.
+     *
+     * @param department the department
+     */
     public void setDepartment(Department department) {
         this.department = department;
     }
 
+    /**
+     * Is staff visibility custom.
+     *
+     * @return the boolean
+     */
     public Boolean isStaffVisibilityCustom() {
 
         return staffVisibilityCustom;
     }
 
+    /**
+     * Sets staff visibility custom.
+     *
+     * @param staffVisibilityCustom the staff visibility custom
+     */
     public void setStaffVisibilityCustom(Boolean staffVisibilityCustom) {
         this.staffVisibilityCustom = staffVisibilityCustom;
     }
 
+    /**
+     * Gets status.
+     *
+     * @return the status
+     */
     public String getStatus() {
 
         return Status;
     }
 
+    /**
+     * Sets status.
+     *
+     * @param Status the status
+     */
     public void setStatus(String Status) {
         this.Status = Status;
     }
 
+    /**
+     * Gets display icon.
+     *
+     * @return the display icon
+     */
     public String getDisplayIcon() {
 
         return displayIcon;
     }
 
+    /**
+     * Sets display icon.
+     *
+     * @param displayIcon the display icon
+     */
     public void setDisplayIcon(String displayIcon) {
         this.displayIcon = displayIcon;
     }
 
+    /**
+     * Gets department id.
+     *
+     * @return the department id
+     */
     public int getDepartmentId() {
 
         return departmentId;
     }
 
+    /**
+     * Sets department id.
+     *
+     * @param departmentId the department id
+     */
     public void setDepartmentId(int departmentId) {
         this.departmentId = departmentId;
     }
 
+    /**
+     * Gets display order.
+     *
+     * @return the display order
+     */
     public int getDisplayOrder() {
 
         return displayOrder;
     }
 
+    /**
+     * Sets display order.
+     *
+     * @param displayOrder the display order
+     */
     public void setDisplayOrder(int displayOrder) {
         this.displayOrder = displayOrder;
     }
 
+    /**
+     * Gets title.
+     *
+     * @return the title
+     */
     public String getTitle() {
 
         return title;
     }
 
+    /**
+     * Sets title.
+     *
+     * @param title the title
+     */
     public void setTitle(String title) {
         this.title = title;
     }
@@ -238,6 +313,11 @@ public class TicketStatus extends KEntity {
         return id;
     }
 
+    /**
+     * Sets id.
+     *
+     * @param id the id
+     */
     public void setId(int id) {
         this.id = id;
     }
@@ -252,36 +332,79 @@ public class TicketStatus extends KEntity {
         return this;
     }
 
+    /**
+     * Gets object xml name.
+     *
+     * @return the object xml name
+     */
     public static String getObjectXmlName() {
 
         return objectXmlName;
     }
 
+    /**
+     * Sets object xml name.
+     *
+     * @param objectXmlName the object xml name
+     */
     public static void setObjectXmlName(String objectXmlName) {
         TicketStatus.objectXmlName = objectXmlName;
     }
 
+    /**
+     * Gets controller.
+     *
+     * @return the controller
+     */
     public static String getController() {
 
         return controller;
     }
 
+    /**
+     * Sets controller.
+     *
+     * @param controller the controller
+     */
     public static void setController(String controller) {
         TicketStatus.controller = controller;
     }
 
+    /**
+     * Gets background color.
+     *
+     * @return the background color
+     */
     public String getBackgroundColor() {
         return backgroundColor;
     }
 
+    /**
+     * Gets color.
+     *
+     * @return the color
+     */
     public String getColor() {
         return color;
     }
 
+    /**
+     * Gets staff groups.
+     *
+     * @return the staff groups
+     * @throws KayakoException the kayako exception
+     */
     public HashMap<Integer, StaffGroup> getStaffGroups() throws KayakoException {
         return getStaffGroups(false);
     }
 
+    /**
+     * Gets staff groups.
+     *
+     * @param refresh the refresh
+     * @return the staff groups
+     * @throws KayakoException the kayako exception
+     */
     public HashMap<Integer, StaffGroup> getStaffGroups(Boolean refresh) throws KayakoException {
         for (int staffGroupId : this.getStaffGroupIds()) {
             if (!staffGroups.containsKey(staffGroupId) || refresh) {
@@ -291,75 +414,167 @@ public class TicketStatus extends KEntity {
         return staffGroups;
     }
 
+    /**
+     * Sets staff groups.
+     *
+     * @param staffGroups the staff groups
+     */
     public void setStaffGroups(HashMap<Integer, StaffGroup> staffGroups) {
         this.staffGroups = staffGroups;
     }
 
+    /**
+     * Sets background color.
+     *
+     * @param backgroundColor the background color
+     */
     public void setBackgroundColor(String backgroundColor) {
         this.backgroundColor = backgroundColor;
     }
 
+    /**
+     * Sets color.
+     *
+     * @param color the color
+     */
     public void setColor(String color) {
         this.color = color;
     }
 
+    /**
+     * Gets reset due time.
+     *
+     * @return the reset due time
+     */
     public Boolean getResetDueTime() {
         return resetDueTime;
     }
 
+    /**
+     * Sets reset due time.
+     *
+     * @param resetDueTime the reset due time
+     */
     public void setResetDueTime(Boolean resetDueTime) {
         this.resetDueTime = resetDueTime;
     }
 
+    /**
+     * Gets display count.
+     *
+     * @return the display count
+     */
     public Boolean getDisplayCount() {
         return displayCount;
     }
 
+    /**
+     * Sets display count.
+     *
+     * @param displayCount the display count
+     */
     public void setDisplayCount(Boolean displayCount) {
         this.displayCount = displayCount;
     }
 
+    /**
+     * Gets mark as resolved.
+     *
+     * @return the mark as resolved
+     */
     public Boolean getMarkAsResolved() {
         return markAsResolved;
     }
 
+    /**
+     * Gets type.
+     *
+     * @return the type
+     */
     public String getType() {
         return type;
     }
 
+    /**
+     * Sets type.
+     *
+     * @param type the type
+     */
     public void setType(String type) {
         this.type = type;
     }
 
+    /**
+     * Gets trigger survey.
+     *
+     * @return the trigger survey
+     */
     public Boolean getTriggerSurvey() {
         return triggerSurvey;
     }
 
+    /**
+     * Sets trigger survey.
+     *
+     * @param triggerSurvey the trigger survey
+     */
     public void setTriggerSurvey(Boolean triggerSurvey) {
         this.triggerSurvey = triggerSurvey;
     }
 
+    /**
+     * Sets mark as resolved.
+     *
+     * @param markAsResolved the mark as resolved
+     */
     public void setMarkAsResolved(Boolean markAsResolved) {
         this.markAsResolved = markAsResolved;
     }
 
+    /**
+     * Gets staff group ids.
+     *
+     * @return the staff group ids
+     */
     public ArrayList<Integer> getStaffGroupIds() {
         return staffGroupIds;
     }
 
+    /**
+     * Sets staff group ids.
+     *
+     * @param staffGroupIds the staff group ids
+     */
     public void setStaffGroupIds(ArrayList<Integer> staffGroupIds) {
         this.staffGroupIds = staffGroupIds;
     }
 
+    /**
+     * Gets display in main list.
+     *
+     * @return the display in main list
+     */
     public Boolean getDisplayInMainList() {
         return displayInMainList;
     }
 
+    /**
+     * Sets display in main list.
+     *
+     * @param displayInMainList the display in main list
+     * @return the display in main list
+     */
     public TicketStatus setDisplayInMainList(Boolean displayInMainList) {
         this.displayInMainList = displayInMainList;
         return this;
     }
 
+    /**
+     * Is visible to staff group.
+     *
+     * @param staffGroupId the staff group id
+     * @return the boolean
+     */
     public Boolean isVisibleToStaffGroup(int staffGroupId) {
         if (!isStaffVisibilityCustom()) {
             return true;
@@ -367,10 +582,22 @@ public class TicketStatus extends KEntity {
         return this.staffGroupIds.contains(staffGroupId);
     }
 
+    /**
+     * Is visible to staff group.
+     *
+     * @param staffGroup the staff group
+     * @return the boolean
+     */
     public Boolean isVisibleToStaffGroup(StaffGroup staffGroup) {
         return this.isVisibleToStaffGroup(staffGroup.getId());
     }
 
+    /**
+     * Is available in department.
+     *
+     * @param departmentId the department id
+     * @return the boolean
+     */
     public Boolean isAvailableInDepartment(int departmentId) {
         if (this.departmentId == 0) {
             return true;
@@ -378,10 +605,23 @@ public class TicketStatus extends KEntity {
         return this.departmentId == departmentId;
     }
 
+    /**
+     * Is available in department.
+     *
+     * @param department the department
+     * @return the boolean
+     */
     public Boolean isAvailableInDepartment(Department department) {
         return this.isAvailableInDepartment(department.getId());
     }
 
+    /**
+     * Get ticket status.
+     *
+     * @param id the id
+     * @return the ticket status
+     * @throws KayakoException the kayako exception
+     */
     public static TicketStatus get(int id) throws KayakoException {
         return new TicketStatus().populate(KEntity.get(controller, id));
     }

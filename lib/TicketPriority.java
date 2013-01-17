@@ -4,24 +4,29 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * ###############################################
- * Kayako App
- * _______________________________________________
- *
+ * The type Ticket priority.
  * @author Rajat Garg
  * @package lib
  * @copyright Copyright (c) 2001-2012, Kayako
- * @license http://www.kayako.com/license
- * @link http://www.kayako.com
- * ###############################################
+ * @license http ://www.kayako.com/license
+ * @link http ://www.kayako.com
  */
 public class TicketPriority extends KEntity {
 
     static final String TYPE_PUBLIC = "public";
     static final String TYPE_PRIVATE = "private";
 
+    /**
+     * The Controller.
+     */
     static protected String controller = "/Tickets/TicketPriority";
+    /**
+     * The Object xml name.
+     */
     static protected String objectXmlName = "ticketpriority";
+    /**
+     * The Read only.
+     */
     protected Boolean readOnly = true;
 
     /**
@@ -61,7 +66,7 @@ public class TicketPriority extends KEntity {
      *
      * @apiField
      * @var string
-     * @see TicketType::TYPE constants.
+     * @see  ::TYPE constants.
      */
     protected String type;
 
@@ -76,7 +81,7 @@ public class TicketPriority extends KEntity {
     /**
      * Identifier of user group this ticket type is visible to.
      *
-     * @apiField name=usergroupid
+     * @apiField name =usergroupid
      * @var int[]
      */
     protected ArrayList<Integer> userGroupIds = new ArrayList<Integer>();
@@ -106,41 +111,85 @@ public class TicketPriority extends KEntity {
     protected String color;
     private HashMap<Integer, UserGroup> userGroups = new HashMap<Integer, UserGroup>();
 
+    /**
+     * Is user visibility custom.
+     *
+     * @return the boolean
+     */
     public Boolean isUserVisibilityCustom() {
 
         return userVisibilityCustom;
     }
 
+    /**
+     * Sets user visibility custom.
+     *
+     * @param userVisibilityCustom the user visibility custom
+     * @return the user visibility custom
+     */
     public TicketPriority setUserVisibilityCustom(Boolean userVisibilityCustom) {
         this.userVisibilityCustom = userVisibilityCustom;
         return this;
     }
 
+    /**
+     * Gets display icon.
+     *
+     * @return the display icon
+     */
     public String getDisplayIcon() {
 
         return displayIcon;
     }
 
+    /**
+     * Sets display icon.
+     *
+     * @param displayIcon the display icon
+     * @return the display icon
+     */
     public TicketPriority setDisplayIcon(String displayIcon) {
         this.displayIcon = displayIcon;
         return this;
     }
 
+    /**
+     * Gets display order.
+     *
+     * @return the display order
+     */
     public int getDisplayOrder() {
 
         return displayOrder;
     }
 
+    /**
+     * Sets display order.
+     *
+     * @param displayOrder the display order
+     * @return the display order
+     */
     public TicketPriority setDisplayOrder(int displayOrder) {
         this.displayOrder = displayOrder;
         return this;
     }
 
+    /**
+     * Gets title.
+     *
+     * @return the title
+     */
     public String getTitle() {
 
         return title;
     }
 
+    /**
+     * Sets title.
+     *
+     * @param title the title
+     * @return the title
+     */
     public TicketPriority setTitle(String title) {
         this.title = title;
         return this;
@@ -151,6 +200,12 @@ public class TicketPriority extends KEntity {
         return id;
     }
 
+    /**
+     * Sets id.
+     *
+     * @param id the id
+     * @return the id
+     */
     public TicketPriority setId(int id) {
         this.id = id;
         return this;
@@ -168,46 +223,101 @@ public class TicketPriority extends KEntity {
         return this;
     }
 
+    /**
+     * Gets object xml name.
+     *
+     * @return the object xml name
+     */
     public static String getObjectXmlName() {
 
         return objectXmlName;
     }
 
+    /**
+     * Sets object xml name.
+     *
+     * @param objectXmlName the object xml name
+     */
     public static void setObjectXmlName(String objectXmlName) {
         TicketPriority.objectXmlName = objectXmlName;
     }
 
+    /**
+     * Gets controller.
+     *
+     * @return the controller
+     */
     public static String getController() {
 
         return controller;
     }
 
+    /**
+     * Sets controller.
+     *
+     * @param controller the controller
+     */
     public static void setController(String controller) {
         TicketPriority.controller = controller;
     }
 
+    /**
+     * Gets type.
+     *
+     * @return the type
+     */
     public String getType() {
         return type;
     }
 
+    /**
+     * Sets type.
+     *
+     * @param type the type
+     * @return the type
+     */
     public TicketPriority setType(String type) {
         this.type = type;
         return this;
     }
 
+    /**
+     * Gets user group ids.
+     *
+     * @return the user group ids
+     */
     public ArrayList<Integer> getUserGroupIds() {
         return userGroupIds;
     }
 
+    /**
+     * Sets user group ids.
+     *
+     * @param userGroupIds the user group ids
+     * @return the user group ids
+     */
     public TicketPriority setUserGroupIds(ArrayList<Integer> userGroupIds) {
         this.userGroupIds = userGroupIds;
         return this;
     }
 
+    /**
+     * Gets user groups.
+     *
+     * @return the user groups
+     * @throws KayakoException the kayako exception
+     */
     public HashMap<Integer, UserGroup> getUserGroups() throws KayakoException {
         return getUserGroups(false);
     }
 
+    /**
+     * Gets user groups.
+     *
+     * @param refresh the refresh
+     * @return the user groups
+     * @throws KayakoException the kayako exception
+     */
     public HashMap<Integer, UserGroup> getUserGroups(Boolean refresh) throws KayakoException {
         for (int userGroupId : this.getUserGroupIds()) {
             if (!userGroups.containsKey(userGroupId) || refresh) {
@@ -217,11 +327,23 @@ public class TicketPriority extends KEntity {
         return userGroups;
     }
 
+    /**
+     * Sets user groups.
+     *
+     * @param userGroups the user groups
+     * @return the user groups
+     */
     public TicketPriority setUserGroups(HashMap<Integer, UserGroup> userGroups) {
         this.userGroups = userGroups;
         return this;
     }
 
+    /**
+     * Is visible to user group.
+     *
+     * @param userGroupId the user group id
+     * @return the boolean
+     */
     public Boolean isVisibleToUserGroup(int userGroupId) {
         if (!isUserVisibilityCustom()) {
             return true;
@@ -229,28 +351,63 @@ public class TicketPriority extends KEntity {
         return this.userGroupIds.contains(userGroupId);
     }
 
+    /**
+     * Is visible to user group.
+     *
+     * @param userGroup the user group
+     * @return the boolean
+     */
     public Boolean isVisibleToUserGroup(UserGroup userGroup) {
         return this.isVisibleToUserGroup(userGroup.getId());
     }
 
+    /**
+     * Gets background color.
+     *
+     * @return the background color
+     */
     public String getBackgroundColor() {
         return backgroundColor;
     }
 
+    /**
+     * Gets color.
+     *
+     * @return the color
+     */
     public String getColor() {
         return color;
     }
 
+    /**
+     * Sets background color.
+     *
+     * @param backgroundColor the background color
+     * @return the background color
+     */
     public TicketPriority setBackgroundColor(String backgroundColor) {
         this.backgroundColor = backgroundColor;
         return this;
     }
 
+    /**
+     * Sets color.
+     *
+     * @param color the color
+     * @return the color
+     */
     public TicketPriority setColor(String color) {
         this.color = color;
         return this;
     }
 
+    /**
+     * Get ticket priority.
+     *
+     * @param id the id
+     * @return the ticket priority
+     * @throws KayakoException the kayako exception
+     */
     public static TicketPriority get(int id) throws KayakoException {
         return new TicketPriority().populate(KEntity.get(controller, id));
     }

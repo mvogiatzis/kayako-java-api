@@ -4,16 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * ###############################################
- * Kayako App
- * _______________________________________________
- *
+ * The type Department.
  * @author Rajat Garg
  * @package lib
  * @copyright Copyright (c) 2001-2012, Kayako
- * @license http://www.kayako.com/license
- * @link http://www.kayako.com
- * ###############################################
+ * @license http ://www.kayako.com/license
+ * @link http ://www.kayako.com
  */
 public class Department extends KEntity {
 
@@ -33,22 +29,52 @@ public class Department extends KEntity {
      */
     static final String APP_LIVECHAT = "tickets";
 
+    /**
+     * The Controller.
+     */
     static protected String controller = "/Base/Department";
+    /**
+     * The Object xml name.
+     */
     static protected String objectXmlName = "department";
+    /**
+     * The Read only.
+     */
     protected Boolean readOnly = true;
 
+    /**
+     * Instantiates a new Department.
+     */
     public Department() {
         this.setType(TYPE_PUBLIC);
     }
 
+    /**
+     * Instantiates a new Department.
+     *
+     * @param title the title
+     */
     public Department(String title) {
         this(title, TYPE_PUBLIC);
     }
 
+    /**
+     * Instantiates a new Department.
+     *
+     * @param title the title
+     * @param type the type
+     */
     public Department(String title, String type) {
         this(title, type, APP_TICKETS);
     }
 
+    /**
+     * Instantiates a new Department.
+     *
+     * @param title the title
+     * @param type the type
+     * @param app the app
+     */
     public Department(String title, String type, String app) {
         this.setTitle(title);
         this.setType(type);
@@ -125,14 +151,14 @@ public class Department extends KEntity {
      *
      * @apiField
      * @var string
-     * @see Department::TYPE constants.
+     * @see  ::TYPE constants.
      */
     protected String type;
 
     /**
      * Department app.
      *
-     * @apiField required_create=true
+     * @apiField required_create =true
      * @var int
      */
 
@@ -146,10 +172,23 @@ public class Department extends KEntity {
 
     protected Department parentDepartment = null;
 
+    /**
+     * Gets parent department.
+     *
+     * @return the parent department
+     * @throws KayakoException the kayako exception
+     */
     public Department getParentDepartment() throws KayakoException {
         return this.getParentDepartment(false);
     }
 
+    /**
+     * Gets parent department.
+     *
+     * @param refresh the refresh
+     * @return the parent department
+     * @throws KayakoException the kayako exception
+     */
     public Department getParentDepartment(Boolean refresh) throws KayakoException {
         if (parentDepartment != null && !refresh) {
             return parentDepartment;
@@ -162,10 +201,23 @@ public class Department extends KEntity {
 
     }
 
+    /**
+     * Get department.
+     *
+     * @param id the id
+     * @return the department
+     * @throws KayakoException the kayako exception
+     */
     public static Department get(int id) throws KayakoException {
         return new Department().populate(KEntity.get(controller, id));
     }
 
+    /**
+     * Sets parent department.
+     *
+     * @param parentDepartment the parent department
+     * @return the parent department
+     */
     public Department setParentDepartment(Department parentDepartment) {
         this.parentDepartment = parentDepartment;
         if (parentDepartment != null && parentDepartment.getId() > 0) {
@@ -174,51 +226,106 @@ public class Department extends KEntity {
         return this;
     }
 
+    /**
+     * Is user visibility custom.
+     *
+     * @return the boolean
+     */
     public Boolean isUserVisibilityCustom() {
 
         return userVisibilityCustom;
     }
 
+    /**
+     * Sets user visibility custom.
+     *
+     * @param userVisibilityCustom the user visibility custom
+     * @return the user visibility custom
+     */
     public Department setUserVisibilityCustom(Boolean userVisibilityCustom) {
         this.userVisibilityCustom = userVisibilityCustom;
         return this;
     }
 
+    /**
+     * Gets display icon.
+     *
+     * @return the display icon
+     */
     public String getDisplayIcon() {
 
         return displayIcon;
     }
 
+    /**
+     * Sets display icon.
+     *
+     * @param displayIcon the display icon
+     * @return the display icon
+     */
     public Department setDisplayIcon(String displayIcon) {
         this.displayIcon = displayIcon;
         return this;
     }
 
+    /**
+     * Gets parent department id.
+     *
+     * @return the parent department id
+     */
     public int getParentDepartmentId() {
 
         return parentDepartmentId;
     }
 
+    /**
+     * Sets parent department id.
+     *
+     * @param parentDepartmentId the parent department id
+     * @return the parent department id
+     */
     public Department setParentDepartmentId(int parentDepartmentId) {
         this.parentDepartmentId = parentDepartmentId;
         return this;
     }
 
+    /**
+     * Gets display order.
+     *
+     * @return the display order
+     */
     public int getDisplayOrder() {
 
         return displayOrder;
     }
 
+    /**
+     * Sets display order.
+     *
+     * @param displayOrder the display order
+     * @return the display order
+     */
     public Department setDisplayOrder(int displayOrder) {
         this.displayOrder = displayOrder;
         return this;
     }
 
+    /**
+     * Gets title.
+     *
+     * @return the title
+     */
     public String getTitle() {
 
         return title;
     }
 
+    /**
+     * Sets title.
+     *
+     * @param title the title
+     * @return the title
+     */
     public Department setTitle(String title) {
         this.title = title;
         return this;
@@ -229,6 +336,12 @@ public class Department extends KEntity {
         return id;
     }
 
+    /**
+     * Sets id.
+     *
+     * @param id the id
+     * @return the id
+     */
     public Department setId(int id) {
         this.id = id;
         return this;
@@ -244,29 +357,62 @@ public class Department extends KEntity {
         return this;
     }
 
+    /**
+     * Gets object xml name.
+     *
+     * @return the object xml name
+     */
     public static String getObjectXmlName() {
 
         return objectXmlName;
     }
 
+    /**
+     * Sets object xml name.
+     *
+     * @param objectXmlName the object xml name
+     */
     public static void setObjectXmlName(String objectXmlName) {
         Department.objectXmlName = objectXmlName;
     }
 
+    /**
+     * Gets controller.
+     *
+     * @return the controller
+     */
     public static String getController() {
 
         return controller;
     }
 
+    /**
+     * Sets controller.
+     *
+     * @param controller the controller
+     */
     public static void setController(String controller) {
         Department.controller = controller;
 
     }
 
+    /**
+     * Gets user groups.
+     *
+     * @return the user groups
+     * @throws KayakoException the kayako exception
+     */
     public HashMap<Integer, UserGroup> getUserGroups() throws KayakoException {
         return getUserGroups(false);
     }
 
+    /**
+     * Gets user groups.
+     *
+     * @param refresh the refresh
+     * @return the user groups
+     * @throws KayakoException the kayako exception
+     */
     public HashMap<Integer, UserGroup> getUserGroups(Boolean refresh) throws KayakoException {
         for (int userGroupId : this.getUserGroupIds()) {
             if (!userGroups.containsKey(userGroupId) || refresh) {
@@ -276,29 +422,63 @@ public class Department extends KEntity {
         return userGroups;
     }
 
+    /**
+     * Sets user groups.
+     *
+     * @param userGroups the user groups
+     * @return the user groups
+     */
     public Department setUserGroups(HashMap<Integer, UserGroup> userGroups) {
         this.userGroups = userGroups;
         return this;
     }
 
+    /**
+     * Gets type.
+     *
+     * @return the type
+     */
     public String getType() {
         return type;
     }
 
+    /**
+     * Sets type.
+     *
+     * @param type the type
+     * @return the type
+     */
     public Department setType(String type) {
         this.type = type;
         return this;
     }
 
+    /**
+     * Gets user group ids.
+     *
+     * @return the user group ids
+     */
     public ArrayList<Integer> getUserGroupIds() {
         return userGroupIds;
     }
 
+    /**
+     * Sets user group ids.
+     *
+     * @param userGroupIds the user group ids
+     * @return the user group ids
+     */
     public Department setUserGroupIds(ArrayList<Integer> userGroupIds) {
         this.userGroupIds = userGroupIds;
         return this;
     }
 
+    /**
+     * Add user group.
+     *
+     * @param userGroup the user group
+     * @return the department
+     */
     public Department addUserGroup(UserGroup userGroup) {
         if (userGroupIds.contains(userGroup.getId())) {
             return this;
@@ -309,6 +489,12 @@ public class Department extends KEntity {
         return this;
     }
 
+    /**
+     * Is visible to user group.
+     *
+     * @param userGroupId the user group id
+     * @return the boolean
+     */
     public Boolean isVisibleToUserGroup(int userGroupId) {
         if (!isUserVisibilityCustom()) {
             return true;
@@ -316,19 +502,46 @@ public class Department extends KEntity {
         return this.userGroupIds.contains(userGroupId);
     }
 
+    /**
+     * Is visible to user group.
+     *
+     * @param userGroup the user group
+     * @return the boolean
+     */
     public Boolean isVisibleToUserGroup(UserGroup userGroup) {
         return this.isVisibleToUserGroup(userGroup.getId());
     }
 
+    /**
+     * Gets app.
+     *
+     * @return the app
+     */
     public String getApp() {
         return app;
     }
 
+    /**
+     * Sets app.
+     *
+     * @param app the app
+     * @return the app
+     */
     public Department setApp(String app) {
         this.app = app;
         return this;
     }
 
+    /**
+     * Create auto ticket.
+     *
+     * @param creatorFullName the creator full name
+     * @param email the email
+     * @param contents the contents
+     * @param subject the subject
+     * @return the ticket
+     * @throws KayakoException the kayako exception
+     */
     public Ticket createAutoTicket(String creatorFullName, String email, String contents, String subject) throws KayakoException {
         return new Ticket(this, creatorFullName, email, contents, subject);
     }
@@ -338,12 +551,19 @@ public class Department extends KEntity {
      * WARNING: Data is not sent to Kayako unless you explicitly call create() on this method's result.
      *
      * @param title Title of new department.
-     * @return Department
+     * @return Department department
      */
     public Department createSubDepartment(String title) {
         return this.createSubDepartment(title, Department.TYPE_PUBLIC);
     }
 
+    /**
+     * Create sub department.
+     *
+     * @param title the title
+     * @param type the type
+     * @return the department
+     */
     public Department createSubDepartment(String title, String type) {
         return new Department(title, type, this.getApp()).setParentDepartment(this);
     }

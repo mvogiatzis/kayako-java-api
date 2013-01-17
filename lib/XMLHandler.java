@@ -9,18 +9,13 @@ import java.util.Map;
 import java.util.Stack;
 
 /**
- * ###############################################
- * <p/>
- * Kayako App
- * _______________________________________________
- *
+ * The type XML handler.
  * @author Rajat Garg
  * @package lib
  * @copyright Copyright (c) 2001-2012, Kayako
  * @license http ://www.kayako.com/license
  * @link http ://www.kayako.com
  * <p/>
- * ###############################################
  */
 public class XMLHandler extends DefaultHandler {
 

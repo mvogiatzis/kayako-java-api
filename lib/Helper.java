@@ -11,16 +11,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * ###############################################
- * Kayako App
- * _______________________________________________
+ * The Helper class to provide some useful utility functions.
  *
  * @author Rajat Garg
  * @package lib
  * @copyright Copyright (c) 2001-2012, Kayako
  * @license http ://www.kayako.com/license
  * @link http ://www.kayako.com
- * ###############################################
  */
 public class Helper {
 
@@ -86,7 +83,7 @@ public class Helper {
      * @return the date string
      */
     public static String getDateString(long timeStamp) {
-        return getDateString(timeStamp, new ConfigurationFactory().getConfiguration().getDateFormat());
+        return getDateString(timeStamp, KEntity.getConfigurationFactory().getConfiguration().getDateFormat());
     }
 
     /**
@@ -97,14 +94,14 @@ public class Helper {
      * @throws ParseException the parse exception
      */
     public static long getTimeStampFromDateString(String dateString) throws ParseException {
-        return getTimeStampFromDateString(dateString, new ConfigurationFactory().getConfiguration().getDateFormat());
+        return getTimeStampFromDateString(dateString, KEntity.getConfigurationFactory().getConfiguration().getDateFormat());
     }
 
     /**
      * Gets time stamp from date string.
      *
      * @param dateString the date string
-     * @param format     the format
+     * @param format the format
      * @return the time stamp from date string
      * @throws ParseException the parse exception
      */
@@ -118,9 +115,9 @@ public class Helper {
      * Gets date string.
      *
      * @param timeStamp the time stamp
-     * @param format    the format
+     * @param format the format
      * @return the date string
-     *///String format can be anything workable with SimpleDateFormat constructor
+     */ //String format can be anything workable with SimpleDateFormat constructor
     // ref: http://docs.oracle.com/javase/6/docs/api/java/text/SimpleDateFormat.html
     public static String getDateString(long timeStamp, String format) {
         Date date = new Date(timeStamp);

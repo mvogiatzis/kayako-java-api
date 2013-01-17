@@ -4,33 +4,49 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * ###############################################
- * Kayako App
- * _______________________________________________
- *
+ * The type User group.
  * @author Rajat Garg
  * @package lib
  * @copyright Copyright (c) 2001-2012, Kayako
- * @license http://www.kayako.com/license
- * @link http://www.kayako.com
- * ###############################################
+ * @license http ://www.kayako.com/license
+ * @link http ://www.kayako.com
  */
 public class UserGroup extends KEntity {
 
     final static String TYPE_REGISTERED = "registered";
     final static String TYPE_GUEST = "guest";
 
+    /**
+     * The Controller.
+     */
     static protected String controller = "/Base/UserGroup";
+    /**
+     * The Object xml name.
+     */
     static protected String objectXmlName = "usergroup";
 
+    /**
+     * Instantiates a new User group.
+     */
     public UserGroup() {
 
     }
 
+    /**
+     * Instantiates a new User group.
+     *
+     * @param title the title
+     */
     public UserGroup(String title) {
         this(title, TYPE_REGISTERED);
     }
 
+    /**
+     * Instantiates a new User group.
+     *
+     * @param title the title
+     * @param type the type
+     */
     public UserGroup(String title, String type) {
         this.setTitle(title);
         this.setType(type);
@@ -57,7 +73,7 @@ public class UserGroup extends KEntity {
      *
      * @apiField
      * @var string
-     * @see UserGroup::TYPE constants.
+     * @see  ::TYPE constants.
      */
     protected String type;
 
@@ -69,11 +85,21 @@ public class UserGroup extends KEntity {
      */
     protected Boolean master;
 
+    /**
+     * Gets title.
+     *
+     * @return the title
+     */
     public String getTitle() {
 
         return title;
     }
 
+    /**
+     * Sets title.
+     *
+     * @param title the title
+     */
     public void setTitle(String title) {
         this.title = title;
     }
@@ -83,6 +109,11 @@ public class UserGroup extends KEntity {
         return id;
     }
 
+    /**
+     * Sets id.
+     *
+     * @param id the id
+     */
     public void setId(int id) {
         this.id = id;
     }
@@ -97,40 +128,87 @@ public class UserGroup extends KEntity {
         return this;
     }
 
+    /**
+     * Gets object xml name.
+     *
+     * @return the object xml name
+     */
     public static String getObjectXmlName() {
 
         return objectXmlName;
     }
 
+    /**
+     * Sets object xml name.
+     *
+     * @param objectXmlName the object xml name
+     */
     public static void setObjectXmlName(String objectXmlName) {
         UserGroup.objectXmlName = objectXmlName;
     }
 
+    /**
+     * Gets controller.
+     *
+     * @return the controller
+     */
     public static String getController() {
 
         return controller;
     }
 
+    /**
+     * Sets controller.
+     *
+     * @param controller the controller
+     */
     public static void setController(String controller) {
         UserGroup.controller = controller;
     }
 
+    /**
+     * Gets type.
+     *
+     * @return the type
+     */
     public String getType() {
         return type;
     }
 
+    /**
+     * Sets type.
+     *
+     * @param type the type
+     */
     public void setType(String type) {
         this.type = type;
     }
 
+    /**
+     * Is master.
+     *
+     * @return the boolean
+     */
     public Boolean isMaster() {
         return master;
     }
 
+    /**
+     * Sets master.
+     *
+     * @param master the master
+     */
     public void setMaster(Boolean master) {
         this.master = master;
     }
 
+    /**
+     * Get user group.
+     *
+     * @param id the id
+     * @return the user group
+     * @throws KayakoException the kayako exception
+     */
     public static UserGroup get(int id) throws KayakoException {
         return new UserGroup().populate(KEntity.get(controller, id));
     }
@@ -168,6 +246,14 @@ public class UserGroup extends KEntity {
         return userGroupHashMap;
     }
 
+    /**
+     * Create user.
+     *
+     * @param fullName the full name
+     * @param email the email
+     * @param password the password
+     * @return the user
+     */
     public User createUser(String fullName, String email, String password) {
         return new User(fullName, email, this, password);
     }

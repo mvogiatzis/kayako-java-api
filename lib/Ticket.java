@@ -4,16 +4,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * ###############################################
- * Kayako App
- * _______________________________________________
+ * The type Ticket.
  *
  * @author Rajat Garg
  * @package lib
  * @copyright Copyright (c) 2001-2012, Kayako
  * @license http ://www.kayako.com/license
  * @link http ://www.kayako.com
- * ###############################################
  */
 public class Ticket extends KEntityCustom {
 
@@ -126,7 +123,7 @@ public class Ticket extends KEntityCustom {
     /**
      * Ticket flag type.
      *
-     * @apiField  * @see Ticket::FLAG static final Stringants.
+     * @apiField * @see Ticket::FLAG static final Stringants.
      */
     protected int flagType;
     /**
@@ -146,19 +143,19 @@ public class Ticket extends KEntityCustom {
      *
      * @apiField required_create =true
      */
-    protected int statusId;
+    protected int ticketStatusId;
     /**
      * Ticket priority identifier.
      *
      * @apiField required_create =true
      */
-    protected int priorityId;
+    protected int ticketPriorityId;
     /**
      * Ticket type identifier.
      *
      * @apiField required_create =true
      */
-    protected int typeId;
+    protected int ticketTypeId;
     /**
      * Identifier of the user ticket was created by.
      *
@@ -270,13 +267,13 @@ public class Ticket extends KEntityCustom {
     /**
      * Type of the ticket creator.
      *
-     * @apiField  * @see Ticket::CREATOR static final Stringants.
+     * @apiField * @see Ticket::CREATOR static final Stringants.
      */
     protected int creator;
     /**
      * Ticket creation mode.
      *
-     * @apiField  * @see Ticket::CREATION_MODE static final Stringants.
+     * @apiField * @see Ticket::CREATION_MODE static final Stringants.
      */
     protected int creationMode;
     /**
@@ -407,7 +404,7 @@ public class Ticket extends KEntityCustom {
     private Ticket(Department department, String contents, String subject) {
         this.setDepartment(department);
         this.setContents(contents).setSubject(subject);
-        this.setTypeId(getDefaultTypeId()).setPriorityId(getDefaultPriorityId()).setStatusId(getDefaultStatusId());
+        this.setTicketTypeId(getDefaultTypeId()).setTicketPriorityId(getDefaultPriorityId()).setTicketStatusId(getDefaultStatusId());
 
     }
 
@@ -415,9 +412,9 @@ public class Ticket extends KEntityCustom {
      * Instantiates a new Ticket.
      *
      * @param department the department
-     * @param creator the creator
-     * @param contents the contents
-     * @param subject the subject
+     * @param creator    the creator
+     * @param contents   the contents
+     * @param subject    the subject
      */
     public Ticket(Department department, int creator, String contents, String subject) {
         this(department, contents, subject);
@@ -427,10 +424,11 @@ public class Ticket extends KEntityCustom {
     /**
      * Creates new ticket with implicit staff as creator.
      * WARNING: Data is not sent to Kayako unless you explicitly call create() on this method's result.
+     *
      * @param department the department
-     * @param creator the creator
-     * @param contents the contents
-     * @param subject the subject
+     * @param creator    the creator
+     * @param contents   the contents
+     * @param subject    the subject
      */
     public Ticket(Department department, Staff creator, String contents, String subject) {
         this(department, contents, subject);
@@ -440,10 +438,11 @@ public class Ticket extends KEntityCustom {
     /**
      * Creates new ticket with implicit user as creator.
      * WARNING: Data is not sent to Kayako unless you explicitly call create() on this method's result.
+     *
      * @param department the department
-     * @param creator the creator
-     * @param contents the contents
-     * @param subject the subject
+     * @param creator    the creator
+     * @param contents   the contents
+     * @param subject    the subject
      * @throws KayakoException the kayako exception
      */
     public Ticket(Department department, User creator, String contents, String subject) throws KayakoException {
@@ -454,11 +453,12 @@ public class Ticket extends KEntityCustom {
     /**
      * Creates new ticket with creator user automatically created by server using provided name and e-mail.
      * WARNING: Data is not sent to Kayako unless you explicitly call create() on this method's result.
-     * @param department the department
+     *
+     * @param department      the department
      * @param creatorFullName the creator full name
-     * @param creatorEmail the creator email
-     * @param contents the contents
-     * @param subject the subject
+     * @param creatorEmail    the creator email
+     * @param contents        the contents
+     * @param subject         the subject
      * @throws KayakoException the kayako exception
      */
     public Ticket(Department department, String creatorFullName, String creatorEmail, String contents, String subject) throws KayakoException {
@@ -469,7 +469,7 @@ public class Ticket extends KEntityCustom {
     /**
      * Sets creator id.
      *
-     * @param creatorId the creator id
+     * @param creatorId   the creator id
      * @param creatorType the creator type
      * @return the creator id
      * @throws KayakoException the kayako exception
@@ -512,7 +512,7 @@ public class Ticket extends KEntityCustom {
      * Sets creator auto.
      *
      * @param fullName the full name
-     * @param email the email
+     * @param email    the email
      * @return the creator auto
      * @throws KayakoException the kayako exception
      */
@@ -774,18 +774,18 @@ public class Ticket extends KEntityCustom {
      *
      * @return the status id
      */
-    public int getStatusId() {
-        return statusId;
+    public int getTicketStatusId() {
+        return ticketStatusId;
     }
 
     /**
      * Sets status id.
      *
-     * @param statusId the status id
+     * @param ticketStatusId the status id
      * @return the status id
      */
-    public Ticket setStatusId(int statusId) {
-        this.statusId = statusId;
+    public Ticket setTicketStatusId(int ticketStatusId) {
+        this.ticketStatusId = ticketStatusId;
         this.status = null;
         return this;
     }
@@ -795,18 +795,18 @@ public class Ticket extends KEntityCustom {
      *
      * @return the priority id
      */
-    public int getPriorityId() {
-        return priorityId;
+    public int getTicketPriorityId() {
+        return ticketPriorityId;
     }
 
     /**
      * Sets priority id.
      *
-     * @param priorityId the priority id
+     * @param ticketPriorityId the priority id
      * @return the priority id
      */
-    public Ticket setPriorityId(int priorityId) {
-        this.priorityId = priorityId;
+    public Ticket setTicketPriorityId(int ticketPriorityId) {
+        this.ticketPriorityId = ticketPriorityId;
         this.priority = null;
         return this;
     }
@@ -816,18 +816,18 @@ public class Ticket extends KEntityCustom {
      *
      * @return the type id
      */
-    public int getTypeId() {
-        return typeId;
+    public int getTicketTypeId() {
+        return ticketTypeId;
     }
 
     /**
      * Sets type id.
      *
-     * @param typeId the type id
+     * @param ticketTypeId the type id
      * @return the type id
      */
-    public Ticket setTypeId(int typeId) {
-        this.typeId = typeId;
+    public Ticket setTicketTypeId(int ticketTypeId) {
+        this.ticketTypeId = ticketTypeId;
         this.type = null;
         return this;
     }
@@ -904,6 +904,7 @@ public class Ticket extends KEntityCustom {
 
     /**
      * Returns identifier of the staff user, owner of this ticket.
+     *
      * @return the owner staff id
      */
     public int getOwnerStaffId() {
@@ -912,6 +913,7 @@ public class Ticket extends KEntityCustom {
 
     /**
      * Sets identifier of the staff user, owner of this ticket.
+     *
      * @param ownerStaffId the owner staff id
      * @return the owner staff id
      */
@@ -923,6 +925,7 @@ public class Ticket extends KEntityCustom {
 
     /**
      * Returns full name of the staff user, owner of this ticket.
+     *
      * @return the owner staff name
      */
     public String getOwnerStaffName() {
@@ -1219,7 +1222,7 @@ public class Ticket extends KEntityCustom {
      * Sets creator.
      *
      * @param creatorId the creator id
-     * @param type the type
+     * @param type      the type
      * @return the creator
      * @throws KayakoException the kayako exception
      */
@@ -1412,7 +1415,7 @@ public class Ticket extends KEntityCustom {
      * Gets watchers.
      *
      * @return the watchers
-     *///HashMap staffId => Full Name
+     */ //HashMap staffId => Full Name
     public HashMap<Integer, String> getWatchers() {
         return watchers;
     }
@@ -1431,7 +1434,7 @@ public class Ticket extends KEntityCustom {
     /**
      * Add watcher.
      *
-     * @param id the id
+     * @param id   the id
      * @param name the name
      * @return the ticket
      */
@@ -1463,7 +1466,7 @@ public class Ticket extends KEntityCustom {
     /**
      * Add workflow.
      *
-     * @param id the id
+     * @param id    the id
      * @param title the title
      * @return the ticket
      */
@@ -1483,6 +1486,7 @@ public class Ticket extends KEntityCustom {
 
     /**
      * Sets identifier of staff user, the creator of this ticket.
+     *
      * @param staffId the staff id
      * @return the staff id
      * @throws KayakoException the kayako exception
@@ -1558,8 +1562,8 @@ public class Ticket extends KEntityCustom {
      * @throws KayakoException the kayako exception
      */
     public TicketStatus getStatus(Boolean refresh) throws KayakoException {
-        if ((this.status == null || refresh) && this.statusId > 0) {
-            status = TicketStatus.get(this.statusId);
+        if ((this.status == null || refresh) && this.ticketStatusId > 0) {
+            status = TicketStatus.get(this.ticketStatusId);
         }
         return status;
     }
@@ -1572,7 +1576,7 @@ public class Ticket extends KEntityCustom {
      */
     public Ticket setStatus(TicketStatus status) {
         if (status != null) {
-            this.statusId = status.getId();
+            this.ticketStatusId = status.getId();
             this.status = status;
         }
         return this;
@@ -1596,8 +1600,8 @@ public class Ticket extends KEntityCustom {
      * @throws KayakoException the kayako exception
      */
     public TicketPriority getPriority(Boolean refresh) throws KayakoException {
-        if ((this.priority == null || refresh) && this.priorityId > 0) {
-            priority = TicketPriority.get(this.priorityId);
+        if ((this.priority == null || refresh) && this.ticketPriorityId > 0) {
+            priority = TicketPriority.get(this.ticketPriorityId);
         }
         return priority;
     }
@@ -1610,7 +1614,7 @@ public class Ticket extends KEntityCustom {
      */
     public Ticket setPriority(TicketPriority priority) {
         if (priority != null) {
-            this.priorityId = priority.getId();
+            this.ticketPriorityId = priority.getId();
             this.priority = priority;
         }
         return this;
@@ -1634,8 +1638,8 @@ public class Ticket extends KEntityCustom {
      * @throws KayakoException the kayako exception
      */
     public TicketType getType(Boolean refresh) throws KayakoException {
-        if ((this.type == null || refresh) && this.typeId > 0) {
-            type = TicketType.get(this.typeId);
+        if ((this.type == null || refresh) && this.ticketTypeId > 0) {
+            type = TicketType.get(this.ticketTypeId);
         }
         return type;
     }
@@ -1648,7 +1652,7 @@ public class Ticket extends KEntityCustom {
      */
     public Ticket setType(TicketType type) {
         if (type != null) {
-            this.typeId = type.getId();
+            this.ticketTypeId = type.getId();
             this.type = type;
         }
         return this;
@@ -1658,6 +1662,7 @@ public class Ticket extends KEntityCustom {
      * Returns user, the creator of this ticket.
      * <p/>
      * Result is cached until the end of script.
+     *
      * @return the user
      * @throws KayakoException the kayako exception
      */
@@ -1681,6 +1686,7 @@ public class Ticket extends KEntityCustom {
 
     /**
      * Sets user, the creator of this post.
+     *
      * @param user the user
      * @return the user
      * @throws KayakoException the kayako exception
@@ -1704,6 +1710,7 @@ public class Ticket extends KEntityCustom {
      * Return organization the user who created the ticket belongs to.
      * <p/>
      * Result is cached until the end of script.
+     *
      * @return the user organization
      * @throws KayakoException the kayako exception
      */
@@ -1765,6 +1772,7 @@ public class Ticket extends KEntityCustom {
 
     /**
      * Sets staff user, the creator of this ticket.
+     *
      * @param staff the staff
      * @return the staff
      */
@@ -1809,6 +1817,7 @@ public class Ticket extends KEntityCustom {
 
     /**
      * Sets staff user, owner of this ticket.
+     *
      * @param ownerStaff the owner staff
      * @return the owner staff
      */
@@ -2102,10 +2111,10 @@ public class Ticket extends KEntityCustom {
     /**
      * Gets all.
      *
-     * @param departments the departments
+     * @param departments    the departments
      * @param ticketStatuses the ticket statuses
-     * @param owners the owners
-     * @param users the users
+     * @param owners         the owners
+     * @param users          the users
      * @return the all
      * @throws KayakoException the kayako exception
      */
@@ -2217,9 +2226,9 @@ public class Ticket extends KEntityCustom {
     /**
      * Sets default status, priority and type for newly created tickets.
      *
-     * @param statusId Default ticket status identifier.
-     * @param priorityId Default ticket priority identifier.
-     * @param typeId Default ticket type identifier.
+     * @param statusId       Default ticket status identifier.
+     * @param priorityId     Default ticket priority identifier.
+     * @param typeId         Default ticket type identifier.
      * @param autoCreateUser True to automatically create user if none is provided as creator. False otherwise.
      */
 
@@ -2233,7 +2242,7 @@ public class Ticket extends KEntityCustom {
     /**
      * Create ticket post.
      *
-     * @param creator the creator
+     * @param creator  the creator
      * @param contents the contents
      * @return the ticket post
      */
@@ -2244,7 +2253,7 @@ public class Ticket extends KEntityCustom {
     /**
      * Create ticket post.
      *
-     * @param creator the creator
+     * @param creator  the creator
      * @param contents the contents
      * @return the ticket post
      */
@@ -2255,7 +2264,7 @@ public class Ticket extends KEntityCustom {
     /**
      * Create ticket note.
      *
-     * @param creator the creator
+     * @param creator  the creator
      * @param contents the contents
      * @return the ticket note
      */
@@ -2266,9 +2275,9 @@ public class Ticket extends KEntityCustom {
     /**
      * Create ticket time track.
      *
-     * @param contents the contents
-     * @param staff the staff
-     * @param timeWorked the time worked
+     * @param contents     the contents
+     * @param staff        the staff
+     * @param timeWorked   the time worked
      * @param timeBillable the time billable
      * @return the ticket time track
      */
@@ -2298,11 +2307,11 @@ public class Ticket extends KEntityCustom {
             } else if (elementName.equals("departmentid")) {
                 this.setDepartmentId(Helper.parseInt(component.getContent()));
             } else if (elementName.equals("statusid")) {
-                this.setStatusId(Helper.parseInt(component.getContent()));
+                this.setTicketStatusId(Helper.parseInt(component.getContent()));
             } else if (elementName.equals("priorityid")) {
-                this.setPriorityId(Helper.parseInt(component.getContent()));
+                this.setTicketPriorityId(Helper.parseInt(component.getContent()));
             } else if (elementName.equals("typeid")) {
-                this.setTypeId(Helper.parseInt(component.getContent()));
+                this.setTicketTypeId(Helper.parseInt(component.getContent()));
             } else if (elementName.equals("userid")) {
                 this.setUserId(Helper.parseInt(component.getContent()));
             } else if (elementName.equals("userorganization")) {
@@ -2391,8 +2400,8 @@ public class Ticket extends KEntityCustom {
 
         ticketHashMap.put("departmentid", Integer.toString(this.getDepartmentId()));
         ticketHashMap.put("ticketstatusid", Integer.toString(this.getStaffId()));
-        ticketHashMap.put("ticketpriorityid", Integer.toString(this.getPriorityId()));
-        ticketHashMap.put("tickettypeid", Integer.toString(this.getTypeId()));
+        ticketHashMap.put("ticketpriorityid", Integer.toString(this.getTicketPriorityId()));
+        ticketHashMap.put("tickettypeid", Integer.toString(this.getTicketTypeId()));
         if (this.getOwnerStaffId() > 0) {
             ticketHashMap.put("ownerstaffid", Integer.toString(this.getOwnerStaffId()));
         }

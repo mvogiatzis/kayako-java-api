@@ -3,16 +3,12 @@ package lib;
 import java.util.ArrayList;
 
 /**
- * ###############################################
- * Kayako App
- * _______________________________________________
- *
+ * The type Custom field definition.
  * @author Rajat Garg
  * @package lib
  * @copyright Copyright (c) 2001-2012, Kayako
  * @license http ://www.kayako.com/license
  * @link http ://www.kayako.com
- * ###############################################
  */
 public class CustomFieldDefinition extends KEntity {
     static final int TYPE_TEXT = 1;

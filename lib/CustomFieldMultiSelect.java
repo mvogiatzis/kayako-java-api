@@ -4,16 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * ###############################################
- * Kayako App
- * _______________________________________________
- *
+ * The type Custom field multi select.
  * @author Rajat Garg
  * @package lib
  * @copyright Copyright (c) 2001-2012, Kayako
- * @license http://www.kayako.com/license
- * @link http://www.kayako.com
- * ###############################################
+ * @license http ://www.kayako.com/license
+ * @link http ://www.kayako.com
  */
 public class CustomFieldMultiSelect extends CustomField {
 
@@ -24,16 +20,35 @@ public class CustomFieldMultiSelect extends CustomField {
      */
     public static final String VALUE_SEPARATOR = ", ";
 
+    /**
+     * The Options.
+     */
     protected ArrayList<CustomFieldOption> options = new ArrayList<CustomFieldOption>();
 
+    /**
+     * Instantiates a new Custom field multi select.
+     *
+     * @param customFieldGroup the custom field group
+     */
     public CustomFieldMultiSelect(CustomFieldGroup customFieldGroup) {
         super(customFieldGroup);
     }
 
+    /**
+     * Gets options.
+     *
+     * @return the options
+     */
     public ArrayList<CustomFieldOption> getOptions() {
         return options;
     }
 
+    /**
+     * Sets options.
+     *
+     * @param options the options
+     * @return the options
+     */
     public CustomFieldMultiSelect setOptions(ArrayList<CustomFieldOption> options) {
         this.options = options;
         String rawValue = "";
@@ -44,18 +59,34 @@ public class CustomFieldMultiSelect extends CustomField {
         return this;
     }
 
+    /**
+     * Sets options.
+     *
+     * @param option the option
+     * @return the options
+     */
     public CustomFieldMultiSelect setOptions(CustomFieldOption option) {
         ArrayList<CustomFieldOption> arrayList = new ArrayList<CustomFieldOption>();
         arrayList.add(option);
         return this.setOptions(arrayList);
     }
 
+    /**
+     * Add to options.
+     *
+     * @param customFieldOption the custom field option
+     * @return the custom field multi select
+     */
     public CustomFieldMultiSelect addToOptions(CustomFieldOption customFieldOption) {
         this.options.add(customFieldOption);
         return this;
     }
 
-    //returns HashMap like (option.id => option.value)
+    /**
+     * Gets values.
+     *
+     * @return the values
+     */ //returns HashMap like (option.id => option.value)
     public HashMap<String, String> getValues() {
         HashMap<String, String> hashMap = new HashMap<String, String>();
         for (CustomFieldOption option : this.options) {

@@ -3,16 +3,12 @@ package lib;
 import java.util.HashMap;
 
 /**
- * ###############################################
- * Kayako App
- * _______________________________________________
- *
+ * The type Custom field linked select.
  * @author Rajat Garg
  * @package lib
  * @copyright Copyright (c) 2001-2012, Kayako
- * @license http://www.kayako.com/license
- * @link http://www.kayako.com
- * ###############################################
+ * @license http ://www.kayako.com/license
+ * @link http ://www.kayako.com
  */
 public class CustomFieldLinkedSelect extends CustomFieldSelect {
 
@@ -23,6 +19,11 @@ public class CustomFieldLinkedSelect extends CustomFieldSelect {
      */
     public static final String PARENT_CHILD_SEPARATOR = " &gt; ";
 
+    /**
+     * Instantiates a new Custom field linked select.
+     *
+     * @param customFieldGroup the custom field group
+     */
     public CustomFieldLinkedSelect(CustomFieldGroup customFieldGroup) {
         super(customFieldGroup);
     }

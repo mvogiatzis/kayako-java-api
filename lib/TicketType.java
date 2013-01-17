@@ -4,24 +4,29 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * ###############################################
- * Kayako App
- * _______________________________________________
- *
+ * The type Ticket type.
  * @author Rajat Garg
  * @package lib
  * @copyright Copyright (c) 2001-2012, Kayako
- * @license http://www.kayako.com/license
- * @link http://www.kayako.com
- * ###############################################
+ * @license http ://www.kayako.com/license
+ * @link http ://www.kayako.com
  */
 public class TicketType extends KEntity {
 
     final String TYPE_PUBLIC = "public";
     final String TYPE_PRIVATE = "private";
 
+    /**
+     * The Controller.
+     */
     static protected String controller = "/Tickets/TicketType";
+    /**
+     * The Object xml name.
+     */
     static protected String objectXmlName = "tickettype";
+    /**
+     * The Read only.
+     */
     protected Boolean readOnly = true;
 
     /**
@@ -71,7 +76,7 @@ public class TicketType extends KEntity {
      *
      * @apiField
      * @var string
-     * @see TicketType::TYPE constants.
+     * @see  ::TYPE constants.
      */
     protected String type;
 
@@ -86,7 +91,7 @@ public class TicketType extends KEntity {
     /**
      * Identifier of user group this ticket type is visible to.
      *
-     * @apiField name=usergroupid
+     * @apiField name =usergroupid
      * @var int[]
      */
     protected ArrayList<Integer> userGroupIds = new ArrayList<Integer>();
@@ -100,64 +105,134 @@ public class TicketType extends KEntity {
 
     private HashMap<Integer, UserGroup> userGroups = new HashMap<Integer, UserGroup>();
 
+    /**
+     * Gets department.
+     *
+     * @return the department
+     */
     public Department getDepartment() {
         return department;
     }
 
+    /**
+     * Sets department.
+     *
+     * @param department the department
+     */
     public void setDepartment(Department department) {
         this.department = department;
     }
 
+    /**
+     * Is user visibility custom.
+     *
+     * @return the boolean
+     */
     public Boolean isUserVisibilityCustom() {
 
         return userVisibilityCustom;
     }
 
+    /**
+     * Sets user visibility custom.
+     *
+     * @param userVisibilityCustom the user visibility custom
+     */
     public void setUserVisibilityCustom(Boolean userVisibilityCustom) {
         this.userVisibilityCustom = userVisibilityCustom;
     }
 
+    /**
+     * Gets type.
+     *
+     * @return the type
+     */
     public String getType() {
 
         return type;
     }
 
+    /**
+     * Sets type.
+     *
+     * @param type the type
+     */
     public void setType(String type) {
         this.type = type;
     }
 
+    /**
+     * Gets display icon.
+     *
+     * @return the display icon
+     */
     public String getDisplayIcon() {
 
         return displayIcon;
     }
 
+    /**
+     * Sets display icon.
+     *
+     * @param displayIcon the display icon
+     */
     public void setDisplayIcon(String displayIcon) {
         this.displayIcon = displayIcon;
     }
 
+    /**
+     * Gets department id.
+     *
+     * @return the department id
+     */
     public int getDepartmentId() {
 
         return departmentId;
     }
 
+    /**
+     * Sets department id.
+     *
+     * @param departmentId the department id
+     */
     public void setDepartmentId(int departmentId) {
         this.departmentId = departmentId;
     }
 
+    /**
+     * Gets display order.
+     *
+     * @return the display order
+     */
     public int getDisplayOrder() {
 
         return displayOrder;
     }
 
+    /**
+     * Sets display order.
+     *
+     * @param displayOrder the display order
+     */
     public void setDisplayOrder(int displayOrder) {
         this.displayOrder = displayOrder;
     }
 
+    /**
+     * Gets title.
+     *
+     * @return the title
+     */
     public String getTitle() {
 
         return title;
     }
 
+    /**
+     * Sets title.
+     *
+     * @param title the title
+     */
     public void setTitle(String title) {
         this.title = title;
     }
@@ -167,6 +242,11 @@ public class TicketType extends KEntity {
         return id;
     }
 
+    /**
+     * Sets id.
+     *
+     * @param id the id
+     */
     public void setId(int id) {
         this.id = id;
     }
@@ -181,36 +261,79 @@ public class TicketType extends KEntity {
         return this;
     }
 
+    /**
+     * Gets object xml name.
+     *
+     * @return the object xml name
+     */
     public static String getObjectXmlName() {
 
         return objectXmlName;
     }
 
+    /**
+     * Sets object xml name.
+     *
+     * @param objectXmlName the object xml name
+     */
     public static void setObjectXmlName(String objectXmlName) {
         TicketType.objectXmlName = objectXmlName;
     }
 
+    /**
+     * Gets controller.
+     *
+     * @return the controller
+     */
     public static String getController() {
 
         return controller;
     }
 
+    /**
+     * Sets controller.
+     *
+     * @param controller the controller
+     */
     public static void setController(String controller) {
         TicketType.controller = controller;
     }
 
+    /**
+     * Gets user group ids.
+     *
+     * @return the user group ids
+     */
     public ArrayList<Integer> getUserGroupIds() {
         return userGroupIds;
     }
 
+    /**
+     * Sets user group ids.
+     *
+     * @param userGroupIds the user group ids
+     */
     public void setUserGroupIds(ArrayList<Integer> userGroupIds) {
         this.userGroupIds = userGroupIds;
     }
 
+    /**
+     * Gets user groups.
+     *
+     * @return the user groups
+     * @throws KayakoException the kayako exception
+     */
     public HashMap<Integer, UserGroup> getUserGroups() throws KayakoException {
         return getUserGroups(false);
     }
 
+    /**
+     * Gets user groups.
+     *
+     * @param refresh the refresh
+     * @return the user groups
+     * @throws KayakoException the kayako exception
+     */
     public HashMap<Integer, UserGroup> getUserGroups(Boolean refresh) throws KayakoException {
         for (int userGroupId : this.getUserGroupIds()) {
             if (!userGroups.containsKey(userGroupId) || refresh) {
@@ -220,11 +343,23 @@ public class TicketType extends KEntity {
         return userGroups;
     }
 
+    /**
+     * Sets user groups.
+     *
+     * @param userGroups the user groups
+     * @return the user groups
+     */
     public TicketType setUserGroups(HashMap<Integer, UserGroup> userGroups) {
         this.userGroups = userGroups;
         return this;
     }
 
+    /**
+     * Is visible to user group.
+     *
+     * @param userGroupId the user group id
+     * @return the boolean
+     */
     public Boolean isVisibleToUserGroup(int userGroupId) {
         if (!isUserVisibilityCustom()) {
             return true;
@@ -232,10 +367,22 @@ public class TicketType extends KEntity {
         return this.userGroupIds.contains(userGroupId);
     }
 
+    /**
+     * Is visible to user group.
+     *
+     * @param userGroup the user group
+     * @return the boolean
+     */
     public Boolean isVisibleToUserGroup(UserGroup userGroup) {
         return this.isVisibleToUserGroup(userGroup.getId());
     }
 
+    /**
+     * Is available in department.
+     *
+     * @param departmentId the department id
+     * @return the boolean
+     */
     public Boolean isAvailableInDepartment(int departmentId) {
         if (this.departmentId == 0) {
             return true;
@@ -243,10 +390,23 @@ public class TicketType extends KEntity {
         return this.departmentId == departmentId;
     }
 
+    /**
+     * Is available in department.
+     *
+     * @param department the department
+     * @return the boolean
+     */
     public Boolean isAvailableInDepartment(Department department) {
         return this.isAvailableInDepartment(department.getId());
     }
 
+    /**
+     * Get ticket type.
+     *
+     * @param id the id
+     * @return the ticket type
+     * @throws KayakoException the kayako exception
+     */
     public static TicketType get(int id) throws KayakoException {
         return new TicketType().populate(KEntity.get(controller, id));
     }

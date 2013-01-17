@@ -4,30 +4,54 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * ###############################################
- * Kayako App
- * _______________________________________________
- *
+ * The type Staff.
  * @author Rajat Garg
  * @package lib
  * @copyright Copyright (c) 2001-2012, Kayako
- * @license http://www.kayako.com/license
- * @link http://www.kayako.com
- * ###############################################
+ * @license http ://www.kayako.com/license
+ * @link http ://www.kayako.com
  */
 public class Staff extends KEntity {
 
+    /**
+     * The Controller.
+     */
     static protected String controller = "/Base/Staff";
+    /**
+     * The Object xml name.
+     */
     static protected String objectXmlName = "staff";
+    /**
+     * The Read only.
+     */
     protected Boolean readOnly = true;
 
+    /**
+     * Instantiates a new Staff.
+     */
     public Staff() {
     }
 
+    /**
+     * Instantiates a new Staff.
+     *
+     * @param rawArrayElement the raw array element
+     * @throws KayakoException the kayako exception
+     */
     public Staff(RawArrayElement rawArrayElement) throws KayakoException {
         this.populate(rawArrayElement);
     }
 
+    /**
+     * Instantiates a new Staff.
+     *
+     * @param firstName the first name
+     * @param lastName the last name
+     * @param userName the user name
+     * @param email the email
+     * @param staffGroup the staff group
+     * @param password the password
+     */
     public Staff(String firstName, String lastName, String userName, String email, StaffGroup staffGroup, String password) {
         this.setFirstName(firstName);
         this.setLastName(lastName);
@@ -48,7 +72,7 @@ public class Staff extends KEntity {
     /**
      * Staff group identifier.
      *
-     * @apiField required_create=true
+     * @apiField required_create =true
      * @var int
      */
     protected int staffGroupId = 0;
@@ -61,20 +85,32 @@ public class Staff extends KEntity {
 
     protected String firstName;
 
+    /**
+     * The Last name.
+     */
     protected String lastName;
 
+    /**
+     * The Full name.
+     */
     protected String fullName;
 
     /**
      * Staff username (login).
      *
-     * @apiField required_create=true
+     * @apiField required_create =true
      * @var string
      */
     protected String userName;
 
+    /**
+     * The Email.
+     */
     protected String email;
 
+    /**
+     * The Designation.
+     */
     protected String designation;
     /**
      * Staff livechat greeting message.
@@ -92,6 +128,9 @@ public class Staff extends KEntity {
      */
     protected String signature;
 
+    /**
+     * The Mobile number.
+     */
     protected String mobileNumber;
 
     /**
@@ -102,6 +141,9 @@ public class Staff extends KEntity {
      */
     protected Boolean enabled = true;
 
+    /**
+     * The Time zone.
+     */
     protected String timeZone = "GMT";
     /**
      * Is Daylight Saving Time enabled.
@@ -111,15 +153,29 @@ public class Staff extends KEntity {
      */
     protected Boolean DST = false;
 
+    /**
+     * The Password.
+     */
     protected String password = "";
 
     private StaffGroup staffGroup = null;
 
+    /**
+     * Gets first name.
+     *
+     * @return the first name
+     */
     public String getFirstName() {
 
         return firstName;
     }
 
+    /**
+     * Sets first name.
+     *
+     * @param FirstName the first name
+     * @return the first name
+     */
     public Staff setFirstName(String FirstName) {
         this.firstName = FirstName;
         return this;
@@ -130,6 +186,12 @@ public class Staff extends KEntity {
         return id;
     }
 
+    /**
+     * Sets id.
+     *
+     * @param id the id
+     * @return the id
+     */
     public Staff setId(int id) {
         this.id = id;
         return this;
@@ -145,132 +207,290 @@ public class Staff extends KEntity {
         return this;
     }
 
+    /**
+     * Gets object xml name.
+     *
+     * @return the object xml name
+     */
     public static String getObjectXmlName() {
 
         return objectXmlName;
     }
 
+    /**
+     * Sets object xml name.
+     *
+     * @param objectXmlName the object xml name
+     */
     public static void setObjectXmlName(String objectXmlName) {
         Staff.objectXmlName = objectXmlName;
     }
 
+    /**
+     * Gets controller.
+     *
+     * @return the controller
+     */
     public static String getController() {
 
         return controller;
     }
 
+    /**
+     * Sets controller.
+     *
+     * @param controller the controller
+     */
     public static void setController(String controller) {
         Staff.controller = controller;
 
     }
 
+    /**
+     * Gets staff group id.
+     *
+     * @return the staff group id
+     */
     public int getStaffGroupId() {
         return staffGroupId;
     }
 
+    /**
+     * Sets staff group id.
+     *
+     * @param staffGroupId the staff group id
+     * @return the staff group id
+     */
     public Staff setStaffGroupId(int staffGroupId) {
         this.staffGroupId = staffGroupId;
         this.staffGroup = null;
         return this;
     }
 
+    /**
+     * Gets last name.
+     *
+     * @return the last name
+     */
     public String getLastName() {
         return lastName;
     }
 
+    /**
+     * Sets last name.
+     *
+     * @param lastName the last name
+     * @return the last name
+     */
     public Staff setLastName(String lastName) {
         this.lastName = lastName;
         return this;
     }
 
+    /**
+     * Gets full name.
+     *
+     * @return the full name
+     */
     public String getFullName() {
         return fullName;
     }
 
+    /**
+     * Gets user name.
+     *
+     * @return the user name
+     */
     public String getUserName() {
         return userName;
     }
 
+    /**
+     * Gets email.
+     *
+     * @return the email
+     */
     public String getEmail() {
         return email;
     }
 
+    /**
+     * Gets designation.
+     *
+     * @return the designation
+     */
     public String getDesignation() {
         return designation;
     }
 
+    /**
+     * Gets greeting.
+     *
+     * @return the greeting
+     */
     public String getGreeting() {
         return greeting;
     }
 
+    /**
+     * Gets signature.
+     *
+     * @return the signature
+     */
     public String getSignature() {
         return signature;
     }
 
+    /**
+     * Sets signature.
+     *
+     * @param signature the signature
+     * @return the signature
+     */
     public Staff setSignature(String signature) {
         this.signature = signature;
         return this;
     }
 
+    /**
+     * Sets greeting.
+     *
+     * @param greeting the greeting
+     * @return the greeting
+     */
     public Staff setGreeting(String greeting) {
         this.greeting = greeting;
         return this;
     }
 
+    /**
+     * Sets designation.
+     *
+     * @param designation the designation
+     * @return the designation
+     */
     public Staff setDesignation(String designation) {
         this.designation = designation;
         return this;
     }
 
+    /**
+     * Sets email.
+     *
+     * @param email the email
+     * @return the email
+     */
     public Staff setEmail(String email) {
         this.email = email;
         return this;
     }
 
+    /**
+     * Sets user name.
+     *
+     * @param userName the user name
+     * @return the user name
+     */
     public Staff setUserName(String userName) {
         this.userName = userName;
         return this;
     }
 
+    /**
+     * Sets full name.
+     *
+     * @param fullName the full name
+     * @return the full name
+     */
     public Staff setFullName(String fullName) {
         this.fullName = fullName;
         return this;
     }
 
+    /**
+     * Gets mobile number.
+     *
+     * @return the mobile number
+     */
     public String getMobileNumber() {
         return mobileNumber;
     }
 
+    /**
+     * Is enabled.
+     *
+     * @return the boolean
+     */
     public Boolean isEnabled() {
         return enabled;
     }
 
+    /**
+     * Sets enabled.
+     *
+     * @param enabled the enabled
+     * @return the enabled
+     */
     public Staff setEnabled(Boolean enabled) {
         this.enabled = enabled;
         return this;
     }
 
+    /**
+     * Gets time zone.
+     *
+     * @return the time zone
+     */
     public String getTimeZone() {
         return timeZone;
     }
 
+    /**
+     * Is dST.
+     *
+     * @return the boolean
+     */
     public Boolean isDST() {
         return DST;
     }
 
+    /**
+     * Gets password.
+     *
+     * @return the password
+     */
     public String getPassword() {
         return password;
     }
 
+    /**
+     * Sets password.
+     *
+     * @param password the password
+     * @return the password
+     */
     public Staff setPassword(String password) {
         this.password = password;
         return this;
     }
 
+    /**
+     * Gets staff group.
+     *
+     * @return the staff group
+     * @throws KayakoException the kayako exception
+     */
     public StaffGroup getStaffGroup() throws KayakoException {
         return this.getStaffGroup(false);
     }
 
+    /**
+     * Gets staff group.
+     *
+     * @param refresh the refresh
+     * @return the staff group
+     * @throws KayakoException the kayako exception
+     */
     public StaffGroup getStaffGroup(Boolean refresh) throws KayakoException {
         if ((this.staffGroup == null || refresh) && this.getStaffGroupId() > 0) {
             this.staffGroup = (StaffGroup) StaffGroup.get(this.getStaffGroupId());
@@ -278,27 +498,58 @@ public class Staff extends KEntity {
         return this.staffGroup;
     }
 
+    /**
+     * Sets staff group.
+     *
+     * @param staffGroup the staff group
+     * @return the staff group
+     */
     public Staff setStaffGroup(StaffGroup staffGroup) {
         this.setStaffGroupId(staffGroup.getId());
         this.staffGroup = staffGroup;
         return this;
     }
 
+    /**
+     * Sets dST.
+     *
+     * @param DST the dST
+     * @return the dST
+     */
     public Staff setDST(Boolean DST) {
         this.DST = DST;
         return this;
     }
 
+    /**
+     * Sets time zone.
+     *
+     * @param timeZone the time zone
+     * @return the time zone
+     */
     public Staff setTimeZone(String timeZone) {
         this.timeZone = timeZone;
         return this;
     }
 
+    /**
+     * Sets mobile number.
+     *
+     * @param mobileNumber the mobile number
+     * @return the mobile number
+     */
     public Staff setMobileNumber(String mobileNumber) {
         this.mobileNumber = mobileNumber;
         return this;
     }
 
+    /**
+     * Get staff.
+     *
+     * @param id the id
+     * @return the staff
+     * @throws KayakoException the kayako exception
+     */
     public static Staff get(int id) throws KayakoException {
         return new Staff(KEntity.get(controller, id));
     }
@@ -371,6 +622,14 @@ public class Staff extends KEntity {
         return staffHashMap;
     }
 
+    /**
+     * Create ticket.
+     *
+     * @param department the department
+     * @param content the content
+     * @param subject the subject
+     * @return the ticket
+     */
     public Ticket createTicket(Department department, String content, String subject) {
         return new Ticket(department, this, content, subject);
     }

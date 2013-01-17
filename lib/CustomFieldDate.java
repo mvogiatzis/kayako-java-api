@@ -4,16 +4,12 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 
 /**
- * ###############################################
- * Kayako App
- * _______________________________________________
- *
+ * The type Custom field date.
  * @author Rajat Garg
  * @package lib
  * @copyright Copyright (c) 2001-2012, Kayako
  * @license http ://www.kayako.com/license
  * @link http ://www.kayako.com
- * ###############################################
  */
 public class CustomFieldDate extends CustomField {
     /**
@@ -60,7 +56,7 @@ public class CustomFieldDate extends CustomField {
      * @return the date
      */
     public String getDate() {
-        return getDate(new ConfigurationFactory().getConfiguration().getDateFormat());
+        return getDate(KEntity.getConfigurationFactory().getConfiguration().getDateFormat());
     }
 
     /**

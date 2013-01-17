@@ -6,20 +6,22 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * ###############################################
- * Kayako App
- * _______________________________________________
- *
+ * The type Ticket attachment.
  * @author Rajat Garg
  * @package lib
  * @copyright Copyright (c) 2001-2012, Kayako
- * @license http://www.kayako.com/license
- * @link http://www.kayako.com
- * ###############################################
+ * @license http ://www.kayako.com/license
+ * @link http ://www.kayako.com
  */
 public class TicketAttachment extends KEntity {
 
+    /**
+     * The Controller.
+     */
     static protected String controller = "/Tickets/TicketAttachment";
+    /**
+     * The Object xml name.
+     */
     static protected String objectXmlName = "attachment";
 
     /**
@@ -32,7 +34,7 @@ public class TicketAttachment extends KEntity {
     /**
      * Ticket identifier.
      *
-     * @apiField required_create=true
+     * @apiField required_create =true
      * @var int
      */
     protected int ticketId;
@@ -40,7 +42,7 @@ public class TicketAttachment extends KEntity {
     /**
      * Identifier of ticket post that this attachment is attached to.
      *
-     * @apiField required_create=true
+     * @apiField required_create =true
      * @var int
      */
     protected int ticketPostId;
@@ -48,7 +50,7 @@ public class TicketAttachment extends KEntity {
     /**
      * Attachment file name.
      *
-     * @apiField required_create=true
+     * @apiField required_create =true
      * @var string
      */
     protected String fileName;
@@ -80,7 +82,7 @@ public class TicketAttachment extends KEntity {
     /**
      * Raw contents of attachment.
      *
-     * @apiField required_create=true
+     * @apiField required_create =true
      * @var string
      */
     protected byte[] contents;
@@ -99,18 +101,38 @@ public class TicketAttachment extends KEntity {
      */
     private TicketPost ticketPost = null;
 
+    /**
+     * Gets controller.
+     *
+     * @return the controller
+     */
     public static String getController() {
         return controller;
     }
 
+    /**
+     * Sets controller.
+     *
+     * @param controller the controller
+     */
     public static void setController(String controller) {
         TicketAttachment.controller = controller;
     }
 
+    /**
+     * Gets object xml name.
+     *
+     * @return the object xml name
+     */
     public static String getObjectXmlName() {
         return objectXmlName;
     }
 
+    /**
+     * Sets object xml name.
+     *
+     * @param objectXmlName the object xml name
+     */
     public static void setObjectXmlName(String objectXmlName) {
         TicketAttachment.objectXmlName = objectXmlName;
     }
@@ -119,71 +141,156 @@ public class TicketAttachment extends KEntity {
         return id;
     }
 
+    /**
+     * Sets id.
+     *
+     * @param id the id
+     * @return the id
+     */
     public TicketAttachment setId(int id) {
         this.id = id;
         return this;
     }
 
+    /**
+     * Gets ticket id.
+     *
+     * @return the ticket id
+     */
     public int getTicketId() {
         return ticketId;
     }
 
+    /**
+     * Sets ticket id.
+     *
+     * @param ticketId the ticket id
+     * @return the ticket id
+     */
     public TicketAttachment setTicketId(int ticketId) {
         this.ticketId = ticketId;
         this.ticket = null;
         return this;
     }
 
+    /**
+     * Gets ticket post id.
+     *
+     * @return the ticket post id
+     */
     public int getTicketPostId() {
         return ticketPostId;
     }
 
+    /**
+     * Sets ticket post id.
+     *
+     * @param ticketPostId the ticket post id
+     * @return the ticket post id
+     */
     public TicketAttachment setTicketPostId(int ticketPostId) {
         this.ticketPostId = ticketPostId;
         this.ticketPost = null;
         return this;
     }
 
+    /**
+     * Gets file name.
+     *
+     * @return the file name
+     */
     public String getFileName() {
         return fileName;
     }
 
+    /**
+     * Sets file name.
+     *
+     * @param fileName the file name
+     * @return the file name
+     */
     public TicketAttachment setFileName(String fileName) {
         this.fileName = fileName;
         return this;
     }
 
+    /**
+     * Gets file size.
+     *
+     * @return the file size
+     */
     public int getFileSize() {
         return fileSize;
     }
 
+    /**
+     * Sets file size.
+     *
+     * @param fileSize the file size
+     * @return the file size
+     */
     public TicketAttachment setFileSize(int fileSize) {
         this.fileSize = fileSize;
         return this;
     }
 
+    /**
+     * Gets file type.
+     *
+     * @return the file type
+     */
     public String getFileType() {
         return fileType;
     }
 
+    /**
+     * Sets file type.
+     *
+     * @param fileType the file type
+     * @return the file type
+     */
     public TicketAttachment setFileType(String fileType) {
         this.fileType = fileType;
         return this;
     }
 
+    /**
+     * Gets date line.
+     *
+     * @return the date line
+     */
     public int getDateLine() {
         return dateLine;
     }
 
+    /**
+     * Sets date line.
+     *
+     * @param dateLine the date line
+     * @return the date line
+     */
     public TicketAttachment setDateLine(int dateLine) {
         this.dateLine = dateLine;
         return this;
     }
 
+    /**
+     * Get contents.
+     *
+     * @return the byte [ ]
+     * @throws KayakoException the kayako exception
+     */
     public byte[] getContents() throws KayakoException {
         return this.getContents(true);
     }
 
+    /**
+     * Get contents.
+     *
+     * @param autoFetch the auto fetch
+     * @return the byte [ ]
+     * @throws KayakoException the kayako exception
+     */
     public byte[] getContents(Boolean autoFetch) throws KayakoException {
         if (this.contents == null && autoFetch) {
             this.setContents(get(this.getTicketId(), this.getId()).getContents());
@@ -191,11 +298,23 @@ public class TicketAttachment extends KEntity {
         return contents;
     }
 
+    /**
+     * Sets contents.
+     *
+     * @param contents the contents
+     * @return the contents
+     */
     public TicketAttachment setContents(byte[] contents) {
         this.contents = contents;
         return this;
     }
 
+    /**
+     * Sets content from file.
+     *
+     * @param file the file
+     * @return the content from file
+     */
     public TicketAttachment setContentFromFile(File file) {
         try {
             this.contents = Helper.readBytesFromFile(file);
@@ -206,10 +325,23 @@ public class TicketAttachment extends KEntity {
         return this;
     }
 
+    /**
+     * Gets ticket.
+     *
+     * @return the ticket
+     * @throws KayakoException the kayako exception
+     */
     public Ticket getTicket() throws KayakoException {
         return this.getTicket(false);
     }
 
+    /**
+     * Gets ticket.
+     *
+     * @param refresh the refresh
+     * @return the ticket
+     * @throws KayakoException the kayako exception
+     */
     public Ticket getTicket(Boolean refresh) throws KayakoException {
         if (this.ticket == null || refresh) {
             if (this.getTicketId() == 0) {
@@ -220,16 +352,35 @@ public class TicketAttachment extends KEntity {
         return ticket;
     }
 
+    /**
+     * Sets ticket.
+     *
+     * @param ticket the ticket
+     * @return the ticket
+     */
     public TicketAttachment setTicket(Ticket ticket) {
         this.ticket = ticket;
         this.ticketId = ticket.getId();
         return this;
     }
 
+    /**
+     * Gets ticket post.
+     *
+     * @return the ticket post
+     * @throws KayakoException the kayako exception
+     */
     public TicketPost getTicketPost() throws KayakoException {
         return this.getTicketPost(false);
     }
 
+    /**
+     * Gets ticket post.
+     *
+     * @param refresh the refresh
+     * @return the ticket post
+     * @throws KayakoException the kayako exception
+     */
     public TicketPost getTicketPost(Boolean refresh) throws KayakoException {
         if (this.ticketPost == null || refresh) {
             if (this.getTicketPostId() == 0) {
@@ -244,6 +395,9 @@ public class TicketAttachment extends KEntity {
      * Sets the ticket post this attachment will be attached to.
      * <p/>
      * Automatically sets the ticket.
+     * @param ticketPost the ticket post
+     * @return the ticket post
+     * @throws KayakoException the kayako exception
      */
     public TicketAttachment setTicketPost(TicketPost ticketPost) throws KayakoException {
         this.ticketPost = ticketPost;
@@ -253,6 +407,14 @@ public class TicketAttachment extends KEntity {
         return this;
     }
 
+    /**
+     * Get ticket attachment.
+     *
+     * @param ticketId the ticket id
+     * @param id the id
+     * @return the ticket attachment
+     * @throws KayakoException the kayako exception
+     */
     public static TicketAttachment get(int ticketId, int id) throws KayakoException {
         ArrayList<String> arrayList = new ArrayList<String>();
         arrayList.add(Integer.toString(ticketId));
@@ -260,10 +422,22 @@ public class TicketAttachment extends KEntity {
         return new TicketAttachment().populate(KEntity.get(controller, arrayList));
     }
 
+    /**
+     * Update ticket attachment.
+     *
+     * @return the ticket attachment
+     * @throws KayakoException the kayako exception
+     */
     public TicketAttachment update() throws KayakoException {
         throw new KayakoException("This method is not available for this type of objects.");
     }
 
+    /**
+     * Delete boolean.
+     *
+     * @return the boolean
+     * @throws KayakoException the kayako exception
+     */
     public Boolean delete() throws KayakoException {
         return KEntity.getRESTClient().delete(controller, this.getIdArray()) != null;
     }
@@ -275,10 +449,23 @@ public class TicketAttachment extends KEntity {
         return arrayList;
     }
 
+    /**
+     * Gets all.
+     *
+     * @param controller the controller
+     * @return the all
+     * @throws KayakoException the kayako exception
+     */
     public static RawArrayElement getAll(String controller) throws KayakoException {
         throw new KayakoException("This method is not available");
     }
 
+    /**
+     * Gets all.
+     *
+     * @param ticketId the ticket id
+     * @return the all
+     */
     public static RawArrayElement getAll(int ticketId) {
         ArrayList<String> searchParams = new ArrayList<String>();
         searchParams.add("ListAll");
@@ -286,6 +473,13 @@ public class TicketAttachment extends KEntity {
         return KEntity.getAll(controller, searchParams);
     }
 
+    /**
+     * Gets all attachments.
+     *
+     * @param ticketId the ticket id
+     * @return the all attachments
+     * @throws KayakoException the kayako exception
+     */
     public static ArrayList<TicketAttachment> getAllAttachments(int ticketId) throws KayakoException {
         return refineToArray(getAll(ticketId));
     }
@@ -340,6 +534,12 @@ public class TicketAttachment extends KEntity {
         return buildHashMap(false);
     }
 
+    /**
+     * Build hash map.
+     *
+     * @param newTicketAttachment the new ticket attachment
+     * @return the hash map
+     */
     public HashMap<String, String> buildHashMap(Boolean newTicketAttachment) {
         HashMap<String, String> ticketAttachmentHashMap = new HashMap<String, String>();
         ticketAttachmentHashMap.put("ticketid", Integer.toString(this.getTicketId()));
@@ -359,17 +559,39 @@ public class TicketAttachment extends KEntity {
         return super.toString();
     }
 
+    /**
+     * Create ticket attachment.
+     *
+     * @param ticketPost the ticket post
+     * @param contents the contents
+     * @param fileName the file name
+     * @return the ticket attachment
+     * @throws KayakoException the kayako exception
+     */
     public static TicketAttachment createTicketAttachment(TicketPost ticketPost, byte[] contents, String fileName) throws KayakoException {
         TicketAttachment ticketAttachment = new TicketAttachment().setTicketPost(ticketPost).setContents(contents).setFileName(fileName);
         return ticketAttachment;
     }
 
+    /**
+     * Create ticket attachment.
+     *
+     * @param ticketPost the ticket post
+     * @param file the file
+     * @return the ticket attachment
+     * @throws KayakoException the kayako exception
+     */
     public static TicketAttachment createTicketAttachment(TicketPost ticketPost, File file) throws KayakoException {
         TicketAttachment ticketAttachment = new TicketAttachment().setTicketPost(ticketPost).setContentFromFile(file);
         return ticketAttachment;
     }
 
-    //Though create() method might not be written everywhere, create(String controller) can be called on almost all objects
+    /**
+     * Create ticket attachment.
+     *
+     * @return the ticket attachment
+     * @throws KayakoException the kayako exception
+     */ //Though create() method might not be written everywhere, create(String controller) can be called on almost all objects
     public TicketAttachment create() throws KayakoException {
         return (TicketAttachment) super.create(controller);
     }

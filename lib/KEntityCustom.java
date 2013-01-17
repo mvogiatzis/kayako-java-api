@@ -5,16 +5,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * ###############################################
- * Kayako App
- * _______________________________________________
- *
+ * The type K entity custom.
  * @author Rajat Garg
  * @package lib
  * @copyright Copyright (c) 2001-2012, Kayako
- * @license http://www.kayako.com/license
- * @link http://www.kayako.com
- * ###############################################
+ * @license http ://www.kayako.com/license
+ * @link http ://www.kayako.com
  */
 public abstract class KEntityCustom extends KEntity {
 
@@ -39,41 +35,93 @@ public abstract class KEntityCustom extends KEntity {
      */
     protected ArrayList<CustomFieldGroup> customFieldGroups = new ArrayList<CustomFieldGroup>();
 
+    /**
+     * Gets custom field groups.
+     *
+     * @return the custom field groups
+     * @throws KayakoException the kayako exception
+     */
     public ArrayList<CustomFieldGroup> getCustomFieldGroups() throws KayakoException {
         return getCustomFieldGroups(false);
     }
 
+    /**
+     * Gets custom field groups.
+     *
+     * @param refresh the refresh
+     * @return the custom field groups
+     * @throws KayakoException the kayako exception
+     */
     public ArrayList<CustomFieldGroup> getCustomFieldGroups(Boolean refresh) throws KayakoException {
         this.loadCustomFieldGroups(refresh);
         return this.customFieldGroups;
     }
 
+    /**
+     * Sets custom field groups.
+     *
+     * @param customFieldGroups the custom field groups
+     */
     public void setCustomFieldGroups(ArrayList<CustomFieldGroup> customFieldGroups) {
         this.customFieldGroups = customFieldGroups;
     }
 
+    /**
+     * Gets custom field hash map.
+     *
+     * @return the custom field hash map
+     * @throws KayakoException the kayako exception
+     */
     public HashMap<String, CustomField> getCustomFieldHashMap() throws KayakoException {
         return this.getCustomFieldHashMap(false);
     }
 
+    /**
+     * Gets custom field hash map.
+     *
+     * @param refresh the refresh
+     * @return the custom field hash map
+     * @throws KayakoException the kayako exception
+     */
     public HashMap<String, CustomField> getCustomFieldHashMap(Boolean refresh) throws KayakoException {
         this.loadCustomFieldGroups(refresh);
         return customFieldHashMap;
     }
 
-    //This function will return ArrayList of custom fields
+    /**
+     * Gets custom fields.
+     *
+     * @param refresh the refresh
+     * @return the custom fields
+     * @throws KayakoException the kayako exception
+     */ //This function will return ArrayList of custom fields
     public ArrayList<CustomField> getCustomFields(Boolean refresh) throws KayakoException {
         return new ArrayList<CustomField>(this.getCustomFieldHashMap(refresh).values());
     }
 
+    /**
+     * Sets custom field hash map.
+     *
+     * @param customFieldHashMap the custom field hash map
+     */
     public void setCustomFieldHashMap(HashMap<String, CustomField> customFieldHashMap) {
         this.customFieldHashMap = customFieldHashMap;
     }
 
+    /**
+     * Gets object id field.
+     *
+     * @return the object id field
+     */
     public static String getObjectIdField() {
         return objectIdField;
     }
 
+    /**
+     * Sets object id field.
+     *
+     * @param objectIdField the object id field
+     */
     public static void setObjectIdField(String objectIdField) {
         KEntityCustom.objectIdField = objectIdField;
     }
@@ -90,27 +138,44 @@ public abstract class KEntityCustom extends KEntity {
      * Returns custom field based on its name.
      *
      * @param name Field name.
-     * @return CustomField
+     * @return CustomField custom field
+     * @throws KayakoException the kayako exception
      */
     public CustomField getCustomField(String name) throws KayakoException {
         this.loadCustomFieldGroups();
         return this.getCustomFieldHashMap().get(name);
     }
 
+    /**
+     * Load custom field groups.
+     *
+     * @return the array list
+     * @throws KayakoException the kayako exception
+     */
     protected ArrayList<CustomFieldGroup> loadCustomFieldGroups() throws KayakoException {
         return this.loadCustomFieldGroups(false);
     }
 
+    /**
+     * Load custom field groups.
+     *
+     * @param refresh the refresh
+     * @return the array list
+     * @throws KayakoException the kayako exception
+     */
     protected abstract ArrayList<CustomFieldGroup> loadCustomFieldGroups(Boolean refresh) throws KayakoException;
 
     /**
      * Prepares local array for custom field fast lookup based on its name.
      * this function should populate this.customFields
+     * @param refresh the refresh
+     * @return the array list
      */
     protected abstract ArrayList<CustomField> loadCustomField(Boolean refresh);
 
     /**
      * Prepares local array for custom field fast lookup based on its name.
+     * @throws KayakoException the kayako exception
      */
     protected void cacheFields() throws KayakoException {
         for (CustomFieldGroup customFieldGroup : this.getCustomFieldGroups()) {
@@ -120,14 +185,23 @@ public abstract class KEntityCustom extends KEntity {
         }
     }
 
-    //this method needs to be implemented in the derived class to basically call the overloaded method with correct arguments
+    /**
+     * Update custom fields.
+     *
+     * @return the k entity custom
+     * @throws NoSuchMethodException the no such method exception
+     * @throws InvocationTargetException the invocation target exception
+     * @throws IllegalAccessException the illegal access exception
+     * @throws KayakoException the kayako exception
+     */ //this method needs to be implemented in the derived class to basically call the overloaded method with correct arguments
     public abstract KEntityCustom updateCustomFields() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, KayakoException;
 
     /**
      * Updates all custom fields values on Kayako server.
      *
      * @param customGroupController - This is the customGroupController of CustomGroupClass
-     * @return KEntityCustom
+     * @return KEntityCustom k entity custom
+     * @throws KayakoException the kayako exception
      */
     public KEntityCustom updateCustomFields(String customGroupController) throws KayakoException {
         if (this.customFieldGroups == null) {

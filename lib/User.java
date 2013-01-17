@@ -4,16 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * ###############################################
- * Kayako App
- * _______________________________________________
- *
+ * The type User.
  * @author Rajat Garg
  * @package lib
  * @copyright Copyright (c) 2001-2012, Kayako
  * @license http ://www.kayako.com/license
  * @link http ://www.kayako.com
- * ###############################################
  */
 public class User extends KEntity {
     static final String ROLE_USER = "user";
@@ -45,10 +41,10 @@ public class User extends KEntity {
     /**
      * Instantiates a new User.
      *
-     * @param name      the name
-     * @param email     the email
+     * @param name the name
+     * @param email the email
      * @param userGroup the user group
-     * @param password  the password
+     * @param password the password
      */
     public User(String name, String email, UserGroup userGroup, String password) {
         this.setFullName(name);
@@ -78,7 +74,7 @@ public class User extends KEntity {
      *
      * @apiField
      * @var string
-     * @see ::ROLE constants.
+     * @see  ::ROLE constants.
      */
     protected String userRole = ROLE_USER;
     /**
@@ -91,7 +87,7 @@ public class User extends KEntity {
      *
      * @apiField
      * @var string
-     * @see ::SALUTATION constants.
+     * @see  ::SALUTATION constants.
      */
     protected String salutation;
 
@@ -735,7 +731,7 @@ public class User extends KEntity {
      * Gets all.
      *
      * @param startingUserId the starting user id
-     * @param maxItems       the max items
+     * @param maxItems the max items
      * @return the all
      */
     public static RawArrayElement getAll(int startingUserId, int maxItems) {
@@ -779,7 +775,7 @@ public class User extends KEntity {
      * Gets all users.
      *
      * @param startingUserId the starting user id
-     * @param maxItems       the max items
+     * @param maxItems the max items
      * @return the all users
      * @throws KayakoException the kayako exception
      */
@@ -902,8 +898,8 @@ public class User extends KEntity {
      * Create ticket.
      *
      * @param department the department
-     * @param content    the content
-     * @param subject    the subject
+     * @param content the content
+     * @param subject the subject
      * @return the ticket
      * @throws KayakoException the kayako exception
      */

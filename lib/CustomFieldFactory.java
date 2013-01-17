@@ -1,20 +1,23 @@
 package lib;
 
-
 /**
- * ###############################################
- * Kayako App
- * _______________________________________________
- *
+ * The type Custom field factory.
  * @author Rajat Garg
  * @package lib
  * @copyright Copyright (c) 2001-2012, Kayako
- * @license http://www.kayako.com/license
- * @link http://www.kayako.com
- * ###############################################
+ * @license http ://www.kayako.com/license
+ * @link http ://www.kayako.com
  */
 public class CustomFieldFactory {
 
+    /**
+     * Create custom field.
+     *
+     * @param customFieldGroup the custom field group
+     * @param rawArrayElement the raw array element
+     * @return the custom field
+     * @throws KayakoException the kayako exception
+     */
     public static CustomField createCustomField(CustomFieldGroup customFieldGroup, RawArrayElement rawArrayElement) throws KayakoException {
         if (rawArrayElement == null || !rawArrayElement.getElementName().equals(CustomField.getXmlName())) {
             throw new KayakoException("Invalid XML Element Supplied");

@@ -4,16 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * ###############################################
- * Kayako App
- * _______________________________________________
- *
+ * The type Ticket time track.
  * @author Rajat Garg
  * @package lib
  * @copyright Copyright (c) 2001-2012, Kayako
- * @license http://www.kayako.com/license
- * @link http://www.kayako.com
- * ###############################################
+ * @license http ://www.kayako.com/license
+ * @link http ://www.kayako.com
  */
 public class TicketTimeTrack extends KEntity {
 
@@ -52,7 +48,13 @@ public class TicketTimeTrack extends KEntity {
      */
     static final int COLOR_RED = 5;
 
+    /**
+     * The Controller.
+     */
     static protected String controller = "/Tickets/TicketTimeTrack";
+    /**
+     * The Object xml name.
+     */
     static protected String objectXmlName = "timetrack";
 
     /**
@@ -66,7 +68,7 @@ public class TicketTimeTrack extends KEntity {
     /**
      * Ticket identifier - if this timetrack is associated with ticket.
      *
-     * @apiField required_create=true
+     * @apiField required_create =true
      * @var int
      */
     protected int ticketId;
@@ -74,7 +76,7 @@ public class TicketTimeTrack extends KEntity {
     /**
      * Time worked (in seconds) in this ticket time track.
      *
-     * @apiField required_create=true alias=timespent
+     * @apiField required_create =true alias=timespent
      * @var int
      */
     protected int timeWorked;
@@ -82,7 +84,7 @@ public class TicketTimeTrack extends KEntity {
     /**
      * Billable time (in seconds) in this ticket time track.
      *
-     * @apiField required_create=true
+     * @apiField required_create =true
      * @var int
      */
     protected int timeBillable;
@@ -90,7 +92,7 @@ public class TicketTimeTrack extends KEntity {
     /**
      * Bill timestamp of this ticket time track.
      *
-     * @apiField required_create=true alias=billtimeline
+     * @apiField required_create =true alias=billtimeline
      * @var int
      */
     protected int billDate;
@@ -98,7 +100,7 @@ public class TicketTimeTrack extends KEntity {
     /**
      * Work timestamp of this ticket time track.
      *
-     * @apiField required_create=true alias=worktimeline
+     * @apiField required_create =true alias=worktimeline
      * @var int
      */
     protected int workDate;
@@ -122,7 +124,7 @@ public class TicketTimeTrack extends KEntity {
     /**
      * Creator staff identifier.
      *
-     * @apiField required_create=true alias=staffid
+     * @apiField required_create =true alias=staffid
      * @var int
      */
     protected int creatorStaffId;
@@ -140,14 +142,14 @@ public class TicketTimeTrack extends KEntity {
      *
      * @apiField
      * @var int
-     * @see TicketTimeTrack::COLOR constants.
+     * @see  ::COLOR constants.
      */
     protected int noteColor;
 
     /**
      * Note contents of this ticket time track.
      *
-     * @apiField required_create=true
+     * @apiField required_create =true
      * @var String
      */
     protected String contents;
@@ -173,14 +175,35 @@ public class TicketTimeTrack extends KEntity {
      */
     private Staff creatorStaff = null;
 
+    /**
+     * Instantiates a new Ticket time track.
+     */
     public TicketTimeTrack() {
     }
 
+    /**
+     * Instantiates a new Ticket time track.
+     *
+     * @param ticket the ticket
+     * @param contents the contents
+     * @param staff the staff
+     * @param timeWorked the time worked
+     * @param timeBillable the time billable
+     */
     public TicketTimeTrack(Ticket ticket, String contents, Staff staff, int timeWorked, int timeBillable) {
         this.setTicketId(ticket.getId()).setContents(contents).setCreatorStaffId(staff.getId());
         this.setTimeWorked(timeWorked).setTimeBillable(timeBillable).setWorkerStaff(staff);
     }
 
+    /**
+     * Instantiates a new Ticket time track.
+     *
+     * @param ticket the ticket
+     * @param contents the contents
+     * @param staff the staff
+     * @param timeWorked the time worked
+     * @param timeBillable the time billable
+     */
     public TicketTimeTrack(Ticket ticket, String contents, Staff staff, String timeWorked, String timeBillable) {
         this.setTicketId(ticket.getId()).setContents(contents).setCreatorStaffId(staff.getId());
         this.setTimeWorked(timeWorked).setTimeBillable(timeBillable).setWorkerStaff(staff);
@@ -190,6 +213,12 @@ public class TicketTimeTrack extends KEntity {
         return id;
     }
 
+    /**
+     * Sets id.
+     *
+     * @param id the id
+     * @return the id
+     */
     public TicketTimeTrack setId(int id) {
         this.id = id;
         return this;
@@ -207,38 +236,82 @@ public class TicketTimeTrack extends KEntity {
         return this;
     }
 
+    /**
+     * Gets object xml name.
+     *
+     * @return the object xml name
+     */
     public static String getObjectXmlName() {
 
         return objectXmlName;
     }
 
+    /**
+     * Sets object xml name.
+     *
+     * @param objectXmlName the object xml name
+     */
     public static void setObjectXmlName(String objectXmlName) {
         TicketTimeTrack.objectXmlName = objectXmlName;
     }
 
+    /**
+     * Gets controller.
+     *
+     * @return the controller
+     */
     public static String getController() {
 
         return controller;
     }
 
+    /**
+     * Sets controller.
+     *
+     * @param controller the controller
+     */
     public static void setController(String controller) {
         TicketTimeTrack.controller = controller;
     }
 
+    /**
+     * Gets ticket id.
+     *
+     * @return the ticket id
+     */
     public int getTicketId() {
         return ticketId;
     }
 
+    /**
+     * Sets ticket id.
+     *
+     * @param ticketId the ticket id
+     * @return the ticket id
+     */
     public TicketTimeTrack setTicketId(int ticketId) {
         this.ticketId = ticketId;
         this.ticket = null;
         return this;
     }
 
+    /**
+     * Gets ticket.
+     *
+     * @return the ticket
+     * @throws KayakoException the kayako exception
+     */
     public Ticket getTicket() throws KayakoException {
         return this.getTicket(false);
     }
 
+    /**
+     * Gets ticket.
+     *
+     * @param refresh the refresh
+     * @return the ticket
+     * @throws KayakoException the kayako exception
+     */
     public Ticket getTicket(Boolean refresh) throws KayakoException {
         if (this.ticket == null || refresh) {
             if (this.getTicketId() == 0) {
@@ -249,30 +322,64 @@ public class TicketTimeTrack extends KEntity {
         return ticket;
     }
 
+    /**
+     * Sets ticket.
+     *
+     * @param ticket the ticket
+     * @return the ticket
+     */
     public TicketTimeTrack setTicket(Ticket ticket) {
         this.ticket = ticket;
         this.ticketId = ticket.getId();
         return this;
     }
 
+    /**
+     * Gets creator staff id.
+     *
+     * @return the creator staff id
+     */
     public int getCreatorStaffId() {
         return creatorStaffId;
     }
 
+    /**
+     * Sets creator staff id.
+     *
+     * @param creatorStaffId the creator staff id
+     * @return the creator staff id
+     */
     public TicketTimeTrack setCreatorStaffId(int creatorStaffId) {
         this.creatorStaffId = creatorStaffId;
         return this;
     }
 
+    /**
+     * Gets creator staff name.
+     *
+     * @return the creator staff name
+     */
     public String getCreatorStaffName() {
         return creatorStaffName;
     }
 
+    /**
+     * Sets creator staff name.
+     *
+     * @param creatorStaffName the creator staff name
+     * @return the creator staff name
+     */
     public TicketTimeTrack setCreatorStaffName(String creatorStaffName) {
         this.creatorStaffName = creatorStaffName;
         return this;
     }
 
+    /**
+     * Gets creator staff.
+     *
+     * @return the creator staff
+     * @throws KayakoException the kayako exception
+     */
     public Staff getCreatorStaff() throws KayakoException {
         if (this.getCreatorStaffId() == 0) {
             return null;
@@ -283,6 +390,12 @@ public class TicketTimeTrack extends KEntity {
         return this.creatorStaff;
     }
 
+    /**
+     * Sets creator staff.
+     *
+     * @param creatorStaff the creator staff
+     * @return the creator staff
+     */
     public TicketTimeTrack setCreatorStaff(Staff creatorStaff) {
         this.creatorStaff = creatorStaff;
         this.setCreatorStaffId(creatorStaff.getId());
@@ -290,15 +403,32 @@ public class TicketTimeTrack extends KEntity {
         return this;
     }
 
+    /**
+     * Gets time worked.
+     *
+     * @return the time worked
+     */
     public int getTimeWorked() {
         return timeWorked;
     }
 
+    /**
+     * Sets time worked.
+     *
+     * @param timeWorked the time worked
+     * @return the time worked
+     */
     public TicketTimeTrack setTimeWorked(int timeWorked) {
         this.timeWorked = timeWorked;
         return this;
     }
 
+    /**
+     * Sets time worked.
+     *
+     * @param timeWorked the time worked
+     * @return the time worked
+     */
     public TicketTimeTrack setTimeWorked(String timeWorked) {
         this.setTimeWorked(stringToSeconds(timeWorked));
         return this;
@@ -310,79 +440,175 @@ public class TicketTimeTrack extends KEntity {
         return (Helper.parseInt(timeArray[0]) * 60 * 60) + (Helper.parseInt(timeArray[1]) * 60);
     }
 
+    /**
+     * Gets time billable.
+     *
+     * @return the time billable
+     */
     public int getTimeBillable() {
         return timeBillable;
     }
 
+    /**
+     * Sets time billable.
+     *
+     * @param timeBillable the time billable
+     * @return the time billable
+     */
     public TicketTimeTrack setTimeBillable(int timeBillable) {
         this.timeBillable = timeBillable;
         return this;
     }
 
+    /**
+     * Sets time billable.
+     *
+     * @param time the time
+     * @return the time billable
+     */
     public TicketTimeTrack setTimeBillable(String time) {
         this.setTimeBillable(stringToSeconds(time));
         return this;
     }
 
+    /**
+     * Gets bill date.
+     *
+     * @return the bill date
+     */
     public int getBillDate() {
         return billDate;
     }
 
+    /**
+     * Sets bill date.
+     *
+     * @param billDate the bill date
+     * @return the bill date
+     */
     public TicketTimeTrack setBillDate(int billDate) {
         this.billDate = billDate;
         return this;
     }
 
+    /**
+     * Gets work date.
+     *
+     * @return the work date
+     */
     public int getWorkDate() {
         return workDate;
     }
 
+    /**
+     * Sets work date.
+     *
+     * @param workDate the work date
+     * @return the work date
+     */
     public TicketTimeTrack setWorkDate(int workDate) {
         this.workDate = workDate;
         return this;
     }
 
+    /**
+     * Gets worker staff id.
+     *
+     * @return the worker staff id
+     */
     public int getWorkerStaffId() {
         return workerStaffId;
     }
 
+    /**
+     * Sets worker staff id.
+     *
+     * @param workerStaffId the worker staff id
+     * @return the worker staff id
+     */
     public TicketTimeTrack setWorkerStaffId(int workerStaffId) {
         this.workerStaffId = workerStaffId;
         this.workerStaff = null;
         return this;
     }
 
+    /**
+     * Gets worker staff name.
+     *
+     * @return the worker staff name
+     */
     public String getWorkerStaffName() {
         return workerStaffName;
     }
 
+    /**
+     * Sets worker staff name.
+     *
+     * @param workerStaffName the worker staff name
+     * @return the worker staff name
+     */
     public TicketTimeTrack setWorkerStaffName(String workerStaffName) {
         this.workerStaffName = workerStaffName;
         return this;
     }
 
+    /**
+     * Gets note color.
+     *
+     * @return the note color
+     */
     public int getNoteColor() {
         return noteColor;
     }
 
+    /**
+     * Sets note color.
+     *
+     * @param noteColor the note color
+     * @return the note color
+     */
     public TicketTimeTrack setNoteColor(int noteColor) {
         this.noteColor = noteColor;
         return this;
     }
 
+    /**
+     * Gets contents.
+     *
+     * @return the contents
+     */
     public String getContents() {
         return contents;
     }
 
+    /**
+     * Sets contents.
+     *
+     * @param contents the contents
+     * @return the contents
+     */
     public TicketTimeTrack setContents(String contents) {
         this.contents = contents;
         return this;
     }
 
+    /**
+     * Gets worker staff.
+     *
+     * @return the worker staff
+     * @throws KayakoException the kayako exception
+     */
     public Staff getWorkerStaff() throws KayakoException {
         return this.getWorkerStaff(false);
     }
 
+    /**
+     * Gets worker staff.
+     *
+     * @param refresh the refresh
+     * @return the worker staff
+     * @throws KayakoException the kayako exception
+     */
     public Staff getWorkerStaff(Boolean refresh) throws KayakoException {
         if (this.workerStaff == null || refresh) {
             this.workerStaff = Staff.get(this.getWorkerStaffId());
@@ -391,12 +617,24 @@ public class TicketTimeTrack extends KEntity {
         return workerStaff;
     }
 
+    /**
+     * Sets worker staff.
+     *
+     * @param workerStaff the worker staff
+     * @return the worker staff
+     */
     public TicketTimeTrack setWorkerStaff(Staff workerStaff) {
         this.workerStaff = workerStaff;
         this.setWorkerStaffId(workerStaff.getId());
         return this;
     }
 
+    /**
+     * Gets all.
+     *
+     * @param ticketId the ticket id
+     * @return the all
+     */
     public static RawArrayElement getAll(int ticketId) {
         ArrayList<String> searchParams = new ArrayList<String>();
         searchParams.add("ListAll");
@@ -412,10 +650,25 @@ public class TicketTimeTrack extends KEntity {
         return TicketTimeTracks;
     }
 
+    /**
+     * Gets all time tracks.
+     *
+     * @param ticketId the ticket id
+     * @return the all time tracks
+     * @throws KayakoException the kayako exception
+     */
     public static ArrayList<TicketTimeTrack> getAllTimeTracks(int ticketId) throws KayakoException {
         return refineToArray(getAll(ticketId));
     }
 
+    /**
+     * Get ticket time track.
+     *
+     * @param ticketId the ticket id
+     * @param id the id
+     * @return the ticket time track
+     * @throws KayakoException the kayako exception
+     */
     public static TicketTimeTrack get(int ticketId, int id) throws KayakoException {
         ArrayList<String> arrayList = new ArrayList<String>();
         arrayList.add(Integer.toString(ticketId));
@@ -428,6 +681,12 @@ public class TicketTimeTrack extends KEntity {
         throw new KayakoException("This method is not available on this type of objects.");
     }
 
+    /**
+     * Create ticket time track.
+     *
+     * @return the ticket time track
+     * @throws KayakoException the kayako exception
+     */
     public TicketTimeTrack create() throws KayakoException {
         return (TicketTimeTrack) super.create(controller);
     }
@@ -452,6 +711,12 @@ public class TicketTimeTrack extends KEntity {
         return buildHashMap(false);
     }
 
+    /**
+     * Build hash map.
+     *
+     * @param newTicketTimeTrack the new ticket time track
+     * @return the hash map
+     */
     public HashMap<String, String> buildHashMap(Boolean newTicketTimeTrack) {
         HashMap<String, String> ticketTimeTrackHashMap = new HashMap<String, String>();
         ticketTimeTrackHashMap.put("ticketid", Integer.toString(this.getTicketId()));

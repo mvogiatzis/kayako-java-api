@@ -4,16 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * ###############################################
- * Kayako App
- * _______________________________________________
- *
+ * The type Ticket note.
  * @author Rajat Garg
  * @package lib
  * @copyright Copyright (c) 2001-2012, Kayako
- * @license http://www.kayako.com/license
- * @link http://www.kayako.com
- * ###############################################
+ * @license http ://www.kayako.com/license
+ * @link http ://www.kayako.com
  */
 public class TicketNote extends KEntity {
 
@@ -73,7 +69,13 @@ public class TicketNote extends KEntity {
      */
     static final String TYPE_USER_ORGANIZATION = "userorganization";
 
+    /**
+     * The Controller.
+     */
     static protected String controller = "/Tickets/TicketNote";
+    /**
+     * The Object xml name.
+     */
     static protected String objectXmlName = "note";
 
     /**
@@ -87,7 +89,7 @@ public class TicketNote extends KEntity {
     /**
      * Ticket identifier - if this note is associated with ticket.
      *
-     * @apiField required_create=true
+     * @apiField required_create =true
      * @var int
      */
     protected int ticketId;
@@ -113,7 +115,7 @@ public class TicketNote extends KEntity {
      *
      * @apiField
      * @var string
-     * @see TicketNote::TYPE static final Stringants.
+     * @see  ::TYPE static final Stringants.
      */
     protected String type = TYPE_TICKET;
 
@@ -122,14 +124,14 @@ public class TicketNote extends KEntity {
      *
      * @apiField
      * @var int
-     * @see TicketNote::COLOR static final Stringants.
+     * @see  ::COLOR static final Stringants.
      */
     protected int noteColor;
 
     /**
      * Identifier of staff user who created this note.
      *
-     * @apiField alias=staffid
+     * @apiField alias =staffid
      * @var int
      */
     protected int creatorStaffId = 0;
@@ -137,7 +139,7 @@ public class TicketNote extends KEntity {
     /**
      * Full name of staff user who created this note.
      *
-     * @apiField getter=getCreatorName setter=setCreator alias=fullname
+     * @apiField getter =getCreatorName setter=setCreator alias=fullname
      * @var string
      */
     protected String creatorStaffName;
@@ -161,7 +163,7 @@ public class TicketNote extends KEntity {
     /**
      * Ticket note contents.
      *
-     * @apiField required_create=true
+     * @apiField required_create =true
      * @var string
      */
     protected String contents;
@@ -201,9 +203,19 @@ public class TicketNote extends KEntity {
      */
     private UserOrganization userOrganization = null;
 
+    /**
+     * Instantiates a new Ticket note.
+     */
     public TicketNote() {
     }
 
+    /**
+     * Instantiates a new Ticket note.
+     *
+     * @param ticket the ticket
+     * @param creatorStaff the creator staff
+     * @param contents the contents
+     */
     public TicketNote(Ticket ticket, Staff creatorStaff, String contents) {
         this.setTicket(ticket).setCreatorStaff(creatorStaff).setContents(contents);
     }
@@ -212,6 +224,12 @@ public class TicketNote extends KEntity {
         return id;
     }
 
+    /**
+     * Sets id.
+     *
+     * @param id the id
+     * @return the id
+     */
     public TicketNote setId(int id) {
         this.id = id;
         return this;
@@ -229,24 +247,49 @@ public class TicketNote extends KEntity {
         return this;
     }
 
+    /**
+     * Gets object xml name.
+     *
+     * @return the object xml name
+     */
     public static String getObjectXmlName() {
 
         return objectXmlName;
     }
 
+    /**
+     * Sets object xml name.
+     *
+     * @param objectXmlName the object xml name
+     */
     public static void setObjectXmlName(String objectXmlName) {
         TicketNote.objectXmlName = objectXmlName;
     }
 
+    /**
+     * Gets controller.
+     *
+     * @return the controller
+     */
     public static String getController() {
 
         return controller;
     }
 
+    /**
+     * Sets controller.
+     *
+     * @param controller the controller
+     */
     public static void setController(String controller) {
         TicketNote.controller = controller;
     }
 
+    /**
+     * Gets ticket id.
+     *
+     * @return the ticket id
+     */
     public int getTicketId() {
         if (this.getType().equals(TYPE_TICKET)) {
             return ticketId;
@@ -255,6 +298,12 @@ public class TicketNote extends KEntity {
         }
     }
 
+    /**
+     * Sets ticket id.
+     *
+     * @param ticketId the ticket id
+     * @return the ticket id
+     */
     public TicketNote setTicketId(int ticketId) {
         this.ticketId = ticketId;
         this.ticket = null;
@@ -264,6 +313,11 @@ public class TicketNote extends KEntity {
         return this;
     }
 
+    /**
+     * Gets user id.
+     *
+     * @return the user id
+     */
     public int getUserId() {
         if (!this.getType().equals(TYPE_USER)) {
             return 0;
@@ -271,24 +325,54 @@ public class TicketNote extends KEntity {
         return userId;
     }
 
+    /**
+     * Sets user id.
+     *
+     * @param userId the user id
+     * @return the user id
+     */
     public TicketNote setUserId(int userId) {
         this.userId = userId;
         return this;
     }
 
+    /**
+     * Gets contents.
+     *
+     * @return the contents
+     */
     public String getContents() {
         return contents;
     }
 
+    /**
+     * Sets contents.
+     *
+     * @param contents the contents
+     * @return the contents
+     */
     public TicketNote setContents(String contents) {
         this.contents = contents;
         return this;
     }
 
+    /**
+     * Gets user.
+     *
+     * @return the user
+     * @throws KayakoException the kayako exception
+     */
     public User getUser() throws KayakoException {
         return this.getUser(false);
     }
 
+    /**
+     * Gets user.
+     *
+     * @param refresh the refresh
+     * @return the user
+     * @throws KayakoException the kayako exception
+     */
     public User getUser(Boolean refresh) throws KayakoException {
         if (!this.getType().equals(TYPE_USER)) {
             return null;
@@ -299,6 +383,12 @@ public class TicketNote extends KEntity {
         return user;
     }
 
+    /**
+     * Sets user.
+     *
+     * @param user the user
+     * @return the user
+     */
     public TicketNote setUser(User user) {
         this.user = user;
         this.userId = user.getId();
@@ -306,10 +396,23 @@ public class TicketNote extends KEntity {
         return this;
     }
 
+    /**
+     * Gets ticket.
+     *
+     * @return the ticket
+     * @throws KayakoException the kayako exception
+     */
     public Ticket getTicket() throws KayakoException {
         return this.getTicket(false);
     }
 
+    /**
+     * Gets ticket.
+     *
+     * @param refresh the refresh
+     * @return the ticket
+     * @throws KayakoException the kayako exception
+     */
     public Ticket getTicket(Boolean refresh) throws KayakoException {
         if (!this.getType().equals(TYPE_TICKET)) {
             return null;
@@ -320,6 +423,12 @@ public class TicketNote extends KEntity {
         return ticket;
     }
 
+    /**
+     * Sets ticket.
+     *
+     * @param ticket the ticket
+     * @return the ticket
+     */
     public TicketNote setTicket(Ticket ticket) {
         this.ticket = ticket;
         this.ticketId = ticket.getId();
@@ -327,6 +436,11 @@ public class TicketNote extends KEntity {
         return this;
     }
 
+    /**
+     * Gets user organization id.
+     *
+     * @return the user organization id
+     */
     public int getUserOrganizationId() {
         if (!this.getType().equals(TYPE_USER_ORGANIZATION)) {
             return 0;
@@ -334,67 +448,145 @@ public class TicketNote extends KEntity {
         return userOrganizationId;
     }
 
+    /**
+     * Sets user organization id.
+     *
+     * @param userOrganizationId the user organization id
+     * @return the user organization id
+     */
     public TicketNote setUserOrganizationId(int userOrganizationId) {
         this.userOrganizationId = userOrganizationId;
         this.userOrganization = null;
         return this;
     }
 
+    /**
+     * Gets type.
+     *
+     * @return the type
+     */
     public String getType() {
         return type;
     }
 
+    /**
+     * Sets type.
+     *
+     * @param type the type
+     * @return the type
+     */
     public TicketNote setType(String type) {
         this.type = type;
         return this;
     }
 
+    /**
+     * Gets note color.
+     *
+     * @return the note color
+     */
     public int getNoteColor() {
         return noteColor;
     }
 
+    /**
+     * Sets note color.
+     *
+     * @param noteColor the note color
+     * @return the note color
+     */
     public TicketNote setNoteColor(int noteColor) {
         this.noteColor = noteColor;
         return this;
     }
 
+    /**
+     * Gets creator staff id.
+     *
+     * @return the creator staff id
+     */
     public int getCreatorStaffId() {
         return creatorStaffId;
     }
 
+    /**
+     * Sets creator staff id.
+     *
+     * @param creatorStaffId the creator staff id
+     * @return the creator staff id
+     */
     public TicketNote setCreatorStaffId(int creatorStaffId) {
         this.creatorStaffId = creatorStaffId;
         return this;
     }
 
+    /**
+     * Gets creator staff name.
+     *
+     * @return the creator staff name
+     */
     public String getCreatorStaffName() {
         return creatorStaffName;
     }
 
+    /**
+     * Sets creator staff name.
+     *
+     * @param creatorStaffName the creator staff name
+     * @return the creator staff name
+     */
     public TicketNote setCreatorStaffName(String creatorStaffName) {
         this.creatorStaffName = creatorStaffName;
         return this;
     }
 
+    /**
+     * Gets for staff id.
+     *
+     * @return the for staff id
+     */
     public int getForStaffId() {
         return forStaffId;
     }
 
+    /**
+     * Sets for staff id.
+     *
+     * @param forStaffId the for staff id
+     * @return the for staff id
+     */
     public TicketNote setForStaffId(int forStaffId) {
         this.forStaffId = forStaffId;
         this.forStaff = null;
         return this;
     }
 
+    /**
+     * Gets creation date.
+     *
+     * @return the creation date
+     */
     public int getCreationDate() {
         return creationDate;
     }
 
+    /**
+     * Sets creation date.
+     *
+     * @param creationDate the creation date
+     * @return the creation date
+     */
     public TicketNote setCreationDate(int creationDate) {
         this.creationDate = creationDate;
         return this;
     }
 
+    /**
+     * Gets creator staff.
+     *
+     * @return the creator staff
+     * @throws KayakoException the kayako exception
+     */
     public Staff getCreatorStaff() throws KayakoException {
         if (this.getCreatorStaffId() == 0) {
             return null;
@@ -405,6 +597,12 @@ public class TicketNote extends KEntity {
         return this.creatorStaff;
     }
 
+    /**
+     * Sets creator staff.
+     *
+     * @param creatorStaff the creator staff
+     * @return the creator staff
+     */
     public TicketNote setCreatorStaff(Staff creatorStaff) {
         this.creatorStaff = creatorStaff;
         this.creatorStaffId = creatorStaff.getId();
@@ -412,14 +610,32 @@ public class TicketNote extends KEntity {
         return this;
     }
 
+    /**
+     * Sets creator.
+     *
+     * @param staff the staff
+     * @return the creator
+     */
     public TicketNote setCreator(Staff staff) {
         return this.setCreatorStaff(staff);
     }
 
+    /**
+     * Sets creator.
+     *
+     * @param id the id
+     * @return the creator
+     */
     public TicketNote setCreator(int id) {
         return this.setCreatorStaffId(id);
     }
 
+    /**
+     * Sets creator.
+     *
+     * @param creatorString the creator string
+     * @return the creator
+     */
     public TicketNote setCreator(String creatorString) {
         this.creatorStaff = null;
         this.creatorStaffId = 0;
@@ -432,12 +648,20 @@ public class TicketNote extends KEntity {
      * <p/>
      * Result is cached.
      *
-     * @return Staff
+     * @return Staff for staff
+     * @throws KayakoException the kayako exception
      */
     public Staff getForStaff() throws KayakoException {
         return this.getForStaff(false);
     }
 
+    /**
+     * Gets for staff.
+     *
+     * @param refresh the refresh
+     * @return the for staff
+     * @throws KayakoException the kayako exception
+     */
     public Staff getForStaff(Boolean refresh) throws KayakoException {
         if (this.forStaff == null || refresh) {
             this.forStaff = (Staff) Staff.get(this.getForStaffId());
@@ -445,16 +669,35 @@ public class TicketNote extends KEntity {
         return forStaff;
     }
 
+    /**
+     * Sets for staff.
+     *
+     * @param forStaff the for staff
+     * @return the for staff
+     */
     public TicketNote setForStaff(Staff forStaff) {
         this.forStaff = forStaff;
         this.forStaffId = forStaff.getId();
         return this;
     }
 
+    /**
+     * Gets user organization.
+     *
+     * @return the user organization
+     * @throws KayakoException the kayako exception
+     */
     public UserOrganization getUserOrganization() throws KayakoException {
         return this.getUserOrganization(false);
     }
 
+    /**
+     * Gets user organization.
+     *
+     * @param refresh the refresh
+     * @return the user organization
+     * @throws KayakoException the kayako exception
+     */
     public UserOrganization getUserOrganization(Boolean refresh) throws KayakoException {
         if ((userOrganization == null || refresh) && userOrganizationId > 0) {
             userOrganization = UserOrganization.get(this.userOrganizationId);
@@ -462,12 +705,24 @@ public class TicketNote extends KEntity {
         return userOrganization;
     }
 
+    /**
+     * Sets user organization.
+     *
+     * @param userOrganization the user organization
+     * @return the user organization
+     */
     public TicketNote setUserOrganization(UserOrganization userOrganization) {
         this.userOrganization = userOrganization;
         this.userOrganizationId = userOrganization.getId();
         return this;
     }
 
+    /**
+     * Gets all.
+     *
+     * @param ticketId the ticket id
+     * @return the all
+     */
     public static RawArrayElement getAll(int ticketId) {
         ArrayList<String> searchParams = new ArrayList<String>();
         searchParams.add("ListAll");
@@ -483,10 +738,25 @@ public class TicketNote extends KEntity {
         return TicketNotes;
     }
 
+    /**
+     * Gets all notes.
+     *
+     * @param ticketId the ticket id
+     * @return the all notes
+     * @throws KayakoException the kayako exception
+     */
     public static ArrayList<TicketNote> getAllNotes(int ticketId) throws KayakoException {
         return refineToArray(getAll(ticketId));
     }
 
+    /**
+     * Get ticket note.
+     *
+     * @param ticketId the ticket id
+     * @param id the id
+     * @return the ticket note
+     * @throws KayakoException the kayako exception
+     */
     public static TicketNote get(int ticketId, int id) throws KayakoException {
         ArrayList<String> arrayList = new ArrayList<String>();
         arrayList.add(Integer.toString(ticketId));
@@ -499,6 +769,12 @@ public class TicketNote extends KEntity {
         throw new KayakoException("This method is not available on this type of objects.");
     }
 
+    /**
+     * Create ticket note.
+     *
+     * @return the ticket note
+     * @throws KayakoException the kayako exception
+     */
     public TicketNote create() throws KayakoException {
         if (!this.getType().equals(TYPE_TICKET)) {
             throw new KayakoException("Ticket note creation is for type ticket only.");
@@ -506,6 +782,12 @@ public class TicketNote extends KEntity {
         return (TicketNote) super.create(controller);
     }
 
+    /**
+     * Delete boolean.
+     *
+     * @return the boolean
+     * @throws KayakoException the kayako exception
+     */
     public Boolean delete() throws KayakoException {
         return KEntity.getRESTClient().delete(controller, this.getIdArray()) != null;
     }
@@ -552,6 +834,12 @@ public class TicketNote extends KEntity {
         return buildHashMap(false);
     }
 
+    /**
+     * Build hash map.
+     *
+     * @param newTicketNote the new ticket note
+     * @return the hash map
+     */
     public HashMap<String, String> buildHashMap(Boolean newTicketNote) {
         HashMap<String, String> ticketNoteHashMap = new HashMap<String, String>();
         ticketNoteHashMap.put("ticketid", Integer.toString(this.getTicketId()));

@@ -5,16 +5,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * ###############################################
- * Kayako App
- * _______________________________________________
- *
+ * The type Ticket post.
  * @author Rajat Garg
  * @package lib
  * @copyright Copyright (c) 2001-2012, Kayako
- * @license http://www.kayako.com/license
- * @link http://www.kayako.com
- * ###############################################
+ * @license http ://www.kayako.com/license
+ * @link http ://www.kayako.com
  */
 public class TicketPost extends KEntity {
 
@@ -58,7 +54,13 @@ public class TicketPost extends KEntity {
      */
     static final int CREATOR_THIRDPARTY = 5;
 
+    /**
+     * The Controller.
+     */
     static protected String controller = "/Tickets/TicketPost";
+    /**
+     * The Object xml name.
+     */
     static protected String objectXmlName = "post";
 
     /**
@@ -135,7 +137,7 @@ public class TicketPost extends KEntity {
      * getter=getCreatorType
      *
      * @param int
-     * @see TicketPost::CREATOR constants.
+     * @see  ::CREATOR constants.
      */
     protected int creator;
 
@@ -248,6 +250,12 @@ public class TicketPost extends KEntity {
         return id;
     }
 
+    /**
+     * Sets id.
+     *
+     * @param id the id
+     * @return the id
+     */
     public TicketPost setId(int id) {
         this.id = id;
         return this;
@@ -265,47 +273,100 @@ public class TicketPost extends KEntity {
         return this;
     }
 
+    /**
+     * Gets object xml name.
+     *
+     * @return the object xml name
+     */
     public static String getObjectXmlName() {
 
         return objectXmlName;
     }
 
+    /**
+     * Sets object xml name.
+     *
+     * @param objectXmlName the object xml name
+     */
     public static void setObjectXmlName(String objectXmlName) {
         TicketPost.objectXmlName = objectXmlName;
     }
 
+    /**
+     * Gets controller.
+     *
+     * @return the controller
+     */
     public static String getController() {
 
         return controller;
     }
 
+    /**
+     * Sets controller.
+     *
+     * @param controller the controller
+     */
     public static void setController(String controller) {
         TicketPost.controller = controller;
     }
 
+    /**
+     * Gets ticket id.
+     *
+     * @return the ticket id
+     */
     public int getTicketId() {
         return ticketId;
     }
 
+    /**
+     * Sets ticket id.
+     *
+     * @param ticketId the ticket id
+     * @return the ticket id
+     */
     public TicketPost setTicketId(int ticketId) {
         this.ticketId = ticketId;
         this.ticket = null;
         return this;
     }
 
+    /**
+     * Gets full name.
+     *
+     * @return the full name
+     */
     public String getFullName() {
         return fullName;
     }
 
+    /**
+     * Sets full name.
+     *
+     * @param fullName the full name
+     * @return the full name
+     */
     public TicketPost setFullName(String fullName) {
         this.fullName = fullName;
         return this;
     }
 
+    /**
+     * Gets user id.
+     *
+     * @return the user id
+     */
     public int getUserId() {
         return userId;
     }
 
+    /**
+     * Sets user id.
+     *
+     * @param userId the user id
+     * @return the user id
+     */
     public TicketPost setUserId(int userId) {
         this.userId = userId;
         if (userId > 0) {
@@ -319,51 +380,111 @@ public class TicketPost extends KEntity {
 
     }
 
+    /**
+     * Gets date line.
+     *
+     * @return the date line
+     */
     public int getDateLine() {
         return dateLine;
     }
 
+    /**
+     * Sets date line.
+     *
+     * @param dateLine the date line
+     * @return the date line
+     */
     public TicketPost setDateLine(int dateLine) {
         this.dateLine = dateLine;
         return this;
     }
 
+    /**
+     * Gets email.
+     *
+     * @return the email
+     */
     public String getEmail() {
         return email;
     }
 
+    /**
+     * Sets email.
+     *
+     * @param email the email
+     * @return the email
+     */
     public TicketPost setEmail(String email) {
         this.email = email;
         return this;
     }
 
+    /**
+     * Gets email to.
+     *
+     * @return the email to
+     */
     public String getEmailTo() {
         return emailTo;
     }
 
+    /**
+     * Sets email to.
+     *
+     * @param emailTo the email to
+     * @return the email to
+     */
     public TicketPost setEmailTo(String emailTo) {
         this.emailTo = emailTo;
         return this;
     }
 
+    /**
+     * Gets iP address.
+     *
+     * @return the iP address
+     */
     public String getIPAddress() {
         return IPAddress;
     }
 
+    /**
+     * Sets iP address.
+     *
+     * @param IPAddress the iP address
+     * @return the iP address
+     */
     public TicketPost setIPAddress(String IPAddress) {
         this.IPAddress = IPAddress;
         return this;
     }
 
+    /**
+     * Gets has attachment.
+     *
+     * @return the has attachment
+     */
     public Boolean getHasAttachment() {
         return hasAttachment;
     }
 
+    /**
+     * Sets has attachment.
+     *
+     * @param hasAttachment the has attachment
+     * @return the has attachment
+     */
     public TicketPost setHasAttachment(Boolean hasAttachment) {
         this.hasAttachment = hasAttachment;
         return this;
     }
 
+    /**
+     * Gets creator.
+     *
+     * @return the creator
+     */
     public int getCreator() {
         switch (this.creator) {
             case CREATOR_USER:
@@ -374,6 +495,13 @@ public class TicketPost extends KEntity {
         return creator;
     }
 
+    /**
+     * Sets creator.
+     *
+     * @param creatorId the creator id
+     * @param type the type
+     * @return the creator
+     */
     public TicketPost setCreator(int creatorId, int type) {
         switch (type) {
             case CREATOR_USER:
@@ -386,52 +514,114 @@ public class TicketPost extends KEntity {
         return this;
     }
 
+    /**
+     * Sets creator.
+     *
+     * @param creator the creator
+     * @return the creator
+     */
     public TicketPost setCreator(int creator) {
         this.creator = creator;
         return this;
     }
 
+    /**
+     * Sets creator.
+     *
+     * @param creator the creator
+     * @return the creator
+     */
     public TicketPost setCreator(Staff creator) {
         this.setStaff(creator);
         return this;
     }
 
+    /**
+     * Sets creator.
+     *
+     * @param creator the creator
+     * @return the creator
+     */
     public TicketPost setCreator(User creator) {
         this.setUser(creator);
         return this;
     }
 
+    /**
+     * Gets hTML.
+     *
+     * @return the hTML
+     */
     public Boolean getHTML() {
         return isHTML;
     }
 
+    /**
+     * Sets hTML.
+     *
+     * @param HTML the hTML
+     * @return the hTML
+     */
     public TicketPost setHTML(Boolean HTML) {
         isHTML = HTML;
         return this;
     }
 
+    /**
+     * Gets third party.
+     *
+     * @return the third party
+     */
     public Boolean getThirdParty() {
         return isThirdParty;
     }
 
+    /**
+     * Sets third party.
+     *
+     * @param thirdParty the third party
+     * @return the third party
+     */
     public TicketPost setThirdParty(Boolean thirdParty) {
         isThirdParty = thirdParty;
         return this;
     }
 
+    /**
+     * Gets emailed.
+     *
+     * @return the emailed
+     */
     public Boolean getEmailed() {
         return isEmailed;
     }
 
+    /**
+     * Sets emailed.
+     *
+     * @param emailed the emailed
+     * @return the emailed
+     */
     public TicketPost setEmailed(Boolean emailed) {
         isEmailed = emailed;
         return this;
     }
 
+    /**
+     * Gets staff id.
+     *
+     * @return the staff id
+     */
     public int getStaffId() {
         return staffId;
     }
 
+    /**
+     * Sets staff id.
+     *
+     * @param staffId the staff id
+     * @return the staff id
+     */
     public TicketPost setStaffId(int staffId) {
         this.staffId = staffId;
         if (staffId > 0) {
@@ -444,46 +634,103 @@ public class TicketPost extends KEntity {
         return this;
     }
 
+    /**
+     * Gets survey comment.
+     *
+     * @return the survey comment
+     */
     public Boolean getSurveyComment() {
         return isSurveyComment;
     }
 
+    /**
+     * Sets survey comment.
+     *
+     * @param surveyComment the survey comment
+     * @return the survey comment
+     */
     public TicketPost setSurveyComment(Boolean surveyComment) {
         isSurveyComment = surveyComment;
         return this;
     }
 
+    /**
+     * Gets contents.
+     *
+     * @return the contents
+     */
     public String getContents() {
         return contents;
     }
 
+    /**
+     * Sets contents.
+     *
+     * @param contents the contents
+     * @return the contents
+     */
     public TicketPost setContents(String contents) {
         this.contents = contents;
         return this;
     }
 
+    /**
+     * Gets subject.
+     *
+     * @return the subject
+     */
     public String getSubject() {
         return subject;
     }
 
+    /**
+     * Sets subject.
+     *
+     * @param subject the subject
+     * @return the subject
+     */
     public TicketPost setSubject(String subject) {
         this.subject = subject;
         return this;
     }
 
+    /**
+     * Is private.
+     *
+     * @return the boolean
+     */
     public Boolean isPrivate() {
         return isPrivate;
     }
 
+    /**
+     * Sets private.
+     *
+     * @param aPrivate the a private
+     * @return the private
+     */
     public TicketPost setPrivate(Boolean aPrivate) {
         isPrivate = aPrivate;
         return this;
     }
 
+    /**
+     * Gets attachments.
+     *
+     * @return the attachments
+     * @throws KayakoException the kayako exception
+     */
     public ArrayList<TicketAttachment> getAttachments() throws KayakoException {
         return this.getAttachments(false);
     }
 
+    /**
+     * Gets attachments.
+     *
+     * @param refresh the refresh
+     * @return the attachments
+     * @throws KayakoException the kayako exception
+     */
     public ArrayList<TicketAttachment> getAttachments(Boolean refresh) throws KayakoException {
         if ((this.attachments.size() == 0 || refresh) && this.hasAttachment) {
             for (TicketAttachment attachment : TicketAttachment.getAllAttachments(this.getTicketId())) {
@@ -495,15 +742,34 @@ public class TicketPost extends KEntity {
         return attachments;
     }
 
+    /**
+     * Sets attachments.
+     *
+     * @param attachments the attachments
+     * @return the attachments
+     */
     public TicketPost setAttachments(ArrayList<TicketAttachment> attachments) {
         this.attachments = attachments;
         return this;
     }
 
+    /**
+     * Gets user.
+     *
+     * @return the user
+     * @throws KayakoException the kayako exception
+     */
     public User getUser() throws KayakoException {
         return this.getUser(false);
     }
 
+    /**
+     * Gets user.
+     *
+     * @param refresh the refresh
+     * @return the user
+     * @throws KayakoException the kayako exception
+     */
     public User getUser(Boolean refresh) throws KayakoException {
         if ((refresh || this.user == null) && this.getUserId() > 0) {
             this.user = User.get(this.getUserId());
@@ -511,6 +777,12 @@ public class TicketPost extends KEntity {
         return user;
     }
 
+    /**
+     * Sets user.
+     *
+     * @param user the user
+     * @return the user
+     */
     public TicketPost setUser(User user) {
         this.user = user;
         this.staff = null;
@@ -520,10 +792,23 @@ public class TicketPost extends KEntity {
         return this;
     }
 
+    /**
+     * Gets staff.
+     *
+     * @return the staff
+     * @throws KayakoException the kayako exception
+     */
     public Staff getStaff() throws KayakoException {
         return this.getStaff(false);
     }
 
+    /**
+     * Gets staff.
+     *
+     * @param refresh the refresh
+     * @return the staff
+     * @throws KayakoException the kayako exception
+     */
     public Staff getStaff(Boolean refresh) throws KayakoException {
         if ((this.staff == null || refresh) && this.staffId > 0) {
             staff = Staff.get(this.staffId);
@@ -531,6 +816,12 @@ public class TicketPost extends KEntity {
         return staff;
     }
 
+    /**
+     * Sets staff.
+     *
+     * @param staff the staff
+     * @return the staff
+     */
     public TicketPost setStaff(Staff staff) {
         this.staff = staff;
         this.staffId = staff.getId();
@@ -539,6 +830,14 @@ public class TicketPost extends KEntity {
         return this;
     }
 
+    /**
+     * Get ticket post.
+     *
+     * @param ticketId the ticket id
+     * @param id the id
+     * @return the ticket post
+     * @throws KayakoException the kayako exception
+     */
     public static TicketPost get(int ticketId, int id) throws KayakoException {
         ArrayList<String> params = new ArrayList<String>();
         params.add(Integer.toString(ticketId));
@@ -546,18 +845,43 @@ public class TicketPost extends KEntity {
         return new TicketPost().populate(KEntity.get(controller, params));
     }
 
+    /**
+     * Update ticket post.
+     *
+     * @return the ticket post
+     * @throws KayakoException the kayako exception
+     */
     public TicketPost update() throws KayakoException {
         throw new KayakoException("This method is not available for this type of objects.");
     }
 
+    /**
+     * Delete boolean.
+     *
+     * @return the boolean
+     * @throws KayakoException the kayako exception
+     */
     public Boolean delete() throws KayakoException {
         return KEntity.getRESTClient().delete(controller, this.getIdArray()) != null;
     }
 
+    /**
+     * Gets ticket.
+     *
+     * @return the ticket
+     * @throws KayakoException the kayako exception
+     */
     public Ticket getTicket() throws KayakoException {
         return this.getTicket(false);
     }
 
+    /**
+     * Gets ticket.
+     *
+     * @param refresh the refresh
+     * @return the ticket
+     * @throws KayakoException the kayako exception
+     */
     public Ticket getTicket(Boolean refresh) throws KayakoException {
         if (this.ticket == null || refresh) {
             if (this.getTicketId() == 0) {
@@ -568,12 +892,24 @@ public class TicketPost extends KEntity {
         return ticket;
     }
 
+    /**
+     * Sets ticket.
+     *
+     * @param ticket the ticket
+     * @return the ticket
+     */
     public TicketPost setTicket(Ticket ticket) {
         this.ticket = ticket;
         this.ticketId = ticket.getId();
         return this;
     }
 
+    /**
+     * Gets all.
+     *
+     * @param ticketId the ticket id
+     * @return the all
+     */
     public static RawArrayElement getAll(int ticketId) {
         ArrayList<String> searchParams = new ArrayList<String>();
         searchParams.add("ListAll");
@@ -589,10 +925,25 @@ public class TicketPost extends KEntity {
         return TicketPosts;
     }
 
+    /**
+     * Gets all posts.
+     *
+     * @param ticketId the ticket id
+     * @return the all posts
+     * @throws KayakoException the kayako exception
+     */
     public static ArrayList<TicketPost> getAllPosts(int ticketId) throws KayakoException {
         return refineToArray(getAll(ticketId));
     }
 
+    /**
+     * Create new.
+     *
+     * @param ticket the ticket
+     * @param contents the contents
+     * @param creator the creator
+     * @return the ticket post
+     */
     public static TicketPost createNew(Ticket ticket, String contents, Staff creator) {
         TicketPost ticketPost = new TicketPost();
         ticketPost.setTicket(ticket);
@@ -601,6 +952,14 @@ public class TicketPost extends KEntity {
         return ticketPost;
     }
 
+    /**
+     * Create new.
+     *
+     * @param ticket the ticket
+     * @param contents the contents
+     * @param creator the creator
+     * @return the ticket post
+     */
     public static TicketPost createNew(Ticket ticket, String contents, User creator) {
         TicketPost ticketPost = new TicketPost();
         ticketPost.setTicket(ticket);
@@ -667,6 +1026,12 @@ public class TicketPost extends KEntity {
         return buildHashMap(false);
     }
 
+    /**
+     * Build hash map.
+     *
+     * @param newTicketPost the new ticket post
+     * @return the hash map
+     */
     public HashMap<String, String> buildHashMap(Boolean newTicketPost) {
         HashMap<String, String> ticketPostHashMap = new HashMap<String, String>();
         ticketPostHashMap.put("ticketid", Integer.toString(this.getTicketId()));
@@ -691,10 +1056,25 @@ public class TicketPost extends KEntity {
         return super.toString();
     }
 
+    /**
+     * Create ticket attachment.
+     *
+     * @param contents the contents
+     * @param fileName the file name
+     * @return the ticket attachment
+     * @throws KayakoException the kayako exception
+     */
     public TicketAttachment createTicketAttachment(byte[] contents, String fileName) throws KayakoException {
         return TicketAttachment.createTicketAttachment(this, contents, fileName);
     }
 
+    /**
+     * Create ticket attachment.
+     *
+     * @param file the file
+     * @return the ticket attachment
+     * @throws KayakoException the kayako exception
+     */
     public TicketAttachment createTicketAttachment(File file) throws KayakoException {
         return TicketAttachment.createTicketAttachment(this, file);
     }

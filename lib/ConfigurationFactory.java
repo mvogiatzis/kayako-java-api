@@ -7,23 +7,24 @@ import com.google.appengine.api.users.UserServiceFactory;
 
 import java.util.Date;
 
-
 /**
- * ###############################################
- * Kayako App
- * _______________________________________________
- *
+ * The Configuration factory - This is a sample implementation of configuration factory. This is for Google App Engine Use Case.
  * @author Rajat Garg
  * @package lib
  * @copyright Copyright (c) 2001-2012, Kayako
- * @license http://www.kayako.com/license
- * @link http://www.kayako.com
+ * @license http ://www.kayako.com/license
+ * @link http ://www.kayako.com
  * <p/>
  * THIS CLASS IS TO BE REWRITTEN FOR SPECIFIC USE
- * ###############################################
  */
 public class ConfigurationFactory implements ConfigurationFactoryInterface {
 
+    /**
+     * Initialize boolean.
+     *
+     * @param userDomain the user domain
+     * @return the boolean
+     */
     public boolean initialize(String userDomain) {
         this.getConfiguration(userDomain);
         return true;
@@ -38,10 +39,23 @@ public class ConfigurationFactory implements ConfigurationFactoryInterface {
 
     }
 
+    /**
+     * Gets configuration.
+     *
+     * @param userDomain the user domain
+     * @return the configuration
+     */
     public Configuration getConfiguration(String userDomain) {
         return this.getConfiguration(userDomain, true);
     }
 
+    /**
+     * Gets configuration.
+     *
+     * @param userDomain the user domain
+     * @param reload the reload
+     * @return the configuration
+     */
     public Configuration getConfiguration(String userDomain, Boolean reload) {
         if (Configuration.getConfiguration() == null || reload) {
             this.reload(userDomain);
@@ -49,6 +63,15 @@ public class ConfigurationFactory implements ConfigurationFactoryInterface {
         return Configuration.getConfiguration();
     }
 
+    /**
+     * Sets configuration.
+     *
+     * @param userDomain the user domain
+     * @param apiURL the api uRL
+     * @param apiKey the api key
+     * @param secretKey the secret key
+     * @return the configuration
+     */
     public boolean setConfiguration(String userDomain, String apiURL, String apiKey, String secretKey) {
         Entity configuration = this.getConfigurationEntity(userDomain);
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();

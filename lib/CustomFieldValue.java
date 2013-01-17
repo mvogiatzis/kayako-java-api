@@ -1,16 +1,12 @@
 package lib;
 
 /**
- * ###############################################
- * Kayako App
- * _______________________________________________
- *
+ * The type Custom field value.
  * @author Rajat Garg
  * @package lib
  * @copyright Copyright (c) 2001-2012, Kayako
- * @license http://www.kayako.com/license
- * @link http://www.kayako.com
- * ###############################################
+ * @license http ://www.kayako.com/license
+ * @link http ://www.kayako.com
  */
 public class CustomFieldValue {
 
@@ -19,10 +15,21 @@ public class CustomFieldValue {
     Boolean isFile = false;
     String fileName = "";
 
+    /**
+     * Instantiates a new Custom field value.
+     *
+     * @param rawValue the raw value
+     */
     public CustomFieldValue(String rawValue) {
         this.rawValue = rawValue;
     }
 
+    /**
+     * Instantiates a new Custom field value.
+     *
+     * @param rawValue the raw value
+     * @param fileName the file name
+     */
     public CustomFieldValue(String rawValue, String fileName) {
         this.isFile = true;
         this.fileName = fileName;

@@ -3,19 +3,18 @@ package lib;
 import java.util.HashMap;
 
 /**
- * ###############################################
- * Kayako App
- * _______________________________________________
- *
+ * The type Custom field.
  * @author Rajat Garg
  * @package lib
  * @copyright Copyright (c) 2001-2012, Kayako
- * @license http://www.kayako.com/license
- * @link http://www.kayako.com
- * ###############################################
+ * @license http ://www.kayako.com/license
+ * @link http ://www.kayako.com
  */
 public class CustomField extends KEntity {
 
+    /**
+     * The Object xml name.
+     */
     static protected String objectXmlName = "field";
     /**
      * Field identifier.
@@ -52,7 +51,7 @@ public class CustomField extends KEntity {
     /**
      * Field value.
      *
-     * @apiField name=value getter=getRawValue setter=setValue
+     * @apiField name =value getter=getRawValue setter=setValue
      * @var string
      */
     protected String rawValue;
@@ -71,6 +70,11 @@ public class CustomField extends KEntity {
      */
     protected CustomFieldDefinition definition = null;
 
+    /**
+     * Instantiates a new Custom field.
+     *
+     * @param customFieldGroup the custom field group
+     */
     public CustomField(CustomFieldGroup customFieldGroup) {
         this.customFieldGroup = customFieldGroup;
     }
@@ -79,11 +83,24 @@ public class CustomField extends KEntity {
         return id;
     }
 
+    /**
+     * Sets id.
+     *
+     * @param id the id
+     * @return the id
+     */
     public CustomField setId(int id) {
         this.id = id;
         return this;
     }
 
+    /**
+     * Get custom field.
+     *
+     * @param id the id
+     * @return the custom field
+     * @throws KayakoException the kayako exception
+     */
     public static CustomField get(int id) throws KayakoException {
         throw new KayakoException("This method is not available for this type of objects.");
     }
@@ -113,19 +130,43 @@ public class CustomField extends KEntity {
         return super.toString();
     }
 
+    /**
+     * Gets custom field group.
+     *
+     * @return the custom field group
+     */
     public CustomFieldGroup getCustomFieldGroup() {
         return customFieldGroup;
     }
 
+    /**
+     * Sets custom field group.
+     *
+     * @param customFieldGroup the custom field group
+     * @return the custom field group
+     */
     public CustomField setCustomFieldGroup(CustomFieldGroup customFieldGroup) {
         this.customFieldGroup = customFieldGroup;
         return this;
     }
 
+    /**
+     * Gets definition.
+     *
+     * @return the definition
+     * @throws KayakoException the kayako exception
+     */
     public CustomFieldDefinition getDefinition() throws KayakoException {
         return this.getDefinition(false);
     }
 
+    /**
+     * Gets definition.
+     *
+     * @param refresh the refresh
+     * @return the definition
+     * @throws KayakoException the kayako exception
+     */
     public CustomFieldDefinition getDefinition(Boolean refresh) throws KayakoException {
         if (this.definition != null && !refresh) {
             return this.definition;
@@ -133,47 +174,104 @@ public class CustomField extends KEntity {
         return new CustomFieldDefinition(CustomFieldDefinition.getAll(CustomFieldDefinition.getController()).filterByComponentAttribute("fieldname", this.getName()).getComponents().get(0));
     }
 
+    /**
+     * Sets definition.
+     *
+     * @param definition the definition
+     * @return the definition
+     */
     public CustomField setDefinition(CustomFieldDefinition definition) {
         this.definition = definition;
         return this;
     }
 
+    /**
+     * Gets name.
+     *
+     * @return the name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Sets name.
+     *
+     * @param name the name
+     * @return the name
+     */
     public CustomField setName(String name) {
         this.name = name;
         return this;
     }
 
+    /**
+     * Gets raw value.
+     *
+     * @return the raw value
+     */
     public String getRawValue() {
         return rawValue;
     }
 
+    /**
+     * Sets raw value.
+     *
+     * @param rawValue the raw value
+     * @return the raw value
+     */
     public CustomField setRawValue(String rawValue) {
         this.rawValue = rawValue;
         return this;
     }
 
+    /**
+     * Gets title.
+     *
+     * @return the title
+     */
     public String getTitle() {
         return title;
     }
 
+    /**
+     * Sets title.
+     *
+     * @param title the title
+     * @return the title
+     */
     public CustomField setTitle(String title) {
         this.title = title;
         return this;
     }
 
+    /**
+     * Gets type.
+     *
+     * @return the type
+     */
     public int getType() {
         return type;
     }
 
+    /**
+     * Sets type.
+     *
+     * @param type the type
+     * @return the type
+     */
     public CustomField setType(int type) {
         this.type = type;
         return this;
     }
 
+    /**
+     * Gets option.
+     *
+     * @param value the value
+     * @return the option
+     * @throws KayakoException the kayako exception
+     */
     public CustomFieldOption getOption(String value) throws KayakoException {
         int id = Helper.parseInt(value);
         if (id > 0) {
@@ -182,6 +280,13 @@ public class CustomField extends KEntity {
         return this.getDefinition().getOptionByValue(value);
     }
 
+    /**
+     * Gets option.
+     *
+     * @param id the id
+     * @return the option
+     * @throws KayakoException the kayako exception
+     */
     public CustomFieldOption getOption(int id) throws KayakoException {
         return this.getDefinition().getOptionById(id);
     }
@@ -204,6 +309,12 @@ public class CustomField extends KEntity {
         return buildHashMap(false);
     }
 
+    /**
+     * Build hash map.
+     *
+     * @param newCustomField the new custom field
+     * @return the hash map
+     */
     public HashMap<String, String> buildHashMap(Boolean newCustomField) {
         HashMap<String, String> customFieldHashMap = new HashMap<String, String>();
         customFieldHashMap.put(this.getName(), this.getRawValue());
@@ -214,6 +325,12 @@ public class CustomField extends KEntity {
         return buildFilesHashMap(false);
     }
 
+    /**
+     * Build files hash map.
+     *
+     * @param newCustomFieldFile the new custom field file
+     * @return the hash map
+     */
     public HashMap<String, HashMap<String, String>> buildFilesHashMap(Boolean newCustomFieldFile) {
         HashMap<String, HashMap<String, String>> fileHashMap = new HashMap<String, HashMap<String, String>>();
         //This function returns empty hashMap from here

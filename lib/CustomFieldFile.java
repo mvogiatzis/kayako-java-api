@@ -6,19 +6,18 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 /**
- * ###############################################
- * Kayako App
- * _______________________________________________
- *
+ * The type Custom field file.
  * @author Rajat Garg
  * @package lib
  * @copyright Copyright (c) 2001-2012, Kayako
- * @license http://www.kayako.com/license
- * @link http://www.kayako.com
- * ###############################################
+ * @license http ://www.kayako.com/license
+ * @link http ://www.kayako.com
  */
 public class CustomFieldFile extends CustomField {
 
+    /**
+     * The Object xml name.
+     */
     static protected String objectXmlName = "field";
 
     /**
@@ -43,10 +42,20 @@ public class CustomFieldFile extends CustomField {
      */
     protected Boolean isChanged = false;
 
+    /**
+     * Get contents.
+     *
+     * @return the byte [ ]
+     */
     public byte[] getContents() {
         return contents;
     }
 
+    /**
+     * Sets contents.
+     *
+     * @param contents the contents
+     */
     public void setContents(byte[] contents) {
         if (!Arrays.equals(contents, this.contents)) {
             this.setChanged(true);
@@ -54,6 +63,12 @@ public class CustomFieldFile extends CustomField {
         this.contents = contents;
     }
 
+    /**
+     * Sets content from file.
+     *
+     * @param file the file
+     * @return the content from file
+     */
     public CustomFieldFile setContentFromFile(File file) {
         try {
             this.contents = Helper.readBytesFromFile(file);
@@ -67,10 +82,20 @@ public class CustomFieldFile extends CustomField {
         return this;
     }
 
+    /**
+     * Gets file name.
+     *
+     * @return the file name
+     */
     public String getFileName() {
         return fileName;
     }
 
+    /**
+     * Sets file name.
+     *
+     * @param fileName the file name
+     */
     public void setFileName(String fileName) {
         if (fileName != this.fileName) {
             this.setChanged(true);
@@ -78,14 +103,29 @@ public class CustomFieldFile extends CustomField {
         this.fileName = fileName;
     }
 
+    /**
+     * Gets changed.
+     *
+     * @return the changed
+     */
     public Boolean getChanged() {
         return isChanged;
     }
 
+    /**
+     * Sets changed.
+     *
+     * @param changed the changed
+     */
     public void setChanged(Boolean changed) {
         isChanged = changed;
     }
 
+    /**
+     * Instantiates a new Custom field file.
+     *
+     * @param customFieldGroup the custom field group
+     */
     public CustomFieldFile(CustomFieldGroup customFieldGroup) {
         super(customFieldGroup);
     }

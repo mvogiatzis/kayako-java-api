@@ -4,30 +4,49 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * ###############################################
- * Kayako App
- * _______________________________________________
- *
+ * The type Staff group.
  * @author Rajat Garg
  * @package lib
  * @copyright Copyright (c) 2001-2012, Kayako
- * @license http://www.kayako.com/license
- * @link http://www.kayako.com
- * ###############################################
+ * @license http ://www.kayako.com/license
+ * @link http ://www.kayako.com
  */
 public class StaffGroup extends KEntity {
 
+    /**
+     * The Controller.
+     */
     static protected String controller = "/Base/StaffGroup";
+    /**
+     * The Object xml name.
+     */
     static protected String objectXmlName = "staffgroup";
 
+    /**
+     * Instantiates a new Staff group.
+     *
+     * @param rawArrayElement the raw array element
+     * @throws KayakoException the kayako exception
+     */
     public StaffGroup(RawArrayElement rawArrayElement) throws KayakoException {
         this.populate(rawArrayElement);
     }
 
+    /**
+     * Instantiates a new Staff group.
+     *
+     * @param title the title
+     */
     public StaffGroup(String title) {
         this(title, false);
     }
 
+    /**
+     * Instantiates a new Staff group.
+     *
+     * @param title the title
+     * @param admin the admin
+     */
     public StaffGroup(String title, Boolean admin) {
         this.setTitle(title);
         this.setAdmin(admin);
@@ -57,11 +76,21 @@ public class StaffGroup extends KEntity {
      */
     protected Boolean admin;
 
+    /**
+     * Gets title.
+     *
+     * @return the title
+     */
     public String getTitle() {
 
         return title;
     }
 
+    /**
+     * Sets title.
+     *
+     * @param title the title
+     */
     public void setTitle(String title) {
         this.title = title;
     }
@@ -71,6 +100,11 @@ public class StaffGroup extends KEntity {
         return id;
     }
 
+    /**
+     * Sets id.
+     *
+     * @param id the id
+     */
     public void setId(int id) {
         this.id = id;
     }
@@ -85,32 +119,69 @@ public class StaffGroup extends KEntity {
         return this;
     }
 
+    /**
+     * Gets object xml name.
+     *
+     * @return the object xml name
+     */
     public static String getObjectXmlName() {
 
         return objectXmlName;
     }
 
+    /**
+     * Sets object xml name.
+     *
+     * @param objectXmlName the object xml name
+     */
     public static void setObjectXmlName(String objectXmlName) {
         StaffGroup.objectXmlName = objectXmlName;
     }
 
+    /**
+     * Gets controller.
+     *
+     * @return the controller
+     */
     public static String getController() {
 
         return controller;
     }
 
+    /**
+     * Sets controller.
+     *
+     * @param controller the controller
+     */
     public static void setController(String controller) {
         StaffGroup.controller = controller;
     }
 
+    /**
+     * Is admin.
+     *
+     * @return the boolean
+     */
     public Boolean isAdmin() {
         return admin;
     }
 
+    /**
+     * Sets admin.
+     *
+     * @param admin the admin
+     */
     public void setAdmin(Boolean admin) {
         this.admin = admin;
     }
 
+    /**
+     * Get staff group.
+     *
+     * @param id the id
+     * @return the staff group
+     * @throws KayakoException the kayako exception
+     */
     public static StaffGroup get(int id) throws KayakoException {
         return new StaffGroup(KEntity.get(controller, id));
     }
@@ -146,6 +217,16 @@ public class StaffGroup extends KEntity {
         return staffGroupHashMap;
     }
 
+    /**
+     * Create staff.
+     *
+     * @param firstname the firstname
+     * @param lastName the last name
+     * @param userName the user name
+     * @param email the email
+     * @param password the password
+     * @return the staff
+     */
     public Staff createStaff(String firstname, String lastName, String userName, String email, String password) {
         return new Staff(firstname, lastName, userName, email, this, password);
     }

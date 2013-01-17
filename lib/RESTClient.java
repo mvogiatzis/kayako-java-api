@@ -1,19 +1,13 @@
 package lib;
 
 /**
- * ###############################################
- *
- * Kayako App
- * _______________________________________________
- *
  * @author Rajat Garg
- *
  * @package lib
  * @copyright Copyright (c) 2001-2012, Kayako
  * @license http://www.kayako.com/license
  * @link http://www.kayako.com
  *
- * ###############################################
+
  */
 
 import org.xml.sax.InputSource;
@@ -38,6 +32,9 @@ import java.util.Random;
 import java.util.logging.Logger;
 import java.util.zip.GZIPInputStream;
 
+/**
+ * The type REST client.
+ */
 public class RESTClient implements RESTInterface {
 
     private Configuration config;
@@ -116,20 +113,50 @@ public class RESTClient implements RESTInterface {
         return this.processRequest(controller, RESTClient.METHOD_PUT, parameters, data, files);
     }
 
-
+    /**
+     * Gets config.
+     *
+     * @return the config
+     */
     public Configuration getConfig() {
         return this.config;
     }
 
+    /**
+     * Sets config.
+     *
+     * @param config the config
+     * @return the config
+     */
     public RESTClient setConfig(Configuration config) {
         this.config = config;
         return this;
     }
 
+    /**
+     * Process request test.
+     *
+     * @param controller the controller
+     * @param method the method
+     * @param parameters the parameters
+     * @param data the data
+     * @param files the files
+     * @return the raw array element
+     */
     public RawArrayElement processRequestTest(String controller, String method, ArrayList<String> parameters, HashMap<String, String> data, HashMap<String, HashMap<String, String>> files) {
         return this.processRequest(controller, method, parameters, data, files);
     }
 
+    /**
+     * Process request.
+     *
+     * @param controller the controller
+     * @param method the method
+     * @param parameters the parameters
+     * @param data the data
+     * @param files the files
+     * @return the raw array element
+     */
     protected RawArrayElement processRequest(String controller, String method, ArrayList<String> parameters, HashMap<String, String> data, HashMap<String, HashMap<String, String>> files) {
         RawArrayElement rawArrayElement = new RawArrayElement();
         try {
@@ -272,6 +299,16 @@ public class RESTClient implements RESTInterface {
         return url;
     }
 
+    /**
+     * Gets request data test.
+     *
+     * @param controller the controller
+     * @param method the method
+     * @param parameters the parameters
+     * @param data the data
+     * @return the request data test
+     * @throws UnsupportedEncodingException the unsupported encoding exception
+     */
     public String getRequestDataTest(String controller, String method, ArrayList<String> parameters, HashMap<String, String> data) throws UnsupportedEncodingException {
         return this.getRequestData(controller, method, parameters, data);
     }

@@ -3,18 +3,17 @@ package lib;
 import java.util.ArrayList;
 
 /**
- * ###############################################
- * Kayako App
- * _______________________________________________
- *
+ * The type Ticket custom field group.
  * @author Rajat Garg
  * @package lib
  * @copyright Copyright (c) 2001-2012, Kayako
- * @license http://www.kayako.com/license
- * @link http://www.kayako.com
- * ###############################################
+ * @license http ://www.kayako.com/license
+ * @link http ://www.kayako.com
  */
 public class TicketCustomFieldGroup extends CustomFieldGroup {
+    /**
+     * The Controller.
+     */
     static protected String controller = "/Tickets/TicketCustomField";
     /**
      * Ticket identifier.
@@ -23,12 +22,24 @@ public class TicketCustomFieldGroup extends CustomFieldGroup {
      */
     protected int ticketId;
 
+    /**
+     * Instantiates a new Ticket custom field group.
+     *
+     * @param ticketId the ticket id
+     * @param rawArrayElement the raw array element
+     * @throws KayakoException the kayako exception
+     */
     public TicketCustomFieldGroup(int ticketId, RawArrayElement rawArrayElement) throws KayakoException {
         this.ticketId = ticketId;
         this.type = CustomFieldGroup.TYPE_TICKET;
         this.populate(rawArrayElement);
     }
 
+    /**
+     * Instantiates a new Ticket custom field group.
+     *
+     * @param ticketId the ticket id
+     */
     public TicketCustomFieldGroup(int ticketId) {
         this.ticketId = ticketId;
         this.type = CustomFieldGroup.TYPE_TICKET;
@@ -38,7 +49,7 @@ public class TicketCustomFieldGroup extends CustomFieldGroup {
      * Fetches ticket custom fields groups from server.
      *
      * @param ticketId Ticket identifier.
-     * @return RawArrayElement
+     * @return RawArrayElement all
      */
     static public RawArrayElement getAll(int ticketId) {
         ArrayList<String> params = new ArrayList<String>();
@@ -50,12 +61,17 @@ public class TicketCustomFieldGroup extends CustomFieldGroup {
     /**
      * Returns identifier of the ticket that this group is associated with.
      *
-     * @return int
+     * @return int ticket id
      */
     public int getTicketId() {
         return this.ticketId;
     }
 
+    /**
+     * Gets controller.
+     *
+     * @return the controller
+     */
     public static String getController() {
         return controller;
     }
