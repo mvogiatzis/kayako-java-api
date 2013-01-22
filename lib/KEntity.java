@@ -2,9 +2,11 @@ package lib;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Logger;
 
 /**
  * The type K entity. This is the base class for all the object types.
+ *
  * @author Rajat Garg
  * @package lib
  * @copyright Copyright (c) 2001-2012, Kayako
@@ -27,6 +29,8 @@ abstract public class KEntity {
      * The Read only.
      */
     protected Boolean readOnly = false;
+
+    private static final Logger log = Logger.getLogger(KEntity.class.getName());
 
     /**
      * Data key for storing files to send as multipart/form-data.
@@ -75,7 +79,7 @@ abstract public class KEntity {
      * Get raw array element.
      *
      * @param controller the controller
-     * @param id the id
+     * @param id         the id
      * @return the raw array element
      * @throws KayakoException the kayako exception
      */ //These functions will return RawArrayElement, similar functions will be written in SubClasses to use these functions
@@ -122,7 +126,8 @@ abstract public class KEntity {
         if (this.getReadOnly()) {
             throw new KayakoException("This is a read only type, object can't be created");
         }
-        return this.populate(KEntity.getRESTClient().post(controller, new ArrayList<String>(), this.buildHashMap(), this.buildFilesHashMap()).getComponents().get(0));
+        RawArrayElement response = KEntity.getRESTClient().post(controller, new ArrayList<String>(), this.buildHashMap(true), this.buildFilesHashMap());
+        return this.populate(response.getComponents().get(0));
     }
 
     /**
@@ -139,7 +144,7 @@ abstract public class KEntity {
         if (this.getReadOnly()) {
             throw new KayakoException("This is a read only type, object can't be updated");
         }
-        return this.populate(KEntity.getRESTClient().put(controller, this.getIdArray(), this.buildHashMap(), this.buildFilesHashMap()).getComponents().get(0));
+        return this.populate(KEntity.getRESTClient().put(controller, this.getIdArray(), this.buildHashMap(false), this.buildFilesHashMap()).getComponents().get(0));
     }
 
     /**
@@ -188,7 +193,7 @@ abstract public class KEntity {
     /**
      * Gets all.
      *
-     * @param controller the controller
+     * @param controller   the controller
      * @param searchParams the search params
      * @return the all
      */
@@ -260,7 +265,7 @@ abstract public class KEntity {
      *
      * @return the hash map
      */
-    public HashMap<String, String> buildHashMap() {
+    public HashMap<String, String> buildHashMap(Boolean isNew) {
         return new HashMap<String, String>();
     }
 

@@ -229,9 +229,15 @@ public class RESTClient implements RESTInterface {
                 inputStream.close();
                 connection.disconnect();
                 rawArrayElement = myHandler.getRawArrayElement();
+
+                if (this.config.isDebug()) {
+                    log.warning(rawArrayElement.toString());
+                }
+
             } else {
 
                 // Server returned HTTP error code.
+                log.warning("Code : " + connection.getResponseCode() + "Response Message : " + connection.getResponseMessage());
                 return null;
                 //TODO - this portion is to be reconsidered
 /*                InputStream inputStream = (InputStream) connection.getContent();
@@ -357,7 +363,7 @@ public class RESTClient implements RESTInterface {
                     if (query != "") {
                         query += "&";
                     }
-                    query += attribute.getKey() + "=" + URLEncoder.encode(attribute.getValue(), charset);
+                    query += attribute.getKey() + "=" + URLEncoder.encode(attribute.getValue() == null ? "" : attribute.getValue(), charset);
                 }
 
             } catch (Exception e) {

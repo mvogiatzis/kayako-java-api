@@ -14,24 +14,24 @@ import java.util.HashMap;
  */
 public class Ticket extends KEntityCustom {
 
-    static final int FLAG_NONE = 0;
-    static final int FLAG_PURPLE = 1;
-    static final int FLAG_ORANGE = 2;
-    static final int FLAG_GREEN = 3;
-    static final int FLAG_YELLOW = 4;
-    static final int FLAG_RED = 5;
-    static final int FLAG_BLUE = 6;
-    static final int CREATOR_AUTO = 0;
-    static final int CREATOR_STAFF = 1;
-    static final int CREATOR_USER = 2;
-    static final int CREATOR_CLIENT = 2;
-    static final int CREATION_MODE_SUPPORTCENTER = 1;
-    static final int CREATION_MODE_STAFFCP = 2;
-    static final int CREATION_MODE_EMAIL = 3;
-    static final int CREATION_MODE_API = 4;
-    static final int CREATION_MODE_SITEBADGE = 5;
-    static final int CREATION_TYPE_DEFAULT = 1;
-    static final int CREATION_TYPE_PHONE = 2;
+    public static final int FLAG_NONE = 0;
+    public static final int FLAG_PURPLE = 1;
+    public static final int FLAG_ORANGE = 2;
+    public static final int FLAG_GREEN = 3;
+    public static final int FLAG_YELLOW = 4;
+    public static final int FLAG_RED = 5;
+    public static final int FLAG_BLUE = 6;
+    public static final int CREATOR_AUTO = 0;
+    public static final int CREATOR_STAFF = 1;
+    public static final int CREATOR_USER = 2;
+    public static final int CREATOR_CLIENT = 2;
+    public static final int CREATION_MODE_SUPPORTCENTER = 1;
+    public static final int CREATION_MODE_STAFFCP = 2;
+    public static final int CREATION_MODE_EMAIL = 3;
+    public static final int CREATION_MODE_API = 4;
+    public static final int CREATION_MODE_SITEBADGE = 5;
+    public static final int CREATION_TYPE_DEFAULT = 1;
+    public static final int CREATION_TYPE_PHONE = 2;
     /**
      * Flag for searching using query - search the Ticket ID & Mask ID :  SEARCH_TICKET_ID
      */
@@ -123,7 +123,7 @@ public class Ticket extends KEntityCustom {
     /**
      * Ticket flag type.
      *
-     * @apiField * @see Ticket::FLAG static final Stringants.
+     * @apiField * @see Ticket.FLAG static final String
      */
     protected int flagType;
     /**
@@ -167,7 +167,7 @@ public class Ticket extends KEntityCustom {
      *
      * @apiField
      */
-    protected String userOrganizationName;
+    protected String userOrganizationName = "";
     /**
      * Identifier of the organization of the user ticket was created by.
      *
@@ -185,31 +185,31 @@ public class Ticket extends KEntityCustom {
      *
      * @apiField
      */
-    protected String ownerStaffName;
+    protected String ownerStaffName = "";
     /**
      * Full name of creator of the ticket.
      *
      * @apiField required_create =true
      */
-    protected String fullName;
+    protected String fullName = "";
     /**
      * E-mail of creator of the ticket.
      *
      * @apiField required_create =true
      */
-    protected String email;
+    protected String email = "";
     /**
      * Full name of the last replier to this ticket.
      *
      * @apiField
      */
-    protected String lastReplier;
+    protected String lastReplier = "";
     /**
      * Ticket subject.
      *
      * @apiField required_create =true
      */
-    protected String subject;
+    protected String subject = "";
     /**
      * Timestamp of when this ticket was created.
      *
@@ -404,7 +404,9 @@ public class Ticket extends KEntityCustom {
     private Ticket(Department department, String contents, String subject) {
         this.setDepartment(department);
         this.setContents(contents).setSubject(subject);
+        int status_id = getDefaultStatusId();
         this.setTicketTypeId(getDefaultTypeId()).setTicketPriorityId(getDefaultPriorityId()).setTicketStatusId(getDefaultStatusId());
+        status_id = this.getTicketStatusId();
 
     }
 
@@ -1216,6 +1218,10 @@ public class Ticket extends KEntityCustom {
                 return this.staffId;
         }
         return creator;
+    }
+
+    public int getCreatorType() {
+        return this.creator;
     }
 
     /**
@@ -2224,6 +2230,17 @@ public class Ticket extends KEntityCustom {
     }
 
     /**
+     * Sets defaults.
+     *
+     * @param statusId   the status id
+     * @param priorityId the priority id
+     * @param typeId     the type id
+     */
+    public static void setDefaults(int statusId, int priorityId, int typeId) {
+        setDefaults(statusId, priorityId, typeId, true);
+    }
+
+    /**
      * Sets default status, priority and type for newly created tickets.
      *
      * @param statusId       Default ticket status identifier.
@@ -2381,6 +2398,11 @@ public class Ticket extends KEntityCustom {
         return this;
     }
 
+    /**
+     * Build hash map.
+     *
+     * @return the hash map
+     */
     public HashMap<String, String> buildHashMap() {
         HashMap<String, String> ticketHashMap = buildHashMap();
         return buildHashMap(false);
@@ -2399,14 +2421,14 @@ public class Ticket extends KEntityCustom {
         ticketHashMap.put("email", this.getEmail());
 
         ticketHashMap.put("departmentid", Integer.toString(this.getDepartmentId()));
-        ticketHashMap.put("ticketstatusid", Integer.toString(this.getStaffId()));
+        ticketHashMap.put("ticketstatusid", Integer.toString(this.getTicketStatusId()));
         ticketHashMap.put("ticketpriorityid", Integer.toString(this.getTicketPriorityId()));
         ticketHashMap.put("tickettypeid", Integer.toString(this.getTicketTypeId()));
         if (this.getOwnerStaffId() > 0) {
             ticketHashMap.put("ownerstaffid", Integer.toString(this.getOwnerStaffId()));
         }
         if (newTicket) {
-            switch (this.getCreator()) {
+            switch (this.getCreatorType()) {
                 case CREATOR_STAFF:
                     ticketHashMap.put("staffid", Integer.toString(this.getStaffId()));
                     break;

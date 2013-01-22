@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 /**
  * The type User group.
+ *
  * @author Rajat Garg
  * @package lib
  * @copyright Copyright (c) 2001-2012, Kayako
@@ -45,7 +46,7 @@ public class UserGroup extends KEntity {
      * Instantiates a new User group.
      *
      * @param title the title
-     * @param type the type
+     * @param type  the type
      */
     public UserGroup(String title, String type) {
         this.setTitle(title);
@@ -73,7 +74,7 @@ public class UserGroup extends KEntity {
      *
      * @apiField
      * @var string
-     * @see  ::TYPE constants.
+     * @see ::TYPE constants.
      */
     protected String type;
 
@@ -213,6 +214,60 @@ public class UserGroup extends KEntity {
         return new UserGroup().populate(KEntity.get(controller, id));
     }
 
+    /**
+     * Save UserGroup.
+     *
+     * @return the UserGroup
+     * @throws KayakoException the kayako exception
+     */
+    public UserGroup save() throws KayakoException {
+        return (UserGroup) super.save(controller);
+    }
+
+    /**
+     * Update UserGroup.
+     *
+     * @return the UserGroup
+     * @throws KayakoException the kayako exception
+     */
+    public UserGroup update() throws KayakoException {
+        return (UserGroup) super.update(controller);
+    }
+
+    /**
+     * Create UserGroup.
+     *
+     * @return the UserGroup
+     * @throws KayakoException the kayako exception
+     */
+    public UserGroup create() throws KayakoException {
+        return (UserGroup) super.create(controller);
+    }
+
+    /**
+     * Delete boolean.
+     *
+     * @return the boolean
+     * @throws KayakoException the kayako exception
+     */
+    public Boolean delete() throws KayakoException {
+        return super.delete(controller);
+    }
+
+    /**
+     * Refresh UserGroup.
+     *
+     * @return the UserGroup
+     * @throws KayakoException the kayako exception
+     */
+    public UserGroup refresh() throws KayakoException {
+        return (UserGroup) super.refresh(controller);
+    }
+
+    public String toString() {
+        return "User Group : " + this.getTitle();
+    }
+
     //this function will populate the data of the user Group instance when supplied with RawArrayElement derived from the xml
     @Override
     public UserGroup populate(RawArrayElement rawArrayElement) throws KayakoException {
@@ -250,7 +305,7 @@ public class UserGroup extends KEntity {
      * Create user.
      *
      * @param fullName the full name
-     * @param email the email
+     * @param email    the email
      * @param password the password
      * @return the user
      */

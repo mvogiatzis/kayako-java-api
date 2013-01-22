@@ -15,11 +15,11 @@ import java.util.HashMap;
 public class User extends KEntity {
     static final String ROLE_USER = "user";
     static final int DEFAULT_MAX_USERS = 1000;
-    static final String ROLE_MANAGER = "manager";
-    static final String SALUTATION_MR = "Mr.";
-    static final String SALUTATION_MS = "Ms.";
-    static final String SALUTATION_MRS = "Mrs.";
-    static final String SALUTATION_DR = "Dr.";
+    public static final String ROLE_MANAGER = "manager";
+    public static final String SALUTATION_MR = "Mr.";
+    public static final String SALUTATION_MS = "Ms.";
+    public static final String SALUTATION_MRS = "Mrs.";
+    public static final String SALUTATION_DR = "Dr.";
     /**
      * The Controller.
      */
@@ -28,10 +28,6 @@ public class User extends KEntity {
      * The Object xml name.
      */
     static protected String objectXmlName = "user";
-    /**
-     * The Read only.
-     */
-    protected Boolean readOnly = true;
 
     /**
      * Instantiates a new User.
@@ -42,10 +38,10 @@ public class User extends KEntity {
     /**
      * Instantiates a new User.
      *
-     * @param name the name
-     * @param email the email
+     * @param name      the name
+     * @param email     the email
      * @param userGroup the user group
-     * @param password the password
+     * @param password  the password
      */
     public User(String name, String email, UserGroup userGroup, String password) {
         this.setFullName(name);
@@ -75,7 +71,7 @@ public class User extends KEntity {
      *
      * @apiField
      * @var string
-     * @see  ::ROLE constants.
+     * @see ::ROLE constants.
      */
     protected String userRole = ROLE_USER;
     /**
@@ -88,9 +84,9 @@ public class User extends KEntity {
      *
      * @apiField
      * @var string
-     * @see  ::SALUTATION constants.
+     * @see ::SALUTATION constants.
      */
-    protected String salutation;
+    protected String salutation = "";
 
     /**
      * The User expiry.
@@ -100,12 +96,12 @@ public class User extends KEntity {
     /**
      * The Designation.
      */
-    protected String designation;
+    protected String designation = "";
 
     /**
      * The Full name.
      */
-    protected String fullName;
+    protected String fullName = "";
 
     /**
      * The Emails.
@@ -115,7 +111,7 @@ public class User extends KEntity {
     /**
      * The Phone.
      */
-    protected String phone;
+    protected String phone = "";
 
     /**
      * The Date line.
@@ -737,7 +733,7 @@ public class User extends KEntity {
      * Gets all.
      *
      * @param startingUserId the starting user id
-     * @param maxItems the max items
+     * @param maxItems       the max items
      * @return the all
      */
     public static RawArrayElement getAll(int startingUserId, int maxItems) {
@@ -781,7 +777,7 @@ public class User extends KEntity {
      * Gets all users.
      *
      * @param startingUserId the starting user id
-     * @param maxItems the max items
+     * @param maxItems       the max items
      * @return the all users
      * @throws KayakoException the kayako exception
      */
@@ -906,6 +902,16 @@ public class User extends KEntity {
         return new User().populate(KEntity.get(controller, id).getFirstComponent());
     }
 
+    /**
+     * Update user.
+     *
+     * @return the user
+     * @throws KayakoException the kayako exception
+     */
+    public User update() throws KayakoException {
+        return (User) super.update(controller);
+    }
+
     public HashMap<String, String> buildHashMap() {
         return buildHashMap(false);
     }
@@ -925,8 +931,8 @@ public class User extends KEntity {
             userHashMap.put("sendwelcomeemail", this.isSendWelcomeEmail() ? "1" : "0");
         }
         userHashMap.put("email", this.getEmail());
-        userHashMap.put("userorganizaionid", Integer.toString(this.getUserOrganizationId()));
-        userHashMap.put("salutaion", this.getSalutation());
+        userHashMap.put("userorganizationid", Integer.toString(this.getUserOrganizationId()));
+        userHashMap.put("salutation", this.getSalutation());
         userHashMap.put("designation", this.getDesignation());
         userHashMap.put("phone", this.getPhone());
         userHashMap.put("isenabled", this.isEnabled() ? "1" : "0");
@@ -944,8 +950,8 @@ public class User extends KEntity {
      * Create ticket.
      *
      * @param department the department
-     * @param content the content
-     * @param subject the subject
+     * @param content    the content
+     * @param subject    the subject
      * @return the ticket
      * @throws KayakoException the kayako exception
      */

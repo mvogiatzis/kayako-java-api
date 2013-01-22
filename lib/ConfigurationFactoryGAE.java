@@ -46,7 +46,7 @@ public class ConfigurationFactoryGAE implements ConfigurationFactoryInterface {
      * @return the configuration
      */
     public Configuration getConfiguration(String userDomain) {
-        return this.getConfiguration(userDomain, true);
+        return this.getConfiguration(userDomain, true).setDebug(true);
     }
 
     /**
