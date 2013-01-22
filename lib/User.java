@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 /**
  * The type User.
+ *
  * @author Rajat Garg
  * @package lib
  * @copyright Copyright (c) 2001-2012, Kayako
@@ -276,7 +277,12 @@ public class User extends KEntity {
      * @return the email
      */
     public String getEmail() {
-        return emails.get(0);
+        if (emails.size() > 0) {
+            return emails.get(0);
+        } else {
+            return null;
+        }
+
     }
 
     /**
@@ -797,6 +803,46 @@ public class User extends KEntity {
         return refineToArray(KEntity.getRESTClient().post("/Base/UserSearch", new ArrayList<String>(), data).filterByComponentName(objectXmlName));
     }
 
+    /**
+     * Save user.
+     *
+     * @return the user
+     * @throws KayakoException the kayako exception
+     */
+    public User save() throws KayakoException {
+        return (User) super.save(controller);
+    }
+
+    /**
+     * Create user.
+     *
+     * @return the user
+     * @throws KayakoException the kayako exception
+     */
+    public User create() throws KayakoException {
+        return (User) super.create(controller);
+    }
+
+    /**
+     * Delete boolean.
+     *
+     * @return the boolean
+     * @throws KayakoException the kayako exception
+     */
+    public Boolean delete() throws KayakoException {
+        return super.delete(controller);
+    }
+
+    /**
+     * Refresh user.
+     *
+     * @return the user
+     * @throws KayakoException the kayako exception
+     */
+    public User refresh() throws KayakoException {
+        return (User) super.refresh(controller);
+    }
+
     //this function will populate the data of the user instance when supplied with RawArrayElement derived from the xml
     @Override
     public User populate(RawArrayElement rawArrayElement) throws KayakoException {
@@ -857,7 +903,7 @@ public class User extends KEntity {
      * @throws KayakoException the kayako exception
      */
     public static User get(int id) throws KayakoException {
-        return new User().populate(KEntity.get(controller, id));
+        return new User().populate(KEntity.get(controller, id).getFirstComponent());
     }
 
     public HashMap<String, String> buildHashMap() {

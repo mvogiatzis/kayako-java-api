@@ -2,6 +2,7 @@ package lib;
 
 /**
  * The type Configuration.
+ *
  * @author Rajat Garg
  * @package lib
  * @copyright Copyright (c) 2001-2012, Kayako
@@ -16,8 +17,9 @@ public class Configuration {
     private Boolean debug;
     private Boolean standardUrlType = true;
     private static Configuration configuration = null;
-    private String dateFormat = "MM/dd/yyyy";
-    private String dateTimeFormat = "Y-m-d H:i:s";
+    //http://docs.oracle.com/javase/6/docs/api/java/text/SimpleDateFormat.html
+    private String dateFormat = "yyyy-MM-dd";
+    private String dateTimeFormat = "yyyy-MM-dd HH:mm:ss";
 
     /**
      * REST client.
@@ -29,13 +31,13 @@ public class Configuration {
     /**
      * Instantiates a new Configuration.
      *
-     * @param baseUrl the base url
-     * @param apiKey the api key
+     * @param baseUrl   the base url
+     * @param apiKey    the api key
      * @param secretKey the secret key
-     * @param testMode the test mode
+     * @param testMode  the test mode
      */
     public Configuration(String baseUrl, String apiKey, String secretKey, Boolean testMode) {
-        //this("http://swift.kayako.com/api/index.php?", "80866fb4-b6e2-1584-a51sfda37894", "ZWJiNTkzYzMtNmEwNS1dfgfdgdfghdhYzhmMWRkNDVkYmY2ZmQwYjU4MjgtYzY0ghfGQ0LWJkZjktNWE3NmViZDRhMmFk");
+        //this("http://swift.kayako.com/api/index.php?", "80866fb4-b6e2-6548-a51sfda37894", "ZWJiNTkzYzMtNmEwNS1dfgfdgdfghdhYzhmMWRkNDVkYmY2ZmQwYjU4MjgtYzY0ghfGQ0LWJkZjktNWE3NmViZDRhMmFk");
         this.baseUrl = baseUrl;
         this.apiKey = apiKey;
         this.secretKey = secretKey;
@@ -45,8 +47,8 @@ public class Configuration {
     /**
      * Instantiates a new Configuration.
      *
-     * @param baseUrl the base url
-     * @param apiKey the api key
+     * @param baseUrl   the base url
+     * @param apiKey    the api key
      * @param secretKey the secret key
      */
     public Configuration(String baseUrl, String apiKey, String secretKey) {

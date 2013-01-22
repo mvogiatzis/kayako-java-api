@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 /**
  * The type Staff.
+ *
  * @author Rajat Garg
  * @package lib
  * @copyright Copyright (c) 2001-2012, Kayako
@@ -24,7 +25,7 @@ public class Staff extends KEntity {
     /**
      * The Read only.
      */
-    protected Boolean readOnly = true;
+    protected Boolean readOnly = false;
 
     /**
      * Instantiates a new Staff.
@@ -45,12 +46,12 @@ public class Staff extends KEntity {
     /**
      * Instantiates a new Staff.
      *
-     * @param firstName the first name
-     * @param lastName the last name
-     * @param userName the user name
-     * @param email the email
+     * @param firstName  the first name
+     * @param lastName   the last name
+     * @param userName   the user name
+     * @param email      the email
      * @param staffGroup the staff group
-     * @param password the password
+     * @param password   the password
      */
     public Staff(String firstName, String lastName, String userName, String email, StaffGroup staffGroup, String password) {
         this.setFirstName(firstName);
@@ -83,17 +84,17 @@ public class Staff extends KEntity {
      * @var string
      */
 
-    protected String firstName;
+    protected String firstName = "";
 
     /**
      * The Last name.
      */
-    protected String lastName;
+    protected String lastName = "";
 
     /**
      * The Full name.
      */
-    protected String fullName;
+    protected String fullName = "";
 
     /**
      * Staff username (login).
@@ -111,14 +112,14 @@ public class Staff extends KEntity {
     /**
      * The Designation.
      */
-    protected String designation;
+    protected String designation = "";
     /**
      * Staff livechat greeting message.
      *
      * @apiField
      * @var string
      */
-    protected String greeting;
+    protected String greeting = "";
 
     /**
      * Staff signature appended to posts.
@@ -126,12 +127,12 @@ public class Staff extends KEntity {
      * @apiField
      * @var string
      */
-    protected String signature;
+    protected String signature = "";
 
     /**
      * The Mobile number.
      */
-    protected String mobileNumber;
+    protected String mobileNumber = "";
 
     /**
      * Is this staff enabled.
@@ -554,6 +555,56 @@ public class Staff extends KEntity {
         return new Staff(KEntity.get(controller, id));
     }
 
+    /**
+     * Save staff.
+     *
+     * @return the staff
+     * @throws KayakoException the kayako exception
+     */
+    public Staff save() throws KayakoException {
+        return (Staff) super.save(controller);
+    }
+
+    /**
+     * Update staff.
+     *
+     * @return the staff
+     * @throws KayakoException the kayako exception
+     */
+    public Staff update() throws KayakoException {
+        return (Staff) super.update(controller);
+    }
+
+    /**
+     * Create staff.
+     *
+     * @return the staff
+     * @throws KayakoException the kayako exception
+     */
+    public Staff create() throws KayakoException {
+        return (Staff) super.create(controller);
+    }
+
+    /**
+     * Delete boolean.
+     *
+     * @return the boolean
+     * @throws KayakoException the kayako exception
+     */
+    public Boolean delete() throws KayakoException {
+        return super.delete(controller);
+    }
+
+    /**
+     * Refresh staff.
+     *
+     * @return the staff
+     * @throws KayakoException the kayako exception
+     */
+    public Staff refresh() throws KayakoException {
+        return (Staff) super.refresh(controller);
+    }
+
     //this function will populate the data of the staff instance when supplied with RawArrayElement derived from the xml
     @Override
     public Staff populate(RawArrayElement rawArrayElement) throws KayakoException {
@@ -626,8 +677,8 @@ public class Staff extends KEntity {
      * Create ticket.
      *
      * @param department the department
-     * @param content the content
-     * @param subject the subject
+     * @param content    the content
+     * @param subject    the subject
      * @return the ticket
      */
     public Ticket createTicket(Department department, String content, String subject) {

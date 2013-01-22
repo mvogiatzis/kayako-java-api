@@ -137,10 +137,10 @@ public class RESTClient implements RESTInterface {
      * Process request test.
      *
      * @param controller the controller
-     * @param method the method
+     * @param method     the method
      * @param parameters the parameters
-     * @param data the data
-     * @param files the files
+     * @param data       the data
+     * @param files      the files
      * @return the raw array element
      */
     public RawArrayElement processRequestTest(String controller, String method, ArrayList<String> parameters, HashMap<String, String> data, HashMap<String, HashMap<String, String>> files) {
@@ -151,10 +151,10 @@ public class RESTClient implements RESTInterface {
      * Process request.
      *
      * @param controller the controller
-     * @param method the method
+     * @param method     the method
      * @param parameters the parameters
-     * @param data the data
-     * @param files the files
+     * @param data       the data
+     * @param files      the files
      * @return the raw array element
      */
     protected RawArrayElement processRequest(String controller, String method, ArrayList<String> parameters, HashMap<String, String> data, HashMap<String, HashMap<String, String>> files) {
@@ -255,7 +255,6 @@ public class RESTClient implements RESTInterface {
         return rawArrayElement;
     }
 
-
     /**
      * Prepares URL (and returns it) and POST data (updates it via reference).
      */
@@ -284,7 +283,6 @@ public class RESTClient implements RESTInterface {
             url = this.config.getBaseUrl() + "e=" + controller + "/" + parameters_str.toString();
         }
 
-
         if (method.equals(RESTClient.METHOD_POST) || method.equals(RESTClient.METHOD_PUT)) {
             data.put("apikey", this.config.getApiKey());
             data.put("salt", Integer.toString(salt));
@@ -303,9 +301,9 @@ public class RESTClient implements RESTInterface {
      * Gets request data test.
      *
      * @param controller the controller
-     * @param method the method
+     * @param method     the method
      * @param parameters the parameters
-     * @param data the data
+     * @param data       the data
      * @return the request data test
      * @throws UnsupportedEncodingException the unsupported encoding exception
      */
@@ -351,7 +349,6 @@ public class RESTClient implements RESTInterface {
                 postBody += CRLF;
                 postBody += "--" + boundary + "--" + CRLF;
             }
-
         } else {
             //foreach hashMap data element , create query string
             String query = "";
@@ -362,7 +359,6 @@ public class RESTClient implements RESTInterface {
                     }
                     query += attribute.getKey() + "=" + URLEncoder.encode(attribute.getValue(), charset);
                 }
-
 
             } catch (Exception e) {
                 e.printStackTrace();

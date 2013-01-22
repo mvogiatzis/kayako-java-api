@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 
 /**
  * The type Raw array element.
+ *
  * @author Rajat Garg
  * @package lib
  * @copyright Copyright (c) 2001-2012, Kayako
@@ -45,7 +46,7 @@ public class RawArrayElement {
      * Instantiates a new Raw array element.
      *
      * @param elementName the element name
-     * @param attributes the attributes
+     * @param attributes  the attributes
      */
     public RawArrayElement(String elementName, Map<String, String> attributes) {
         this.elementName = elementName;
@@ -57,7 +58,7 @@ public class RawArrayElement {
      * Instantiates a new Raw array element.
      *
      * @param elementName the element name
-     * @param content the content
+     * @param content     the content
      */
     public RawArrayElement(String elementName, String content) {
         this.elementName = elementName;
@@ -69,8 +70,8 @@ public class RawArrayElement {
      * Instantiates a new Raw array element.
      *
      * @param elementName the element name
-     * @param attributes the attributes
-     * @param content the content
+     * @param attributes  the attributes
+     * @param content     the content
      */
     public RawArrayElement(String elementName, Map<String, String> attributes, String content) {
         this.isComposite = false;
@@ -99,6 +100,14 @@ public class RawArrayElement {
      */
     public ArrayList<RawArrayElement> getComponents() {
         return this.components;
+    }
+
+    public RawArrayElement getFirstComponent() {
+        if (this.components.size() > 0) {
+            return this.components.get(0);
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -136,7 +145,7 @@ public class RawArrayElement {
             }
             //there may be a case of multiple components to be used as a filter - any of the filtered attribute equals
             for (RawArrayElement filterComponent : filterComponents) {
-                if (Pattern.compile(Pattern.quote(value), Pattern.CASE_INSENSITIVE).matcher(filterComponent.getContent()).find()) {
+                if (filterComponent.getContent() != null && Pattern.compile(Pattern.quote(value), Pattern.CASE_INSENSITIVE).matcher(filterComponent.getContent()).find()) {
                     filteredComponents.add(component);
                     break;
                 }
@@ -148,7 +157,7 @@ public class RawArrayElement {
     /**
      * Filter by component attribute.
      *
-     * @param attributeName the attribute name
+     * @param attributeName  the attribute name
      * @param attributeValue the attribute value
      * @return the raw array element
      */
@@ -164,7 +173,7 @@ public class RawArrayElement {
     /**
      * Filter by component value.
      *
-     * @param componentName the component name
+     * @param componentName  the component name
      * @param componentValue the component value
      * @return the raw array element
      * @throws KayakoException the kayako exception
@@ -233,7 +242,7 @@ public class RawArrayElement {
     /**
      * Sets attribute.
      *
-     * @param key the key
+     * @param key   the key
      * @param value the value
      * @return the attribute
      */

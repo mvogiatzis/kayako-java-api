@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 /**
  * The type Department.
+ *
  * @author Rajat Garg
  * @package lib
  * @copyright Copyright (c) 2001-2012, Kayako
@@ -20,14 +21,14 @@ public class Department extends KEntity {
      *
      * @var string
      */
-    static final String APP_TICKETS = "tickets";
+    public static final String APP_TICKETS = "tickets";
 
     /**
      * App a department can be associated with - Livechat.
      *
      * @var string
      */
-    static final String APP_LIVECHAT = "tickets";
+    public static final String APP_LIVECHAT = "tickets";
 
     /**
      * The Controller.
@@ -40,7 +41,7 @@ public class Department extends KEntity {
     /**
      * The Read only.
      */
-    protected Boolean readOnly = true;
+    protected Boolean readOnly = false;
 
     /**
      * Instantiates a new Department.
@@ -62,7 +63,7 @@ public class Department extends KEntity {
      * Instantiates a new Department.
      *
      * @param title the title
-     * @param type the type
+     * @param type  the type
      */
     public Department(String title, String type) {
         this(title, type, APP_TICKETS);
@@ -72,8 +73,8 @@ public class Department extends KEntity {
      * Instantiates a new Department.
      *
      * @param title the title
-     * @param type the type
-     * @param app the app
+     * @param type  the type
+     * @param app   the app
      */
     public Department(String title, String type, String app) {
         this.setTitle(title);
@@ -129,7 +130,7 @@ public class Department extends KEntity {
      * @apiField
      * @var bool
      */
-    protected Boolean userVisibilityCustom;
+    protected Boolean userVisibilityCustom = false;
 
     /**
      * Identifiers of user groups which can change department to this status.
@@ -151,7 +152,7 @@ public class Department extends KEntity {
      *
      * @apiField
      * @var string
-     * @see  ::TYPE constants.
+     * @see ::TYPE constants.
      */
     protected String type;
 
@@ -533,12 +534,44 @@ public class Department extends KEntity {
     }
 
     /**
+     * Gets all as RawArrayElement.
+     *
+     * @return the all
+     * @throws KayakoException the kayako exception
+     */
+    public static RawArrayElement getAll() throws KayakoException {
+        return KEntity.getAll(controller);
+    }
+
+    private static ArrayList<Department> refineToArray(RawArrayElement rawArrayElement) throws KayakoException {
+        ArrayList<Department> departments = new ArrayList<Department>();
+        for (RawArrayElement rawArrayElementDepartment : rawArrayElement.getComponents()) {
+            departments.add(new Department().populate(rawArrayElementDepartment));
+        }
+        return departments;
+    }
+
+    public String toString() {
+        return "Department : " + this.getTitle();
+    }
+
+    /**
+     * Gets all departments.
+     *
+     * @return the all departments
+     * @throws KayakoException the kayako exception
+     */
+    public static ArrayList<Department> getAllDepartments() throws KayakoException {
+        return refineToArray(getAll());
+    }
+
+    /**
      * Create auto ticket.
      *
      * @param creatorFullName the creator full name
-     * @param email the email
-     * @param contents the contents
-     * @param subject the subject
+     * @param email           the email
+     * @param contents        the contents
+     * @param subject         the subject
      * @return the ticket
      * @throws KayakoException the kayako exception
      */
@@ -558,10 +591,50 @@ public class Department extends KEntity {
     }
 
     /**
+     * Save k entity.
+     *
+     * @return the k entity
+     * @throws lib.KayakoException the kayako exception
+     */
+    public Department save() throws KayakoException {
+        return (Department) super.save(controller);
+    }
+
+    /**
+     * Create k entity.
+     *
+     * @return the k entity
+     * @throws lib.KayakoException the kayako exception
+     */
+    public Department create() throws KayakoException {
+        return (Department) super.create(controller);
+    }
+
+    /**
+     * Delete boolean.
+     *
+     * @return the boolean
+     * @throws lib.KayakoException the kayako exception
+     */
+    public Boolean delete() throws KayakoException {
+        return super.delete(controller);
+    }
+
+    /**
+     * Refresh k entity.
+     *
+     * @return the k entity
+     * @throws lib.KayakoException the kayako exception
+     */
+    public Department refresh() throws KayakoException {
+        return (Department) super.refresh(controller);
+    }
+
+    /**
      * Create sub department.
      *
      * @param title the title
-     * @param type the type
+     * @param type  the type
      * @return the department
      */
     public Department createSubDepartment(String title, String type) {

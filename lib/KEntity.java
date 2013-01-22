@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * The type K entity.
+ * The type K entity. This is the base class for all the object types.
  * @author Rajat Garg
  * @package lib
  * @copyright Copyright (c) 2001-2012, Kayako
@@ -26,7 +26,7 @@ abstract public class KEntity {
     /**
      * The Read only.
      */
-    protected Boolean readOnly;
+    protected Boolean readOnly = false;
 
     /**
      * Data key for storing files to send as multipart/form-data.
@@ -44,7 +44,7 @@ abstract public class KEntity {
      */
     public static ConfigurationFactoryInterface getConfigurationFactory() {
         if (configurationFactory == null) {
-            configurationFactory = new ConfigurationFactoryDefault();
+            configurationFactory = new ConfigurationFactory();
         }
         return configurationFactory;
     }

@@ -2161,11 +2161,11 @@ public class Ticket extends KEntityCustom {
     }
 
     private static ArrayList<Ticket> refineToArray(RawArrayElement rawArrayElement) throws KayakoException {
-        ArrayList<Ticket> Tickets = new ArrayList<Ticket>();
+        ArrayList<Ticket> tickets = new ArrayList<Ticket>();
         for (RawArrayElement rawArrayElementTicket : rawArrayElement.getComponents()) {
-            Tickets.add(new Ticket().populate(rawArrayElementTicket));
+            tickets.add(new Ticket().populate(rawArrayElementTicket));
         }
-        return Tickets;
+        return tickets;
     }
 
     /**

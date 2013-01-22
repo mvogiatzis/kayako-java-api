@@ -186,6 +186,48 @@ public class StaffGroup extends KEntity {
         return new StaffGroup(KEntity.get(controller, id));
     }
 
+
+    /**
+     * Save k entity.
+     *
+     * @return the k entity
+     * @throws lib.KayakoException the kayako exception
+     */
+    public StaffGroup save() throws KayakoException {
+        return (StaffGroup) super.save(controller);
+    }
+
+    /**
+     * Create k entity.
+     *
+     * @return the k entity
+     * @throws lib.KayakoException the kayako exception
+     */
+    public StaffGroup create() throws KayakoException {
+        return (StaffGroup) super.create(controller);
+    }
+
+    /**
+     * Delete boolean.
+     *
+     * @return the boolean
+     * @throws lib.KayakoException the kayako exception
+     */
+    public Boolean delete() throws KayakoException {
+        return super.delete(controller);
+    }
+
+    /**
+     * Refresh k entity.
+     *
+     * @return the k entity
+     * @throws lib.KayakoException the kayako exception
+     */
+    public StaffGroup refresh() throws KayakoException {
+        return (StaffGroup) super.refresh(controller);
+    }
+
+
     //this function will populate the data of the staff Group instance when supplied with RawArrayElement derived from the xml
     @Override
     public StaffGroup populate(RawArrayElement rawArrayElement) throws KayakoException {
