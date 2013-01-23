@@ -227,6 +227,15 @@ public class StaffGroup extends KEntity {
         return (StaffGroup) super.refresh(controller);
     }
 
+    /**
+     * Gets all.
+     *
+     * @return the all
+     * @throws KayakoException the kayako exception
+     */
+    public static RawArrayElement getAll() throws KayakoException {
+        return KEntity.getAll(controller);
+    }
 
     //this function will populate the data of the staff Group instance when supplied with RawArrayElement derived from the xml
     @Override

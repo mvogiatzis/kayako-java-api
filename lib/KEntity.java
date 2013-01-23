@@ -86,7 +86,7 @@ abstract public class KEntity {
     public static RawArrayElement get(String controller, int id) throws KayakoException {
         ArrayList<String> parameters = new ArrayList<String>();
         parameters.add(Integer.toString(id));
-        return get(controller, parameters);
+        return get(controller, parameters).getFirstComponent();
     }
 
     /**
@@ -144,7 +144,7 @@ abstract public class KEntity {
         if (this.getReadOnly()) {
             throw new KayakoException("This is a read only type, object can't be updated");
         }
-        return this.populate(KEntity.getRESTClient().put(controller, this.getIdArray(), this.buildHashMap(false), this.buildFilesHashMap()).getComponents().get(0));
+        return this.populate(KEntity.getRESTClient().put(controller, this.getIdArray(), this.buildHashMap(false), this.buildFilesHashMap()).getFirstComponent());
     }
 
     /**

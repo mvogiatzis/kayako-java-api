@@ -899,7 +899,7 @@ public class User extends KEntity {
      * @throws KayakoException the kayako exception
      */
     public static User get(int id) throws KayakoException {
-        return new User().populate(KEntity.get(controller, id).getFirstComponent());
+        return new User().populate(KEntity.get(controller, id));
     }
 
     /**

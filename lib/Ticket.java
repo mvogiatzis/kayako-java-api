@@ -14,23 +14,77 @@ import java.util.HashMap;
  */
 public class Ticket extends KEntityCustom {
 
+    /**
+     * The constant FLAG_NONE.
+     */
     public static final int FLAG_NONE = 0;
+    /**
+     * The constant FLAG_PURPLE.
+     */
     public static final int FLAG_PURPLE = 1;
+    /**
+     * The constant FLAG_ORANGE.
+     */
     public static final int FLAG_ORANGE = 2;
+    /**
+     * The constant FLAG_GREEN.
+     */
     public static final int FLAG_GREEN = 3;
+    /**
+     * The constant FLAG_YELLOW.
+     */
     public static final int FLAG_YELLOW = 4;
+    /**
+     * The constant FLAG_RED.
+     */
     public static final int FLAG_RED = 5;
+    /**
+     * The constant FLAG_BLUE.
+     */
     public static final int FLAG_BLUE = 6;
+    /**
+     * The constant CREATOR_AUTO.
+     */
     public static final int CREATOR_AUTO = 0;
+    /**
+     * The constant CREATOR_STAFF.
+     */
     public static final int CREATOR_STAFF = 1;
+    /**
+     * The constant CREATOR_USER.
+     */
     public static final int CREATOR_USER = 2;
+    /**
+     * The constant CREATOR_CLIENT.
+     */
     public static final int CREATOR_CLIENT = 2;
+    /**
+     * The constant CREATION_MODE_SUPPORTCENTER.
+     */
     public static final int CREATION_MODE_SUPPORTCENTER = 1;
+    /**
+     * The constant CREATION_MODE_STAFFCP.
+     */
     public static final int CREATION_MODE_STAFFCP = 2;
+    /**
+     * The constant CREATION_MODE_EMAIL.
+     */
     public static final int CREATION_MODE_EMAIL = 3;
+    /**
+     * The constant CREATION_MODE_API.
+     */
     public static final int CREATION_MODE_API = 4;
+    /**
+     * The constant CREATION_MODE_SITEBADGE.
+     */
     public static final int CREATION_MODE_SITEBADGE = 5;
+    /**
+     * The constant CREATION_TYPE_DEFAULT.
+     */
     public static final int CREATION_TYPE_DEFAULT = 1;
+    /**
+     * The constant CREATION_TYPE_PHONE.
+     */
     public static final int CREATION_TYPE_PHONE = 2;
     /**
      * Flag for searching using query - search the Ticket ID & Mask ID :  SEARCH_TICKET_ID
@@ -601,7 +655,7 @@ public class Ticket extends KEntityCustom {
         if (this.isNew()) {
             throw new KayakoException("Custom fields are not available for new objects. Save the object before accessing its custom fields.");
         }
-        ArrayList<CustomFieldGroup> customFieldGroups = this.getCustomFieldGroups();
+        ArrayList<CustomFieldGroup> customFieldGroups = this.customFieldGroups;
         if (customFieldGroups.size() == 0 && !refresh) {
             return customFieldGroups;
         }
@@ -1220,6 +1274,11 @@ public class Ticket extends KEntityCustom {
         return creator;
     }
 
+    /**
+     * Gets creator type.
+     *
+     * @return the creator type
+     */
     public int getCreatorType() {
         return this.creator;
     }
@@ -2208,6 +2267,19 @@ public class Ticket extends KEntityCustom {
     }
 
     /**
+     * Get ticket.
+     *
+     * @param displayId the display id
+     * @return the ticket
+     * @throws KayakoException the kayako exception
+     */
+    public static Ticket get(String displayId) throws KayakoException {
+        ArrayList<String> parameters = new ArrayList<String>();
+        parameters.add(displayId);
+        return new Ticket().populate(KEntity.get(controller, parameters).getFirstComponent());
+    }
+
+    /**
      * Search array list.
      *
      * @param query the query
@@ -2302,12 +2374,62 @@ public class Ticket extends KEntityCustom {
         return new TicketTimeTrack(this, contents, staff, timeWorked, timeWorked);
     }
 
+    /**
+     * Save Ticket.
+     *
+     * @return the Ticket
+     * @throws KayakoException the kayako exception
+     */
+    public Ticket save() throws KayakoException {
+        return (Ticket) super.save(controller);
+    }
+
+    /**
+     * Update Ticket.
+     *
+     * @return the Ticket
+     * @throws KayakoException the kayako exception
+     */
+    public Ticket update() throws KayakoException {
+        return (Ticket) super.update(controller);
+    }
+
+    /**
+     * Create Ticket.
+     *
+     * @return the Ticket
+     * @throws KayakoException the kayako exception
+     */
+    public Ticket create() throws KayakoException {
+        return (Ticket) super.create(controller);
+    }
+
+    /**
+     * Delete boolean.
+     *
+     * @return the boolean
+     * @throws KayakoException the kayako exception
+     */
+    public Boolean delete() throws KayakoException {
+        return super.delete(controller);
+    }
+
+    /**
+     * Refresh Ticket.
+     *
+     * @return the Ticket
+     * @throws KayakoException the kayako exception
+     */
+    public Ticket refresh() throws KayakoException {
+        return (Ticket) super.refresh(controller);
+    }
+
     //TODO - Statistics
 
     @Override
     public Ticket populate(RawArrayElement rawArrayElement) throws KayakoException {
         if (!rawArrayElement.getElementName().equals(objectXmlName)) {
-            throw new KayakoException();
+            throw new KayakoException("Unexpected element name in received XML.");
         }
 
         ArrayList<RawArrayElement> components = rawArrayElement.getComponents();

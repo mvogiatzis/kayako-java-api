@@ -134,20 +134,6 @@ public class RESTClient implements RESTInterface {
     }
 
     /**
-     * Process request test.
-     *
-     * @param controller the controller
-     * @param method     the method
-     * @param parameters the parameters
-     * @param data       the data
-     * @param files      the files
-     * @return the raw array element
-     */
-    public RawArrayElement processRequestTest(String controller, String method, ArrayList<String> parameters, HashMap<String, String> data, HashMap<String, HashMap<String, String>> files) {
-        return this.processRequest(controller, method, parameters, data, files);
-    }
-
-    /**
      * Process request.
      *
      * @param controller the controller

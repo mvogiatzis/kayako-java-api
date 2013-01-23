@@ -411,6 +411,17 @@ public class TicketType extends KEntity {
         return new TicketType().populate(KEntity.get(controller, id));
     }
 
+    /**
+     * Gets all.
+     *
+     * @return the all
+     * @throws KayakoException the kayako exception
+     */
+    public static RawArrayElement getAll() throws KayakoException {
+        return KEntity.getAll(controller);
+    }
+
+
     //this function will populate the data of the ticket type instance when supplied with RawArrayElement derived from the xml
     @Override
     public TicketType populate(RawArrayElement rawArrayElement) throws KayakoException {

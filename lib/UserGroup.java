@@ -264,6 +264,17 @@ public class UserGroup extends KEntity {
         return (UserGroup) super.refresh(controller);
     }
 
+    /**
+     * Gets all.
+     *
+     * @return the all
+     * @throws KayakoException the kayako exception
+     */
+    public static RawArrayElement getAll() throws KayakoException {
+        return KEntity.getAll(controller);
+    }
+
+
     public String toString() {
         return "User Group : " + this.getTitle();
     }
