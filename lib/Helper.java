@@ -77,6 +77,20 @@ public class Helper {
     }
 
     /**
+     * Parse long.
+     *
+     * @param string the string
+     * @return the long
+     */
+    public static long parseLong(String string) {
+        try {
+            return Long.parseLong(string);
+        } catch (NumberFormatException nfe) {
+            return 0;
+        }
+    }
+
+    /**
      * Gets date string.
      *
      * @param timeStamp the time stamp
@@ -101,7 +115,7 @@ public class Helper {
      * Gets time stamp from date string.
      *
      * @param dateString the date string
-     * @param format the format
+     * @param format     the format
      * @return the time stamp from date string
      * @throws ParseException the parse exception
      */
@@ -115,7 +129,7 @@ public class Helper {
      * Gets date string.
      *
      * @param timeStamp the time stamp
-     * @param format the format
+     * @param format    the format
      * @return the date string
      */ //String format can be anything workable with SimpleDateFormat constructor
     // ref: http://docs.oracle.com/javase/6/docs/api/java/text/SimpleDateFormat.html

@@ -19,7 +19,7 @@ public class CustomFieldFactory {
      * @throws KayakoException the kayako exception
      */
     public static CustomField createCustomField(CustomFieldGroup customFieldGroup, RawArrayElement rawArrayElement) throws KayakoException {
-        if (rawArrayElement == null || !rawArrayElement.getElementName().equals(CustomField.getXmlName())) {
+        if (rawArrayElement == null || !rawArrayElement.getElementName().equals(CustomField.getObjectXmlName())) {
             throw new KayakoException("Invalid XML Element Supplied");
         }
         int type = Integer.parseInt(rawArrayElement.getAttribute("type"));

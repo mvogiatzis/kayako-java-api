@@ -1,7 +1,10 @@
 package lib;
 
+import java.util.ArrayList;
+
 /**
  * The type Custom field option.
+ *
  * @author Rajat Garg
  * @package lib
  * @copyright Copyright (c) 2001-2012, Kayako
@@ -237,8 +240,10 @@ public class CustomFieldOption extends KEntity {
      * @return the all
      * @throws KayakoException the kayako exception
      */
-    public static RawArrayElement getAll() throws KayakoException {
-        return KEntity.getAll(controller);
+    public static RawArrayElement getAll(int fieldId) throws KayakoException {
+        ArrayList<String> parameters = new ArrayList<String>();
+        parameters.add(Integer.toString(fieldId));
+        return KEntity.getAll(controller, parameters);
     }
 
     /**

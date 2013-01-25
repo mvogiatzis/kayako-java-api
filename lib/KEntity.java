@@ -24,7 +24,7 @@ abstract public class KEntity {
     /**
      * The Xml name.
      */
-    static protected String xmlName;
+    static protected String objectXmlName;
     /**
      * The Read only.
      */
@@ -71,8 +71,8 @@ abstract public class KEntity {
      *
      * @return the xml name
      */
-    public static String getXmlName() {
-        return xmlName;
+    public static String getObjectXmlName() {
+        return objectXmlName;
     }
 
     /**
@@ -127,7 +127,7 @@ abstract public class KEntity {
             throw new KayakoException("This is a read only type, object can't be created");
         }
         RawArrayElement response = KEntity.getRESTClient().post(controller, new ArrayList<String>(), this.buildHashMap(true), this.buildFilesHashMap());
-        return this.populate(response.getComponents().get(0));
+        return this.populate(response.getFirstComponent());
     }
 
     /**

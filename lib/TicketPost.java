@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 /**
  * The type Ticket post.
+ *
  * @author Rajat Garg
  * @package lib
  * @copyright Copyright (c) 2001-2012, Kayako
@@ -17,42 +18,42 @@ public class TicketPost extends KEntity {
     /**
      * Post creator type - staff user.
      */
-    static final int CREATOR_STAFF = 1;
+    public static final int CREATOR_STAFF = 1;
 
     /**
      * Post creator type - user.
      *
      * @param int
      */
-    static final int CREATOR_USER = 2;
+    public static final int CREATOR_USER = 2;
 
     /**
      * Post creator type - user.
      *
      * @param int
      */
-    static final int CREATOR_CLIENT = 2;
+    public static final int CREATOR_CLIENT = 2;
 
     /**
      * Post creator type - owner of e-mail marked as CC in ticket properties.
      *
      * @param int
      */
-    static final int CREATOR_CC = 3;
+    public static final int CREATOR_CC = 3;
 
     /**
      * Post creator type - owner of e-mail marked as BCC in ticket properties.
      *
      * @param int
      */
-    static final int CREATOR_BCC = 4;
+    public static final int CREATOR_BCC = 4;
 
     /**
      * Post creator type - owner of e-mail marked as Third Party in ticket properties.
      *
      * @param int
      */
-    static final int CREATOR_THIRDPARTY = 5;
+    public static final int CREATOR_THIRDPARTY = 5;
 
     /**
      * The Controller.
@@ -137,7 +138,7 @@ public class TicketPost extends KEntity {
      * getter=getCreatorType
      *
      * @param int
-     * @see  ::CREATOR constants.
+     * @see ::CREATOR constants.
      */
     protected int creator;
 
@@ -495,11 +496,15 @@ public class TicketPost extends KEntity {
         return creator;
     }
 
+    public int getCreatorType() {
+        return this.creator;
+    }
+
     /**
      * Sets creator.
      *
      * @param creatorId the creator id
-     * @param type the type
+     * @param type      the type
      * @return the creator
      */
     public TicketPost setCreator(int creatorId, int type) {
@@ -827,6 +832,7 @@ public class TicketPost extends KEntity {
         this.staffId = staff.getId();
         this.userId = 0;
         this.user = null;
+        this.creator = staff != null ? CREATOR_STAFF : 0;
         return this;
     }
 
@@ -834,7 +840,7 @@ public class TicketPost extends KEntity {
      * Get ticket post.
      *
      * @param ticketId the ticket id
-     * @param id the id
+     * @param id       the id
      * @return the ticket post
      * @throws KayakoException the kayako exception
      */
@@ -853,6 +859,16 @@ public class TicketPost extends KEntity {
      */
     public TicketPost update() throws KayakoException {
         throw new KayakoException("This method is not available for this type of objects.");
+    }
+
+    /**
+     * Create ticket post.
+     *
+     * @return the ticket post
+     * @throws KayakoException the kayako exception
+     */
+    public TicketPost create() throws KayakoException {
+        return (TicketPost) super.create(controller);
     }
 
     /**
@@ -939,9 +955,9 @@ public class TicketPost extends KEntity {
     /**
      * Create new.
      *
-     * @param ticket the ticket
+     * @param ticket   the ticket
      * @param contents the contents
-     * @param creator the creator
+     * @param creator  the creator
      * @return the ticket post
      */
     public static TicketPost createNew(Ticket ticket, String contents, Staff creator) {
@@ -955,9 +971,9 @@ public class TicketPost extends KEntity {
     /**
      * Create new.
      *
-     * @param ticket the ticket
+     * @param ticket   the ticket
      * @param contents the contents
-     * @param creator the creator
+     * @param creator  the creator
      * @return the ticket post
      */
     public static TicketPost createNew(Ticket ticket, String contents, User creator) {
@@ -1022,6 +1038,11 @@ public class TicketPost extends KEntity {
         return this;
     }
 
+    /**
+     * Build hash map.
+     *
+     * @return the hash map
+     */
     public HashMap<String, String> buildHashMap() {
         return buildHashMap(false);
     }
@@ -1039,7 +1060,7 @@ public class TicketPost extends KEntity {
         ticketPostHashMap.put("contents", this.getContents());
         ticketPostHashMap.put("isprivate", this.isPrivate() ? "1" : "0");
 
-        switch (this.getCreator()) {
+        switch (this.getCreatorType()) {
             case CREATOR_STAFF:
                 ticketPostHashMap.put("staffid", Integer.toString(this.getStaffId()));
                 break;

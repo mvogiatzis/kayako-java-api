@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 /**
  * The type Ticket note.
+ *
  * @author Rajat Garg
  * @package lib
  * @copyright Copyright (c) 2001-2012, Kayako
@@ -18,56 +19,56 @@ public class TicketNote extends KEntity {
      *
      * @var int
      */
-    static final int COLOR_YELLOW = 1;
+    public static final int COLOR_YELLOW = 1;
 
     /**
      * Color of note - purple.
      *
      * @var int
      */
-    static final int COLOR_PURPLE = 2;
+    public static final int COLOR_PURPLE = 2;
 
     /**
      * Color of note - blue.
      *
      * @var int
      */
-    static final int COLOR_BLUE = 3;
+    public static final int COLOR_BLUE = 3;
 
     /**
      * Color of note - green.
      *
      * @var int
      */
-    static final int COLOR_GREEN = 4;
+    public static final int COLOR_GREEN = 4;
 
     /**
      * Color of note - red.
      *
      * @var int
      */
-    static final int COLOR_RED = 5;
+    public static final int COLOR_RED = 5;
 
     /**
      * Note type - connected to ticket.
      *
      * @var string
      */
-    static final String TYPE_TICKET = "ticket";
+    public static final String TYPE_TICKET = "ticket";
 
     /**
      * Note type - connected to user.
      *
      * @var string
      */
-    static final String TYPE_USER = "user";
+    public static final String TYPE_USER = "user";
 
     /**
      * Note type - connected to user organization.
      *
      * @var string
      */
-    static final String TYPE_USER_ORGANIZATION = "userorganization";
+    public static final String TYPE_USER_ORGANIZATION = "userorganization";
 
     /**
      * The Controller.
@@ -115,7 +116,7 @@ public class TicketNote extends KEntity {
      *
      * @apiField
      * @var string
-     * @see  ::TYPE static final Stringants.
+     * @see ::TYPE static final Stringants.
      */
     protected String type = TYPE_TICKET;
 
@@ -124,7 +125,7 @@ public class TicketNote extends KEntity {
      *
      * @apiField
      * @var int
-     * @see  ::COLOR static final Stringants.
+     * @see ::COLOR static final Stringants.
      */
     protected int noteColor;
 
@@ -212,9 +213,9 @@ public class TicketNote extends KEntity {
     /**
      * Instantiates a new Ticket note.
      *
-     * @param ticket the ticket
+     * @param ticket       the ticket
      * @param creatorStaff the creator staff
-     * @param contents the contents
+     * @param contents     the contents
      */
     public TicketNote(Ticket ticket, Staff creatorStaff, String contents) {
         this.setTicket(ticket).setCreatorStaff(creatorStaff).setContents(contents);
@@ -753,7 +754,7 @@ public class TicketNote extends KEntity {
      * Get ticket note.
      *
      * @param ticketId the ticket id
-     * @param id the id
+     * @param id       the id
      * @return the ticket note
      * @throws KayakoException the kayako exception
      */

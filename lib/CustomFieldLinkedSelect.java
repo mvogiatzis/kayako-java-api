@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 /**
  * The type Custom field linked select.
+ *
  * @author Rajat Garg
  * @package lib
  * @copyright Copyright (c) 2001-2012, Kayako
@@ -40,7 +41,6 @@ public class CustomFieldLinkedSelect extends CustomFieldSelect {
 
     @Override
     public CustomFieldLinkedSelect setSelectedOption(CustomFieldOption customFieldOption) throws KayakoException {
-        this.setSelectedOption(customFieldOption);
         if (this.getSelectedOption() != null) {
             this.setRawValue(this.getOption(this.getSelectedOption().getParentOptionId()).getValue() + PARENT_CHILD_SEPARATOR + this.getSelectedOption().getValue());
         } else {

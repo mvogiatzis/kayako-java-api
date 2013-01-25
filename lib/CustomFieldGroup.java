@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 /**
  * The type Custom field group.
+ *
  * @author Rajat Garg
  * @package lib
  * @copyright Copyright (c) 2001-2012, Kayako
@@ -52,13 +53,13 @@ public abstract class CustomFieldGroup extends KEntity {
      *
      * @var CustomField[]
      */
-    protected ArrayList<CustomField> fields;
+    protected ArrayList<CustomField> fields = new ArrayList<CustomField>();
 
     /**
      * Type of custom field group.
      *
      * @var int
-     * @see  ::TYPE constants
+     * @see ::TYPE constants
      */
     protected int type;
 
@@ -206,6 +207,13 @@ public abstract class CustomFieldGroup extends KEntity {
 
         //attribute =  title, id
         this.setTitle(rawArrayElement.getAttribute("title")).setId(Helper.parseInt(rawArrayElement.getAttribute("id")));
+
+        for (RawArrayElement component : rawArrayElement.getComponents()) {
+            String elementName = component.getElementName();
+            if (elementName.equalsIgnoreCase("field")) {
+                this.fields.add(CustomFieldFactory.createCustomField(this, component));
+            }
+        }
         return this;
 
     }

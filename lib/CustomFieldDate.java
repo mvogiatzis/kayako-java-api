@@ -5,6 +5,7 @@ import java.text.ParseException;
 
 /**
  * The type Custom field date.
+ *
  * @author Rajat Garg
  * @package lib
  * @copyright Copyright (c) 2001-2012, Kayako
@@ -112,7 +113,7 @@ public class CustomFieldDate extends CustomField {
         }
 
         //content = timestamp
-        this.setTimestamp(new Timestamp(Long.parseLong(rawArrayElement.getContent())));
+        this.setTimestamp(new Timestamp(Helper.parseLong(rawArrayElement.getContent())));
         return this;
 
     }

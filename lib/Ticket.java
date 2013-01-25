@@ -444,6 +444,12 @@ public class Ticket extends KEntityCustom {
      * List of ticket attachments.
      */
     private ArrayList<TicketAttachment> attachments = new ArrayList<TicketAttachment>();
+
+    /**
+     * For fast lookup of custom fields based on their name.
+     * @var array
+     */
+    //reconsider if its needed
     /**
      * Tickets statistic.
      */
@@ -656,25 +662,16 @@ public class Ticket extends KEntityCustom {
             throw new KayakoException("Custom fields are not available for new objects. Save the object before accessing its custom fields.");
         }
         ArrayList<CustomFieldGroup> customFieldGroups = this.customFieldGroups;
-        if (customFieldGroups.size() == 0 && !refresh) {
+        if (customFieldGroups.size() > 0 && !refresh) {
             return customFieldGroups;
         }
-        RawArrayElement rawArrayElement = TicketCustomFieldGroup.getAll(Ticket.getCustomFieldGroupController());
+        RawArrayElement rawArrayElement = TicketCustomFieldGroup.getAll(this.getId());
         for (RawArrayElement component : rawArrayElement.getComponents()) {
             customFieldGroups.add(new TicketCustomFieldGroup(this.getId(), component));
         }
-        this.setCustomFieldGroups(customFieldGroups);
+        this.customFieldGroups = customFieldGroups;
         this.cacheFields();
-        return this.getCustomFieldGroups();
-    }
-
-    /**
-     * Prepares local array for custom field fast lookup based on its name.
-     * this function should populate this.customFields
-     */
-    @Override
-    protected ArrayList<CustomField> loadCustomField(Boolean refresh) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return this.customFieldGroups;
     }
 
     /**
@@ -2568,7 +2565,6 @@ public class Ticket extends KEntityCustom {
         } else {
             ticketHashMap.put("userid", Integer.toString(this.getUserId()));
         }
-
         return ticketHashMap;
     }
 }

@@ -291,6 +291,14 @@ public class CustomField extends KEntity {
         return this.getDefinition().getOptionById(id);
     }
 
+    public static String getObjectXmlName() {
+        return objectXmlName;
+    }
+
+    public static void setObjectXmlName(String objectXmlName) {
+        CustomField.objectXmlName = objectXmlName;
+    }
+
     @Override
     public CustomField populate(RawArrayElement rawArrayElement) throws KayakoException {
         if (!rawArrayElement.getElementName().equals(objectXmlName)) {

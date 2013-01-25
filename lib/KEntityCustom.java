@@ -1,11 +1,11 @@
 package lib;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
  * The type K entity custom.
+ *
  * @author Rajat Garg
  * @package lib
  * @copyright Copyright (c) 2001-2012, Kayako
@@ -91,6 +91,16 @@ public abstract class KEntityCustom extends KEntity {
     /**
      * Gets custom fields.
      *
+     * @return the custom fields
+     * @throws KayakoException the kayako exception
+     */
+    public ArrayList<CustomField> getCustomFields() throws KayakoException {
+        return this.getCustomFields(false);
+    }
+
+    /**
+     * Gets custom fields.
+     *
      * @param refresh the refresh
      * @return the custom fields
      * @throws KayakoException the kayako exception
@@ -129,7 +139,7 @@ public abstract class KEntityCustom extends KEntity {
     public KEntityCustom update(String controller) throws KayakoException {
         super.update(controller);
         if (!this.isNew()) {
-            this.updateCustomFields(controller);
+            this.updateCustomFields();
         }
         return this;
     }
@@ -167,14 +177,7 @@ public abstract class KEntityCustom extends KEntity {
 
     /**
      * Prepares local array for custom field fast lookup based on its name.
-     * this function should populate this.customFields
-     * @param refresh the refresh
-     * @return the array list
-     */
-    protected abstract ArrayList<CustomField> loadCustomField(Boolean refresh);
-
-    /**
-     * Prepares local array for custom field fast lookup based on its name.
+     *
      * @throws KayakoException the kayako exception
      */
     protected void cacheFields() throws KayakoException {
@@ -189,12 +192,9 @@ public abstract class KEntityCustom extends KEntity {
      * Update custom fields.
      *
      * @return the k entity custom
-     * @throws NoSuchMethodException the no such method exception
-     * @throws InvocationTargetException the invocation target exception
-     * @throws IllegalAccessException the illegal access exception
      * @throws KayakoException the kayako exception
      */ //this method needs to be implemented in the derived class to basically call the overloaded method with correct arguments
-    public abstract KEntityCustom updateCustomFields() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, KayakoException;
+    public abstract KEntityCustom updateCustomFields() throws KayakoException;
 
     /**
      * Updates all custom fields values on Kayako server.

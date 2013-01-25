@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 /**
  * The type Custom field definition.
+ *
  * @author Rajat Garg
  * @package lib
  * @copyright Copyright (c) 2001-2012, Kayako
@@ -461,7 +462,7 @@ public class CustomFieldDefinition extends KEntity {
                 case TYPE_MULTI_SELECT:
                 case TYPE_RADIO:
                 case TYPE_SELECT:
-                    ArrayList<RawArrayElement> optionsRaw = CustomFieldOption.getAll().getComponents();
+                    ArrayList<RawArrayElement> optionsRaw = CustomFieldOption.getAll(this.getId()).getComponents();
                     for (RawArrayElement optionRaw : optionsRaw) {
                         this.addOption(new CustomFieldOption().populate(optionRaw));
                     }
@@ -488,7 +489,7 @@ public class CustomFieldDefinition extends KEntity {
                 case TYPE_MULTI_SELECT:
                 case TYPE_RADIO:
                 case TYPE_SELECT:
-                    ArrayList<RawArrayElement> optionsRaw = CustomFieldOption.getAll().filterByComponentAttribute("isselected", "0").getComponents();
+                    ArrayList<RawArrayElement> optionsRaw = CustomFieldOption.getAll(this.getId()).filterByComponentAttribute("isselected", "0").getComponents();
                     for (RawArrayElement optionRaw : optionsRaw) {
                         this.addOption(new CustomFieldOption().populate(optionRaw));
                     }

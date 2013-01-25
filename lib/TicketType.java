@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 /**
  * The type Ticket type.
+ *
  * @author Rajat Garg
  * @package lib
  * @copyright Copyright (c) 2001-2012, Kayako
@@ -13,8 +14,8 @@ import java.util.HashMap;
  */
 public class TicketType extends KEntity {
 
-    final String TYPE_PUBLIC = "public";
-    final String TYPE_PRIVATE = "private";
+    public final String TYPE_PUBLIC = "public";
+    public final String TYPE_PRIVATE = "private";
 
     /**
      * The Controller.
@@ -76,7 +77,7 @@ public class TicketType extends KEntity {
      *
      * @apiField
      * @var string
-     * @see  ::TYPE constants.
+     * @see ::TYPE constants.
      */
     protected String type;
 
@@ -420,7 +421,6 @@ public class TicketType extends KEntity {
     public static RawArrayElement getAll() throws KayakoException {
         return KEntity.getAll(controller);
     }
-
 
     //this function will populate the data of the ticket type instance when supplied with RawArrayElement derived from the xml
     @Override

@@ -19,7 +19,6 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
@@ -194,7 +193,7 @@ public class RESTClient implements RESTInterface {
                 if (conEn != null && conEn.equals("gzip")) {
                     inputStream = new GZIPInputStream(inputStream);
                 }
-                InputStreamReader reader = new InputStreamReader(inputStream, charset);
+                BomStrippingInputStreamReader reader = new BomStrippingInputStreamReader(inputStream, charset);
 
                 InputSource is = new InputSource(reader);
                 is.setEncoding(charset);
@@ -202,14 +201,20 @@ public class RESTClient implements RESTInterface {
 
                 XMLHandler myHandler = new XMLHandler();
                 SAXParserFactory factory = SAXParserFactory.newInstance();
+
                 try {
                     SAXParser parser = factory.newSAXParser();
                     parser.parse(is, myHandler);
                 } catch (ParserConfigurationException e) {
-                    // TODO throw appropriate exception here
                     e.printStackTrace();
                 } catch (SAXException e) {
-                    // TODO throw appropriate exception here
+                    reader.reset();
+                    String firstLine = "";
+                    String s = "";
+                    while ((s = reader.readLine()) != null) {
+                        firstLine += s;
+                    }
+                    log.warning(firstLine);
                     e.printStackTrace();
                 }
                 inputStream.close();
@@ -223,7 +228,7 @@ public class RESTClient implements RESTInterface {
             } else {
 
                 // Server returned HTTP error code.
-                log.warning("Code : " + connection.getResponseCode() + "Response Message : " + connection.getResponseMessage());
+                log.warning("Not HTTP 200, But Code : " + connection.getResponseCode() + "Response Message : " + connection.getResponseMessage());
                 return null;
                 //TODO - this portion is to be reconsidered
 /*                InputStream inputStream = (InputStream) connection.getContent();

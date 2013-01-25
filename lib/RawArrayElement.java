@@ -162,11 +162,13 @@ public class RawArrayElement {
      * @return the raw array element
      */
     public RawArrayElement filterByComponentAttribute(String attributeName, String attributeValue) {
+        ArrayList<RawArrayElement> filteredList = new ArrayList<RawArrayElement>();
         for (RawArrayElement component : this.getComponents()) {
-            if (!Pattern.compile(Pattern.quote(attributeValue), Pattern.CASE_INSENSITIVE).matcher(component.getAttribute(attributeName)).find()) {
-                this.components.remove(component);
+            if (Pattern.compile(Pattern.quote(attributeValue), Pattern.CASE_INSENSITIVE).matcher(component.getAttribute(attributeName)).find()) {
+                filteredList.add(component);
             }
         }
+        this.setComponents(filteredList);
         return this;
     }
 
@@ -284,7 +286,10 @@ public class RawArrayElement {
      * @return the content
      */ //Simple getters and setters
     public String getContent() {
-        return content;
+        if (content != null) {
+            return content;
+        }
+        return "";
     }
 
     /**
