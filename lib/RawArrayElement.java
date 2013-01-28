@@ -46,7 +46,7 @@ public class RawArrayElement {
      * Instantiates a new Raw array element.
      *
      * @param elementName the element name
-     * @param attributes  the attributes
+     * @param attributes the attributes
      */
     public RawArrayElement(String elementName, Map<String, String> attributes) {
         this.elementName = elementName;
@@ -58,7 +58,7 @@ public class RawArrayElement {
      * Instantiates a new Raw array element.
      *
      * @param elementName the element name
-     * @param content     the content
+     * @param content the content
      */
     public RawArrayElement(String elementName, String content) {
         this.elementName = elementName;
@@ -70,8 +70,8 @@ public class RawArrayElement {
      * Instantiates a new Raw array element.
      *
      * @param elementName the element name
-     * @param attributes  the attributes
-     * @param content     the content
+     * @param attributes the attributes
+     * @param content the content
      */
     public RawArrayElement(String elementName, Map<String, String> attributes, String content) {
         this.isComposite = false;
@@ -102,6 +102,11 @@ public class RawArrayElement {
         return this.components;
     }
 
+    /**
+     * Gets first component.
+     *
+     * @return the first component
+     */
     public RawArrayElement getFirstComponent() {
         if (this.components.size() > 0) {
             return this.components.get(0);
@@ -137,8 +142,13 @@ public class RawArrayElement {
 
     //this function can be used as a filter on RawArrayElement type, so as to act as a generic filter on all element types
     private ArrayList<RawArrayElement> filterBy(String filterName, String value) throws KayakoException {
+        return this.filterBy(filterName, value, false);
+    }
+
+    private ArrayList<RawArrayElement> filterBy(String filterName, String value, Boolean negative) throws KayakoException {
         ArrayList<RawArrayElement> filteredComponents = new ArrayList<RawArrayElement>();
-        for (RawArrayElement component : this.getComponents()) {
+        ArrayList<RawArrayElement> originalComponents = this.getComponents();
+        for (RawArrayElement component : originalComponents) {
             ArrayList<RawArrayElement> filterComponents = component.getComponents(filterName);
             if (filterComponents.size() == 0) {
                 throw new KayakoException("Supplied filter not available on this data.");
@@ -146,8 +156,12 @@ public class RawArrayElement {
             //there may be a case of multiple components to be used as a filter - any of the filtered attribute equals
             for (RawArrayElement filterComponent : filterComponents) {
                 if (filterComponent.getContent() != null && Pattern.compile(Pattern.quote(value), Pattern.CASE_INSENSITIVE).matcher(filterComponent.getContent()).find()) {
-                    filteredComponents.add(component);
+                    if (!negative) {
+                        filteredComponents.add(component);
+                    }
                     break;
+                } else if (negative) {
+                    filteredComponents.add(component);
                 }
             }
         }
@@ -157,7 +171,7 @@ public class RawArrayElement {
     /**
      * Filter by component attribute.
      *
-     * @param attributeName  the attribute name
+     * @param attributeName the attribute name
      * @param attributeValue the attribute value
      * @return the raw array element
      */
@@ -175,14 +189,27 @@ public class RawArrayElement {
     /**
      * Filter by component value.
      *
-     * @param componentName  the component name
+     * @param componentName the component name
+     * @param componentValue the component value
+     * @param negative the negative, invert result
+     * @return the raw array element
+     * @throws KayakoException the kayako exception
+     */
+    public RawArrayElement filterByComponentValue(String componentName, String componentValue, Boolean negative) throws KayakoException {
+        this.setComponents(this.filterBy(componentName, componentValue, negative));
+        return this;
+    }
+
+    /**
+     * Filter by component value.
+     *
+     * @param componentName the component name
      * @param componentValue the component value
      * @return the raw array element
      * @throws KayakoException the kayako exception
      */
     public RawArrayElement filterByComponentValue(String componentName, String componentValue) throws KayakoException {
-        this.setComponents(this.filterBy(componentName, componentValue));
-        return this;
+        return this.filterByComponentValue(componentName, componentValue, false);
     }
 
     /**
@@ -244,7 +271,7 @@ public class RawArrayElement {
     /**
      * Sets attribute.
      *
-     * @param key   the key
+     * @param key the key
      * @param value the value
      * @return the attribute
      */

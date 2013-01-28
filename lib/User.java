@@ -15,10 +15,25 @@ import java.util.HashMap;
 public class User extends KEntity {
     static final String ROLE_USER = "user";
     static final int DEFAULT_MAX_USERS = 1000;
+    /**
+     * The constant ROLE_MANAGER.
+     */
     public static final String ROLE_MANAGER = "manager";
+    /**
+     * The constant SALUTATION_MR.
+     */
     public static final String SALUTATION_MR = "Mr.";
+    /**
+     * The constant SALUTATION_MS.
+     */
     public static final String SALUTATION_MS = "Ms.";
+    /**
+     * The constant SALUTATION_MRS.
+     */
     public static final String SALUTATION_MRS = "Mrs.";
+    /**
+     * The constant SALUTATION_DR.
+     */
     public static final String SALUTATION_DR = "Dr.";
     /**
      * The Controller.
@@ -38,10 +53,10 @@ public class User extends KEntity {
     /**
      * Instantiates a new User.
      *
-     * @param name      the name
-     * @param email     the email
+     * @param name the name
+     * @param email the email
      * @param userGroup the user group
-     * @param password  the password
+     * @param password the password
      */
     public User(String name, String email, UserGroup userGroup, String password) {
         this.setFullName(name);
@@ -71,7 +86,7 @@ public class User extends KEntity {
      *
      * @apiField
      * @var string
-     * @see ::ROLE constants.
+     * @see  ::ROLE constants.
      */
     protected String userRole = ROLE_USER;
     /**
@@ -84,7 +99,7 @@ public class User extends KEntity {
      *
      * @apiField
      * @var string
-     * @see ::SALUTATION constants.
+     * @see  ::SALUTATION constants.
      */
     protected String salutation = "";
 
@@ -733,7 +748,7 @@ public class User extends KEntity {
      * Gets all.
      *
      * @param startingUserId the starting user id
-     * @param maxItems       the max items
+     * @param maxItems the max items
      * @return the all
      */
     public static RawArrayElement getAll(int startingUserId, int maxItems) {
@@ -777,7 +792,7 @@ public class User extends KEntity {
      * Gets all users.
      *
      * @param startingUserId the starting user id
-     * @param maxItems       the max items
+     * @param maxItems the max items
      * @return the all users
      * @throws KayakoException the kayako exception
      */
@@ -912,6 +927,11 @@ public class User extends KEntity {
         return (User) super.update(controller);
     }
 
+    /**
+     * Build hash map.
+     *
+     * @return the hash map
+     */
     public HashMap<String, String> buildHashMap() {
         return buildHashMap(false);
     }
@@ -950,8 +970,8 @@ public class User extends KEntity {
      * Create ticket.
      *
      * @param department the department
-     * @param content    the content
-     * @param subject    the subject
+     * @param content the content
+     * @param subject the subject
      * @return the ticket
      * @throws KayakoException the kayako exception
      */

@@ -116,7 +116,7 @@ public class TicketNote extends KEntity {
      *
      * @apiField
      * @var string
-     * @see ::TYPE static final Stringants.
+     * @see  ::TYPE static final Stringants.
      */
     protected String type = TYPE_TICKET;
 
@@ -125,7 +125,7 @@ public class TicketNote extends KEntity {
      *
      * @apiField
      * @var int
-     * @see ::COLOR static final Stringants.
+     * @see  ::COLOR static final Stringants.
      */
     protected int noteColor;
 
@@ -213,9 +213,9 @@ public class TicketNote extends KEntity {
     /**
      * Instantiates a new Ticket note.
      *
-     * @param ticket       the ticket
+     * @param ticket the ticket
      * @param creatorStaff the creator staff
-     * @param contents     the contents
+     * @param contents the contents
      */
     public TicketNote(Ticket ticket, Staff creatorStaff, String contents) {
         this.setTicket(ticket).setCreatorStaff(creatorStaff).setContents(contents);
@@ -754,7 +754,7 @@ public class TicketNote extends KEntity {
      * Get ticket note.
      *
      * @param ticketId the ticket id
-     * @param id       the id
+     * @param id the id
      * @return the ticket note
      * @throws KayakoException the kayako exception
      */
@@ -831,6 +831,11 @@ public class TicketNote extends KEntity {
         return this;
     }
 
+    /**
+     * Build hash map.
+     *
+     * @return the hash map
+     */
     public HashMap<String, String> buildHashMap() {
         return buildHashMap(false);
     }

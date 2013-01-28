@@ -46,12 +46,12 @@ public class Staff extends KEntity {
     /**
      * Instantiates a new Staff.
      *
-     * @param firstName  the first name
-     * @param lastName   the last name
-     * @param userName   the user name
-     * @param email      the email
+     * @param firstName the first name
+     * @param lastName the last name
+     * @param userName the user name
+     * @param email the email
      * @param staffGroup the staff group
-     * @param password   the password
+     * @param password the password
      */
     public Staff(String firstName, String lastName, String userName, String email, StaffGroup staffGroup, String password) {
         this.setFirstName(firstName);
@@ -615,7 +615,6 @@ public class Staff extends KEntity {
         return KEntity.getAll(controller);
     }
 
-
     //this function will populate the data of the staff instance when supplied with RawArrayElement derived from the xml
     @Override
     public Staff populate(RawArrayElement rawArrayElement) throws KayakoException {
@@ -662,6 +661,11 @@ public class Staff extends KEntity {
         return this;
     }
 
+    /**
+     * Build hash map.
+     *
+     * @return the hash map
+     */
     public HashMap<String, String> buildHashMap() {
         HashMap<String, String> staffHashMap = new HashMap<String, String>();
         staffHashMap.put("firstname", this.getFirstName());
@@ -688,8 +692,8 @@ public class Staff extends KEntity {
      * Create ticket.
      *
      * @param department the department
-     * @param content    the content
-     * @param subject    the subject
+     * @param content the content
+     * @param subject the subject
      * @return the ticket
      */
     public Ticket createTicket(Department department, String content, String subject) {

@@ -12,27 +12,60 @@ import java.util.ArrayList;
  * @link http ://www.kayako.com
  */
 public class CustomFieldDefinition extends KEntity {
-    static final int TYPE_TEXT = 1;
+    /**
+     * The constant TYPE_TEXT.
+     */
+    public static final int TYPE_TEXT = 1;
 
-    static final int TYPE_TEXTAREA = 2;
+    /**
+     * The constant TYPE_TEXTAREA.
+     */
+    public static final int TYPE_TEXTAREA = 2;
 
-    static final int TYPE_PASSWORD = 3;
+    /**
+     * The constant TYPE_PASSWORD.
+     */
+    public static final int TYPE_PASSWORD = 3;
 
-    static final int TYPE_CHECKBOX = 4;
+    /**
+     * The constant TYPE_CHECKBOX.
+     */
+    public static final int TYPE_CHECKBOX = 4;
 
-    static final int TYPE_RADIO = 5;
+    /**
+     * The constant TYPE_RADIO.
+     */
+    public static final int TYPE_RADIO = 5;
 
-    static final int TYPE_SELECT = 6;
+    /**
+     * The constant TYPE_SELECT.
+     */
+    public static final int TYPE_SELECT = 6;
 
-    static final int TYPE_MULTI_SELECT = 7;
+    /**
+     * The constant TYPE_MULTI_SELECT.
+     */
+    public static final int TYPE_MULTI_SELECT = 7;
 
-    static final int TYPE_CUSTOM = 8;
+    /**
+     * The constant TYPE_CUSTOM.
+     */
+    public static final int TYPE_CUSTOM = 8;
 
-    static final int TYPE_LINKED_SELECT = 9;
+    /**
+     * The constant TYPE_LINKED_SELECT.
+     */
+    public static final int TYPE_LINKED_SELECT = 9;
 
-    static final int TYPE_DATE = 10;
+    /**
+     * The constant TYPE_DATE.
+     */
+    public static final int TYPE_DATE = 10;
 
-    static final int TYPE_FILE = 11;
+    /**
+     * The constant TYPE_FILE.
+     */
+    public static final int TYPE_FILE = 11;
 
     /**
      * The Controller.
@@ -176,6 +209,8 @@ public class CustomFieldDefinition extends KEntity {
      * @var CustomFieldDefinition[]
      */
     static private ArrayList<CustomFieldDefinition> definitions = new ArrayList<CustomFieldDefinition>();
+
+    static private RawArrayElement rawDefinitions = null;
 
     @Override
     public KEntity populate(RawArrayElement rawArrayElement) throws KayakoException {
@@ -629,7 +664,32 @@ public class CustomFieldDefinition extends KEntity {
      * @return the all
      */
     static public RawArrayElement getAll(ArrayList<String> parameters) {
-        return KEntity.getAll(controller, parameters);
+        if (rawDefinitions == null) {
+            rawDefinitions = KEntity.getAll(controller, parameters);
+        }
+        return rawDefinitions;
+    }
+
+    /**
+     * Gets all definitions.
+     *
+     * @param parameters the parameters
+     * @return the all definitions
+     * @throws KayakoException the kayako exception
+     */
+    static public ArrayList<CustomFieldDefinition> getAllDefinitions(ArrayList<String> parameters) throws KayakoException {
+        if (definitions.size() == 0) {
+            setDefinitions(refineToArray(getAll(parameters)));
+        }
+        return definitions;
+    }
+
+    private static ArrayList<CustomFieldDefinition> refineToArray(RawArrayElement rawArrayElement) throws KayakoException {
+        ArrayList<CustomFieldDefinition> customFieldDefinitions = new ArrayList<CustomFieldDefinition>();
+        for (RawArrayElement rawArrayElementCustomFieldDefinition : rawArrayElement.getComponents()) {
+            customFieldDefinitions.add(new CustomFieldDefinition(rawArrayElementCustomFieldDefinition));
+        }
+        return customFieldDefinitions;
     }
 
     /**

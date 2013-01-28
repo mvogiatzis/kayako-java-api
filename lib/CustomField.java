@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 /**
  * The type Custom field.
+ *
  * @author Rajat Garg
  * @package lib
  * @copyright Copyright (c) 2001-2012, Kayako
@@ -171,7 +172,8 @@ public class CustomField extends KEntity {
         if (this.definition != null && !refresh) {
             return this.definition;
         }
-        return new CustomFieldDefinition(CustomFieldDefinition.getAll(CustomFieldDefinition.getController()).filterByComponentAttribute("fieldname", this.getName()).getComponents().get(0));
+        this.definition = new CustomFieldDefinition(CustomFieldDefinition.getAll(CustomFieldDefinition.getController()).filterByComponentAttribute("fieldname", this.getName()).getComponents().get(0));
+        return this.definition;
     }
 
     /**
@@ -291,10 +293,20 @@ public class CustomField extends KEntity {
         return this.getDefinition().getOptionById(id);
     }
 
+    /**
+     * Gets object xml name.
+     *
+     * @return the object xml name
+     */
     public static String getObjectXmlName() {
         return objectXmlName;
     }
 
+    /**
+     * Sets object xml name.
+     *
+     * @param objectXmlName the object xml name
+     */
     public static void setObjectXmlName(String objectXmlName) {
         CustomField.objectXmlName = objectXmlName;
     }
@@ -313,6 +325,11 @@ public class CustomField extends KEntity {
 
     }
 
+    /**
+     * Build hash map.
+     *
+     * @return the hash map
+     */
     public HashMap<String, String> buildHashMap() {
         return buildHashMap(false);
     }
