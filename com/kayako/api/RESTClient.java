@@ -10,7 +10,7 @@ package com.kayako.api;
 
  */
 
-import com.kayako.api.tld.Base64;
+import com.kayako.api.tpl.Base64;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
