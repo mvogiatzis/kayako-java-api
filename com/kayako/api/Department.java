@@ -1,5 +1,12 @@
 package com.kayako.api;
 
+import com.kayako.api.exception.KayakoException;
+import com.kayako.api.rest.KEntity;
+import com.kayako.api.rest.RawArrayElement;
+import com.kayako.api.ticket.Ticket;
+import com.kayako.api.user.UserGroup;
+import com.kayako.api.util.Helper;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -177,7 +184,7 @@ public class Department extends KEntity {
      * Gets parent department.
      *
      * @return the parent department
-     * @throws KayakoException the kayako exception
+     * @throws com.kayako.api.exception.KayakoException the kayako exception
      */
     public Department getParentDepartment() throws KayakoException {
         return this.getParentDepartment(false);
