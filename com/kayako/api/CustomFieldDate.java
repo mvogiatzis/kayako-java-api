@@ -19,7 +19,7 @@ public class CustomFieldDate extends CustomField {
      * @var Timestamp
      */
     private Timestamp timestamp;
-    static String objectXmlName = "field";
+    protected static String objectXmlName = "field";
 
     /**
      * Instantiates a new Custom field date.

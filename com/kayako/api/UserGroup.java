@@ -14,8 +14,8 @@ import java.util.HashMap;
  */
 public class UserGroup extends KEntity {
 
-    final static String TYPE_REGISTERED = "registered";
-    final static String TYPE_GUEST = "guest";
+    public final static String TYPE_REGISTERED = "registered";
+    public final static String TYPE_GUEST = "guest";
 
     /**
      * The Controller.

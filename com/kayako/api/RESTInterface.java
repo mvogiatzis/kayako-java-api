@@ -22,19 +22,19 @@ public interface RESTInterface {
     /**
      * The constant METHOD_GET.
      */
-    final static String METHOD_GET = "GET";
+    public final static String METHOD_GET = "GET";
     /**
      * The constant METHOD_POST.
      */
-    final static String METHOD_POST = "POST";
+    public final static String METHOD_POST = "POST";
     /**
      * The constant METHOD_PUT.
      */
-    final static String METHOD_PUT = "PUT";
+    public final static String METHOD_PUT = "PUT";
     /**
      * The constant METHOD_DELETE.
      */
-    final static String METHOD_DELETE = "DELETE";
+    public final static String METHOD_DELETE = "DELETE";
 
     /**
      * Initialize rEST interface.

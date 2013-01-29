@@ -13,8 +13,8 @@ import java.util.HashMap;
  */
 public class UserOrganization extends KEntity {
 
-    static final String TYPE_RESTRICTED = "restricted";
-    static final String TYPE_SHARED = "shared";
+    public static final String TYPE_RESTRICTED = "restricted";
+    public static final String TYPE_SHARED = "shared";
 
     /**
      * The Controller.

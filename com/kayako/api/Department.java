@@ -14,8 +14,8 @@ import java.util.HashMap;
  */
 public class Department extends KEntity {
 
-    static final String TYPE_PUBLIC = "public";
-    static final String TYPE_PRIVATE = "private";
+    public static final String TYPE_PUBLIC = "public";
+    public static final String TYPE_PRIVATE = "private";
     /**
      * App a department can be associated with - Tickets.
      *

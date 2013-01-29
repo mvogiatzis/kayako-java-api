@@ -18,35 +18,35 @@ public class TicketTimeTrack extends KEntity {
      *
      * @var int
      */
-    static final int COLOR_YELLOW = 1;
+    public static final int COLOR_YELLOW = 1;
 
     /**
      * Color of time track - purple.
      *
      * @var int
      */
-    static final int COLOR_PURPLE = 2;
+    public static final int COLOR_PURPLE = 2;
 
     /**
      * Color of time track - blue.
      *
      * @var int
      */
-    static final int COLOR_BLUE = 3;
+    public static final int COLOR_BLUE = 3;
 
     /**
      * Color of time track - green.
      *
      * @var int
      */
-    static final int COLOR_GREEN = 4;
+    public static final int COLOR_GREEN = 4;
 
     /**
      * Color of time track - red.
      *
      * @var int
      */
-    static final int COLOR_RED = 5;
+    public static final int COLOR_RED = 5;
 
     /**
      * The Controller.

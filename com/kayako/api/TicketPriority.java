@@ -13,8 +13,8 @@ import java.util.HashMap;
  */
 public class TicketPriority extends KEntity {
 
-    static final String TYPE_PUBLIC = "public";
-    static final String TYPE_PRIVATE = "private";
+    public static final String TYPE_PUBLIC = "public";
+    public static final String TYPE_PRIVATE = "private";
 
     /**
      * The Controller.

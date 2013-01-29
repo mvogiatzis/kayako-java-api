@@ -13,8 +13,8 @@ import java.util.HashMap;
  * @link http ://www.kayako.com
  */
 public class User extends KEntity {
-    static final String ROLE_USER = "user";
-    static final int DEFAULT_MAX_USERS = 1000;
+    public static final String ROLE_USER = "user";
+    public static final int DEFAULT_MAX_USERS = 1000;
     /**
      * The constant ROLE_MANAGER.
      */
