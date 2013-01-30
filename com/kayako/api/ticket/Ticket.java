@@ -1,6 +1,6 @@
 package com.kayako.api.ticket;
 
-import com.kayako.api.*;
+import com.kayako.api.Department;
 import com.kayako.api.customfield.CustomFieldGroup;
 import com.kayako.api.exception.KayakoException;
 import com.kayako.api.rest.KEntityCustom;

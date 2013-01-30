@@ -10,11 +10,11 @@ package com.kayako.api.exception;
  * @link http ://www.kayako.com
  */
 public class KayakoException extends Exception {
-    KayakoException() {
+    public KayakoException() {
         this("Generic Exception");
     }
 
-    KayakoException(String str) {
+    public KayakoException(String str) {
         super(str);
     }
 

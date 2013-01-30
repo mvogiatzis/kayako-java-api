@@ -12,11 +12,7 @@ package com.kayako.api.tpl;/*
  *  $Id: BomStrippingInputStreamReader.java 15333 2012-02-07 13:18:33Z ian_roberts $
  */
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.nio.CharBuffer;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;

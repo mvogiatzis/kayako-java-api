@@ -1,9 +1,9 @@
 package com.kayako.api.user;
 
-import com.kayako.api.util.Helper;
-import com.kayako.api.rest.KEntity;
 import com.kayako.api.exception.KayakoException;
+import com.kayako.api.rest.KEntity;
 import com.kayako.api.rest.RawArrayElement;
+import com.kayako.api.util.Helper;
 
 import java.util.ArrayList;
 import java.util.HashMap;

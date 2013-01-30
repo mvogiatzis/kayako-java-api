@@ -1,9 +1,9 @@
 package com.kayako.api.customfield;
 
-import com.kayako.api.util.Helper;
 import com.kayako.api.exception.KayakoException;
 import com.kayako.api.rest.RawArrayElement;
 import com.kayako.api.tpl.Base64;
+import com.kayako.api.util.Helper;
 
 import java.io.File;
 import java.io.IOException;
