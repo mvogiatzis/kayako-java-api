@@ -1,1 +1,10 @@
-lib
+com.kayako.api
+com.kayako.api.configuration
+com.kayako.api.customfield
+com.kayako.api.exception
+com.kayako.api.rest
+com.kayako.api.staff
+com.kayako.api.ticket
+com.kayako.api.tpl
+com.kayako.api.user
+com.kayako.api.util

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_javasdk" default="compile.module.javasdk">
+  <dirname property="module.javasdk.basedir" file="${ant.file.module_javasdk}"/>
+  
+  <property name="module.jdk.home.javasdk" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.javasdk" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.javasdk" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.javasdk" value="${compiler.args}"/>
+  
+  <property name="javasdk.output.dir" value="${module.javasdk.basedir}/out/production/JavaSDK"/>
+  <property name="javasdk.testoutput.dir" value="${module.javasdk.basedir}/out/test/JavaSDK"/>
+  
+  <path id="javasdk.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="javasdk.module.production.classpath">
+    <path refid="${module.jdk.classpath.javasdk}"/>
+  </path>
+  
+  <path id="javasdk.runtime.production.module.classpath">
+    <pathelement location="${javasdk.output.dir}"/>
+  </path>
+  
+  <path id="javasdk.module.classpath">
+    <path refid="${module.jdk.classpath.javasdk}"/>
+    <pathelement location="${javasdk.output.dir}"/>
+  </path>
+  
+  <path id="javasdk.runtime.module.classpath">
+    <pathelement location="${javasdk.testoutput.dir}"/>
+    <pathelement location="${javasdk.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.javasdk">
+    <patternset refid="ignored.files"/>
+    <exclude name="Doc/**"/>
+    <exclude name=".idea/**"/>
+    <exclude name="out/**"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.javasdk">
+    <patternset refid="excluded.from.module.javasdk"/>
+  </patternset>
+  
+  <path id="javasdk.module.sourcepath">
+    <dirset dir="${module.javasdk.basedir}/../../workspace">
+      <include name="JavaSDK"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.javasdk" depends="compile.module.javasdk.production,compile.module.javasdk.tests" description="Compile module JavaSDK"/>
+  
+  <target name="compile.module.javasdk.production" depends="register.custom.compilers" description="Compile module JavaSDK; production classes">
+    <mkdir dir="${javasdk.output.dir}"/>
+    <javac2 destdir="${javasdk.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.javasdk}/javac">
+      <compilerarg line="${compiler.args.javasdk}"/>
+      <bootclasspath refid="javasdk.module.bootclasspath"/>
+      <classpath refid="javasdk.module.production.classpath"/>
+      <src refid="javasdk.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.javasdk"/>
+    </javac2>
+    
+    <copy todir="${javasdk.output.dir}">
+      <fileset dir="${module.javasdk.basedir}">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.javasdk.tests" depends="register.custom.compilers,compile.module.javasdk.production" description="compile module JavaSDK; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.javasdk" description="cleanup module">
+    <delete dir="${javasdk.output.dir}"/>
+    <delete dir="${javasdk.testoutput.dir}"/>
+  </target>
+</project>
