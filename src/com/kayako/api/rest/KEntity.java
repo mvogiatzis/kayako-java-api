@@ -1,7 +1,6 @@
 package com.kayako.api.rest;
 
-import com.kayako.api.configuration.ConfigurationFactory;
-import com.kayako.api.configuration.ConfigurationFactoryInterface;
+import com.kayako.api.configuration.Configuration;
 import com.kayako.api.exception.KayakoException;
 
 import java.util.ArrayList;
@@ -43,28 +42,7 @@ abstract public class KEntity {
      */
     public static final String FILES_DATA_NAME = "_files";
 
-    static ConfigurationFactoryInterface configurationFactory;
-
-    /**
-     * Gets configuration factory.
-     *
-     * @return the configuration factory
-     */
-    public static ConfigurationFactoryInterface getConfigurationFactory() {
-        if (configurationFactory == null) {
-            configurationFactory = new ConfigurationFactory();
-        }
-        return configurationFactory;
-    }
-
-    /**
-     * Sets configuration factory.
-     *
-     * @param configurationFactory the configuration factory
-     */
-    public static void setConfigurationFactory(ConfigurationFactoryInterface configurationFactory) {
-        KEntity.configurationFactory = configurationFactory;
-    }
+    static Configuration configuration;
 
     static String getController() {
         return controller;
@@ -85,7 +63,8 @@ abstract public class KEntity {
      * @param controller the controller
      * @param id         the id
      * @return the raw array element
-     * @throws com.kayako.api.exception.KayakoException the kayako exception
+     * @throws com.kayako.api.exception.KayakoException
+     *          the kayako exception
      */ //These functions will return RawArrayElement, similar functions will be written in SubClasses to use these functions
     public static RawArrayElement get(String controller, int id) throws KayakoException {
         ArrayList<String> parameters = new ArrayList<String>();
@@ -204,7 +183,7 @@ abstract public class KEntity {
     public static RawArrayElement getAll(String controller, ArrayList<String> searchParams) {
         RawArrayElement rawArrayElement;
 
-        rawArrayElement = new RESTClient().initialize(getConfigurationFactory().getConfiguration()).get(controller, searchParams);
+        rawArrayElement = new RESTClient().initialize(Configuration.getConfiguration()).get(controller, searchParams);
         return rawArrayElement;
     }
 
@@ -306,7 +285,7 @@ abstract public class KEntity {
      * @return the rEST client
      */
     public static RESTInterface getRESTClient() {
-        return getConfigurationFactory().getConfiguration().getRestClient();
+        return Configuration.getConfiguration().getRestClient();
 
     }
 

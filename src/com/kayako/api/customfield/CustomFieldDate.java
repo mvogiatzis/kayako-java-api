@@ -1,5 +1,6 @@
 package com.kayako.api.customfield;
 
+import com.kayako.api.configuration.Configuration;
 import com.kayako.api.exception.KayakoException;
 import com.kayako.api.rest.RawArrayElement;
 import com.kayako.api.util.Helper;
@@ -61,7 +62,7 @@ public class CustomFieldDate extends CustomField {
      * @return the date
      */
     public String getDate() {
-        return getDate(getConfigurationFactory().getConfiguration().getDateFormat());
+        return getDate(Configuration.getConfiguration().getDateFormat());
     }
 
     /**

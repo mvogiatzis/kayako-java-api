@@ -1,6 +1,6 @@
 package com.kayako.api.util;
 
-import com.kayako.api.rest.KEntity;
+import com.kayako.api.configuration.Configuration;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -99,7 +99,7 @@ public class Helper {
      * @return the date string
      */
     public static String getDateString(long timeStamp) {
-        return getDateString(timeStamp, KEntity.getConfigurationFactory().getConfiguration().getDateFormat());
+        return getDateString(timeStamp, Configuration.getConfiguration().getDateFormat());
     }
 
     /**
@@ -110,7 +110,7 @@ public class Helper {
      * @throws ParseException the parse exception
      */
     public static long getTimeStampFromDateString(String dateString) throws ParseException {
-        return getTimeStampFromDateString(dateString, KEntity.getConfigurationFactory().getConfiguration().getDateFormat());
+        return getTimeStampFromDateString(dateString, Configuration.getConfiguration().getDateFormat());
     }
 
     /**
