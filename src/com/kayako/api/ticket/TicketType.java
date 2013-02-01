@@ -1,6 +1,7 @@
 package com.kayako.api.ticket;
 
 import com.kayako.api.Department;
+import com.kayako.api.TypeAccess;
 import com.kayako.api.exception.KayakoException;
 import com.kayako.api.rest.KEntity;
 import com.kayako.api.rest.RawArrayElement;
@@ -20,9 +21,6 @@ import java.util.HashMap;
  * @link http ://www.kayako.com
  */
 public class TicketType extends KEntity {
-
-    public final String TYPE_PUBLIC = "public";
-    public final String TYPE_PRIVATE = "private";
 
     /**
      * The Controller.
@@ -79,14 +77,7 @@ public class TicketType extends KEntity {
      */
     protected String displayIcon;
 
-    /**
-     * Type of this ticket type.
-     *
-     * @apiField
-     * @var string
-     * @see ::TYPE constants.
-     */
-    protected String type;
+    protected TypeAccess type;
 
     /**
      * If this ticket type is visible to specific user groups only.
@@ -155,7 +146,7 @@ public class TicketType extends KEntity {
      *
      * @return the type
      */
-    public String getType() {
+    public TypeAccess getType() {
 
         return type;
     }
@@ -165,7 +156,7 @@ public class TicketType extends KEntity {
      *
      * @param type the type
      */
-    public void setType(String type) {
+    public void setType(TypeAccess type) {
         this.type = type;
     }
 
@@ -329,7 +320,8 @@ public class TicketType extends KEntity {
      * Gets user groups.
      *
      * @return the user groups
-     * @throws com.kayako.api.exception.KayakoException the kayako exception
+     * @throws com.kayako.api.exception.KayakoException
+     *          the kayako exception
      */
     public HashMap<Integer, UserGroup> getUserGroups() throws KayakoException {
         return getUserGroups(false);
@@ -453,7 +445,7 @@ public class TicketType extends KEntity {
             } else if (elementName.equals("displayicon")) {
                 this.setDisplayIcon(component.getContent());
             } else if (elementName.equals("type")) {
-                this.setType(component.getContent());
+                this.setType(TypeAccess.getEnum(component.getContent()));
             } else if (elementName.equals("uservisibilitycustom")) {
                 if (Helper.parseInt(component.getContent()) == 1) {
                     this.setUserVisibilityCustom(true);

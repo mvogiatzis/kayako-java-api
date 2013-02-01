@@ -1,6 +1,7 @@
 package com.kayako.api.ticket;
 
 import com.kayako.api.Department;
+import com.kayako.api.TypeAccess;
 import com.kayako.api.exception.KayakoException;
 import com.kayako.api.rest.KEntity;
 import com.kayako.api.rest.RawArrayElement;
@@ -20,10 +21,6 @@ import java.util.HashMap;
  * @link http ://www.kayako.com
  */
 public class TicketStatus extends KEntity {
-
-    public final String TYPE_PUBLIC = "public";
-    public final String TYPE_PRIVATE = "private";
-
     /**
      * The Controller.
      */
@@ -133,14 +130,8 @@ public class TicketStatus extends KEntity {
      * @var string
      */
     protected String color;
-    /**
-     * Type of ticket status.
-     *
-     * @apiField
-     * @var string
-     * @see ::TYPE constants.
-     */
-    protected String type;
+
+    protected TypeAccess type;
 
     /**
      * If enabled, Kayako will automatically clear the due time for a ticket when the ticket status changes to this status.
@@ -400,7 +391,8 @@ public class TicketStatus extends KEntity {
      * Gets staff groups.
      *
      * @return the staff groups
-     * @throws com.kayako.api.exception.KayakoException the kayako exception
+     * @throws com.kayako.api.exception.KayakoException
+     *          the kayako exception
      */
     public HashMap<Integer, StaffGroup> getStaffGroups() throws KayakoException {
         return getStaffGroups(false);
@@ -499,7 +491,7 @@ public class TicketStatus extends KEntity {
      *
      * @return the type
      */
-    public String getType() {
+    public TypeAccess getType() {
         return type;
     }
 
@@ -508,8 +500,9 @@ public class TicketStatus extends KEntity {
      *
      * @param type the type
      */
-    public void setType(String type) {
+    public TicketStatus setType(TypeAccess type) {
         this.type = type;
+        return this;
     }
 
     /**
@@ -668,7 +661,7 @@ public class TicketStatus extends KEntity {
             } else if (elementName.equals("displayicon")) {
                 this.setDisplayIcon(component.getContent());
             } else if (elementName.equals("type")) {
-                this.setType(component.getContent());
+                this.setType(TypeAccess.getEnum(component.getContent()));
             } else if (elementName.equals("statuscolor")) {
                 this.setColor(component.getContent());
             } else if (elementName.equals("statusbgcolor")) {
