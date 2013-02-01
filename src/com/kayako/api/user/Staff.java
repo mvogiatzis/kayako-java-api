@@ -1,4 +1,4 @@
-package com.kayako.api.staff;
+package com.kayako.api.user;
 
 import com.kayako.api.Department;
 import com.kayako.api.exception.KayakoException;

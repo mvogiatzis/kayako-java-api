@@ -2,6 +2,8 @@ package com.kayako.api.rest;
 
 import com.kayako.api.configuration.Configuration;
 import com.kayako.api.exception.KayakoException;
+import com.kayako.api.util.library.RESTClient;
+import com.kayako.api.util.library.RESTInterface;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -5,7 +5,7 @@ import com.kayako.api.customfield.CustomFieldGroup;
 import com.kayako.api.exception.KayakoException;
 import com.kayako.api.rest.KEntityCustom;
 import com.kayako.api.rest.RawArrayElement;
-import com.kayako.api.staff.Staff;
+import com.kayako.api.user.Staff;
 import com.kayako.api.user.User;
 import com.kayako.api.user.UserOrganization;
 import com.kayako.api.util.Helper;

@@ -5,7 +5,7 @@ import com.kayako.api.TypeAccess;
 import com.kayako.api.exception.KayakoException;
 import com.kayako.api.rest.KEntity;
 import com.kayako.api.rest.RawArrayElement;
-import com.kayako.api.staff.StaffGroup;
+import com.kayako.api.user.StaffGroup;
 import com.kayako.api.util.Helper;
 
 import java.util.ArrayList;

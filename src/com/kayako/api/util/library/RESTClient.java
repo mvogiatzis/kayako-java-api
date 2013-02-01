@@ -1,4 +1,4 @@
-package com.kayako.api.rest;
+package com.kayako.api.util.library;
 
 /**
  * @author Kayako Support System Pvt Ltd
@@ -12,6 +12,8 @@ package com.kayako.api.rest;
 
 import com.kayako.api.configuration.Configuration;
 import com.kayako.api.exception.KayakoException;
+import com.kayako.api.rest.RawArrayElement;
+import com.kayako.api.rest.XMLHandler;
 import net.iharder.Base64;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;

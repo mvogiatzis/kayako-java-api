@@ -1,7 +1,7 @@
 package com.kayako.api.configuration;
 
-import com.kayako.api.rest.RESTClient;
-import com.kayako.api.rest.RESTInterface;
+import com.kayako.api.util.library.RESTClient;
+import com.kayako.api.util.library.RESTInterface;
 
 /**
  * The type Configuration.

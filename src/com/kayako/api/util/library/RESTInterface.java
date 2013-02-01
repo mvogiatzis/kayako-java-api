@@ -9,9 +9,10 @@
 
  */
 
-package com.kayako.api.rest;
+package com.kayako.api.util.library;
 
 import com.kayako.api.configuration.Configuration;
+import com.kayako.api.rest.RawArrayElement;
 
 import java.util.ArrayList;
 import java.util.HashMap;
