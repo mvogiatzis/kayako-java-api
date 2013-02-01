@@ -10,8 +10,17 @@ package com.kayako.api;
  * @link http ://www.kayako.com
  */
 public enum AppEnum {
-    TICKETS, LIVE_CHAT;
+    /**
+     * The TICKETS.
+     */TICKETS, /**
+     * The LIVE _ cHAT.
+     */LIVE_CHAT;
 
+    /**
+     * Gets string.
+     *
+     * @return the string
+     */
     public String getString() {
         switch (this) {
             case TICKETS:
@@ -24,6 +33,12 @@ public enum AppEnum {
 
     }
 
+    /**
+     * Gets enum.
+     *
+     * @param access the access
+     * @return the enum
+     */
     public static AppEnum getEnum(String access) {
         if (access.equalsIgnoreCase("tickets")) {
             return TICKETS;

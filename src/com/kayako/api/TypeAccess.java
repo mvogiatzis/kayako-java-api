@@ -10,8 +10,17 @@ package com.kayako.api;
  * @link http ://www.kayako.com
  */
 public enum TypeAccess {
-    PUBLIC, PRIVATE;
+    /**
+     * The PUBLIC.
+     */PUBLIC, /**
+     * The PRIVATE.
+     */PRIVATE;
 
+    /**
+     * Gets string.
+     *
+     * @return the string
+     */
     public String getString() {
         switch (this) {
             case PUBLIC:
@@ -24,6 +33,12 @@ public enum TypeAccess {
 
     }
 
+    /**
+     * Gets enum.
+     *
+     * @param access the access
+     * @return the enum
+     */
     public static TypeAccess getEnum(String access) {
         if (access.equalsIgnoreCase("public")) {
             return PUBLIC;
