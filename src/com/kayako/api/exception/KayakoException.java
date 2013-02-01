@@ -3,7 +3,7 @@ package com.kayako.api.exception;
 /**
  * The type Kayako exception.
  *
- * @author Rajat Garg
+ * @author Kayako Support System Pvt Ltd
  * @package api
  * @copyright Copyright (c) 2001-2012, Kayako
  * @license http ://www.kayako.com/license

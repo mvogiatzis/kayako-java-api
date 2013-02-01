@@ -6,7 +6,7 @@ import com.kayako.api.rest.RawArrayElement;
 /**
  * The type Custom field factory.
  *
- * @author Rajat Garg
+ * @author Kayako Support System Pvt Ltd
  * @package api
  * @copyright Copyright (c) 2001-2012, Kayako
  * @license http ://www.kayako.com/license

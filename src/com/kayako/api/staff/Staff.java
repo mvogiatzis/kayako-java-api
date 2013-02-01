@@ -13,7 +13,7 @@ import java.util.HashMap;
 /**
  * The type Staff.
  *
- * @author Rajat Garg
+ * @author Kayako Support System Pvt Ltd
  * @package api
  * @copyright Copyright (c) 2001-2012, Kayako
  * @license http ://www.kayako.com/license

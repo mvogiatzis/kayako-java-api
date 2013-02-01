@@ -13,29 +13,13 @@ import java.util.HashMap;
 /**
  * The type Department.
  *
- * @author Rajat Garg
+ * @author Kayako Support System Pvt Ltd
  * @package api
  * @copyright Copyright (c) 2001-2012, Kayako
  * @license http ://www.kayako.com/license
  * @link http ://www.kayako.com
  */
 public class Department extends KEntity {
-
-    public static final String TYPE_PUBLIC = "public";
-    public static final String TYPE_PRIVATE = "private";
-    /**
-     * App a department can be associated with - Tickets.
-     *
-     * @var string
-     */
-    public static final String APP_TICKETS = "tickets";
-
-    /**
-     * App a department can be associated with - Livechat.
-     *
-     * @var string
-     */
-    public static final String APP_LIVECHAT = "tickets";
 
     /**
      * The Controller.
@@ -54,7 +38,7 @@ public class Department extends KEntity {
      * Instantiates a new Department.
      */
     public Department() {
-        this.setType(TYPE_PUBLIC);
+        this.setType(TypeAccess.PUBLIC);
     }
 
     /**
@@ -63,7 +47,7 @@ public class Department extends KEntity {
      * @param title the title
      */
     public Department(String title) {
-        this(title, TYPE_PUBLIC);
+        this(title, TypeAccess.PUBLIC);
     }
 
     /**
@@ -72,8 +56,8 @@ public class Department extends KEntity {
      * @param title the title
      * @param type  the type
      */
-    public Department(String title, String type) {
-        this(title, type, APP_TICKETS);
+    public Department(String title, TypeAccess type) {
+        this(title, type, AppEnum.TICKETS);
     }
 
     /**
@@ -83,7 +67,7 @@ public class Department extends KEntity {
      * @param type  the type
      * @param app   the app
      */
-    public Department(String title, String type, String app) {
+    public Department(String title, TypeAccess type, AppEnum app) {
         this.setTitle(title);
         this.setType(type);
         this.setApp(app);
@@ -154,14 +138,7 @@ public class Department extends KEntity {
      */
     private HashMap<Integer, UserGroup> userGroups = new HashMap<Integer, UserGroup>();
 
-    /**
-     * Type of department.
-     *
-     * @apiField
-     * @var string
-     * @see ::TYPE constants.
-     */
-    protected String type;
+    protected TypeAccess type;
 
     /**
      * Department app.
@@ -170,7 +147,7 @@ public class Department extends KEntity {
      * @var int
      */
 
-    protected String app;
+    protected AppEnum app;
 
     /**
      * Parent department.
@@ -184,7 +161,8 @@ public class Department extends KEntity {
      * Gets parent department.
      *
      * @return the parent department
-     * @throws com.kayako.api.exception.KayakoException the kayako exception
+     * @throws com.kayako.api.exception.KayakoException
+     *          the kayako exception
      */
     public Department getParentDepartment() throws KayakoException {
         return this.getParentDepartment(false);
@@ -446,7 +424,7 @@ public class Department extends KEntity {
      *
      * @return the type
      */
-    public String getType() {
+    public TypeAccess getType() {
         return type;
     }
 
@@ -456,7 +434,7 @@ public class Department extends KEntity {
      * @param type the type
      * @return the type
      */
-    public Department setType(String type) {
+    public Department setType(TypeAccess type) {
         this.type = type;
         return this;
     }
@@ -525,7 +503,7 @@ public class Department extends KEntity {
      *
      * @return the app
      */
-    public String getApp() {
+    public AppEnum getApp() {
         return app;
     }
 
@@ -535,7 +513,7 @@ public class Department extends KEntity {
      * @param app the app
      * @return the app
      */
-    public Department setApp(String app) {
+    public Department setApp(AppEnum app) {
         this.app = app;
         return this;
     }
@@ -594,7 +572,7 @@ public class Department extends KEntity {
      * @return Department department
      */
     public Department createSubDepartment(String title) {
-        return this.createSubDepartment(title, Department.TYPE_PUBLIC);
+        return this.createSubDepartment(title, TypeAccess.PUBLIC);
     }
 
     /**
@@ -644,7 +622,7 @@ public class Department extends KEntity {
      * @param type  the type
      * @return the department
      */
-    public Department createSubDepartment(String title, String type) {
+    public Department createSubDepartment(String title, TypeAccess type) {
         return new Department(title, type, this.getApp()).setParentDepartment(this);
     }
 
@@ -672,9 +650,9 @@ public class Department extends KEntity {
             } else if (elementName.equals("displayicon")) {
                 this.setDisplayIcon(component.getContent());
             } else if (elementName.equals("type")) {
-                this.setType(component.getContent());
+                this.setType(TypeAccess.getEnum(component.getContent()));
             } else if (elementName.equals("app")) {
-                this.setApp(component.getContent());
+                this.setApp(AppEnum.getEnum(component.getContent()));
             } else if (elementName.equals("uservisibilitycustom")) {
                 if (Helper.parseInt(component.getContent()) == 1) {
                     this.setUserVisibilityCustom(true);
@@ -698,8 +676,8 @@ public class Department extends KEntity {
     public HashMap<String, String> buildHashMap() {
         HashMap<String, String> departmentHashMap = new HashMap<String, String>();
         departmentHashMap.put("title", this.getTitle());
-        departmentHashMap.put("type", this.getType());
-        departmentHashMap.put("app", this.getApp());
+        departmentHashMap.put("type", this.getType().getString());
+        departmentHashMap.put("app", this.getApp().getString());
         departmentHashMap.put("displayorder", Integer.toString(this.getDisplayOrder()));
         departmentHashMap.put("parentdepartmentid", Integer.toString(this.getParentDepartmentId()));
         departmentHashMap.put("uservisibilitycustom", this.isUserVisibilityCustom() ? "1" : "0");
