@@ -1,6 +1,7 @@
 package com.kayako.api.user;
 
 import com.kayako.api.Department;
+import com.kayako.api.SalutationEnum;
 import com.kayako.api.exception.KayakoException;
 import com.kayako.api.rest.KEntity;
 import com.kayako.api.rest.RawArrayElement;
@@ -26,22 +27,7 @@ public class User extends KEntity {
      * The constant ROLE_MANAGER.
      */
     public static final String ROLE_MANAGER = "manager";
-    /**
-     * The constant SALUTATION_MR.
-     */
-    public static final String SALUTATION_MR = "Mr.";
-    /**
-     * The constant SALUTATION_MS.
-     */
-    public static final String SALUTATION_MS = "Ms.";
-    /**
-     * The constant SALUTATION_MRS.
-     */
-    public static final String SALUTATION_MRS = "Mrs.";
-    /**
-     * The constant SALUTATION_DR.
-     */
-    public static final String SALUTATION_DR = "Dr.";
+
     /**
      * The Controller.
      */
@@ -60,10 +46,10 @@ public class User extends KEntity {
     /**
      * Instantiates a new User.
      *
-     * @param name the name
-     * @param email the email
+     * @param name      the name
+     * @param email     the email
      * @param userGroup the user group
-     * @param password the password
+     * @param password  the password
      */
     public User(String name, String email, UserGroup userGroup, String password) {
         this.setFullName(name);
@@ -93,7 +79,7 @@ public class User extends KEntity {
      *
      * @apiField
      * @var string
-     * @see  ::ROLE constants.
+     * @see ::ROLE constants.
      */
     protected String userRole = ROLE_USER;
     /**
@@ -106,9 +92,9 @@ public class User extends KEntity {
      *
      * @apiField
      * @var string
-     * @see  ::SALUTATION constants.
+     * @see ::SALUTATION constants.
      */
-    protected String salutation = "";
+    protected SalutationEnum salutation = null;
 
     /**
      * The User expiry.
@@ -356,7 +342,8 @@ public class User extends KEntity {
      * Gets user group.
      *
      * @return the user group
-     * @throws com.kayako.api.exception.KayakoException the kayako exception
+     * @throws com.kayako.api.exception.KayakoException
+     *          the kayako exception
      */
     public UserGroup getUserGroup() throws KayakoException {
         return this.getUserGroup(false);
@@ -466,7 +453,7 @@ public class User extends KEntity {
      *
      * @return the salutation
      */
-    public String getSalutation() {
+    public SalutationEnum getSalutation() {
         return salutation;
     }
 
@@ -476,7 +463,7 @@ public class User extends KEntity {
      * @param salutation the salutation
      * @return the salutation
      */
-    public User setSalutation(String salutation) {
+    public User setSalutation(SalutationEnum salutation) {
         this.salutation = salutation;
         return this;
     }
@@ -755,7 +742,7 @@ public class User extends KEntity {
      * Gets all.
      *
      * @param startingUserId the starting user id
-     * @param maxItems the max items
+     * @param maxItems       the max items
      * @return the all
      */
     public static RawArrayElement getAll(int startingUserId, int maxItems) {
@@ -799,7 +786,7 @@ public class User extends KEntity {
      * Gets all users.
      *
      * @param startingUserId the starting user id
-     * @param maxItems the max items
+     * @param maxItems       the max items
      * @return the all users
      * @throws KayakoException the kayako exception
      */
@@ -883,7 +870,7 @@ public class User extends KEntity {
             } else if (elementName.equals("userorganizationid")) {
                 this.setUserOrganizationId(Helper.parseInt(component.getContent()));
             } else if (elementName.equals("salutation")) {
-                this.setSalutation(component.getContent());
+                this.setSalutation(SalutationEnum.getEnum(component.getContent()));
             } else if (elementName.equals("userexpiry")) {
                 this.setUserExpiry(Helper.parseInt(component.getContent()));
             } else if (elementName.equals("fullname")) {
@@ -959,7 +946,7 @@ public class User extends KEntity {
         }
         userHashMap.put("email", this.getEmail());
         userHashMap.put("userorganizationid", Integer.toString(this.getUserOrganizationId()));
-        userHashMap.put("salutation", this.getSalutation());
+        userHashMap.put("salutation", this.getSalutation() == null ? "" : this.getSalutation().getString());
         userHashMap.put("designation", this.getDesignation());
         userHashMap.put("phone", this.getPhone());
         userHashMap.put("isenabled", this.isEnabled() ? "1" : "0");
@@ -977,8 +964,8 @@ public class User extends KEntity {
      * Create ticket.
      *
      * @param department the department
-     * @param content the content
-     * @param subject the subject
+     * @param content    the content
+     * @param subject    the subject
      * @return the ticket
      * @throws KayakoException the kayako exception
      */
