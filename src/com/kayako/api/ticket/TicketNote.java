@@ -1,5 +1,6 @@
 package com.kayako.api.ticket;
 
+import com.kayako.api.ColorEnum;
 import com.kayako.api.exception.KayakoException;
 import com.kayako.api.rest.KEntity;
 import com.kayako.api.rest.RawArrayElement;
@@ -21,41 +22,6 @@ import java.util.HashMap;
  * @link http ://www.kayako.com
  */
 public class TicketNote extends KEntity {
-
-    /**
-     * Color of note - yellow.
-     *
-     * @var int
-     */
-    public static final int COLOR_YELLOW = 1;
-
-    /**
-     * Color of note - purple.
-     *
-     * @var int
-     */
-    public static final int COLOR_PURPLE = 2;
-
-    /**
-     * Color of note - blue.
-     *
-     * @var int
-     */
-    public static final int COLOR_BLUE = 3;
-
-    /**
-     * Color of note - green.
-     *
-     * @var int
-     */
-    public static final int COLOR_GREEN = 4;
-
-    /**
-     * Color of note - red.
-     *
-     * @var int
-     */
-    public static final int COLOR_RED = 5;
 
     /**
      * Note type - connected to ticket.
@@ -124,7 +90,7 @@ public class TicketNote extends KEntity {
      *
      * @apiField
      * @var string
-     * @see  ::TYPE static final Stringants.
+     * @see ::TYPE static final Stringants.
      */
     protected String type = TYPE_TICKET;
 
@@ -133,9 +99,9 @@ public class TicketNote extends KEntity {
      *
      * @apiField
      * @var int
-     * @see  ::COLOR static final Stringants.
+     * @see ::COLOR static final Stringants.
      */
-    protected int noteColor;
+    protected ColorEnum noteColor;
 
     /**
      * Identifier of staff user who created this note.
@@ -221,9 +187,9 @@ public class TicketNote extends KEntity {
     /**
      * Instantiates a new Ticket note.
      *
-     * @param ticket the ticket
+     * @param ticket       the ticket
      * @param creatorStaff the creator staff
-     * @param contents the contents
+     * @param contents     the contents
      */
     public TicketNote(Ticket ticket, Staff creatorStaff, String contents) {
         this.setTicket(ticket).setCreatorStaff(creatorStaff).setContents(contents);
@@ -369,7 +335,8 @@ public class TicketNote extends KEntity {
      * Gets user.
      *
      * @return the user
-     * @throws com.kayako.api.exception.KayakoException the kayako exception
+     * @throws com.kayako.api.exception.KayakoException
+     *          the kayako exception
      */
     public User getUser() throws KayakoException {
         return this.getUser(false);
@@ -494,7 +461,7 @@ public class TicketNote extends KEntity {
      *
      * @return the note color
      */
-    public int getNoteColor() {
+    public ColorEnum getNoteColor() {
         return noteColor;
     }
 
@@ -504,7 +471,7 @@ public class TicketNote extends KEntity {
      * @param noteColor the note color
      * @return the note color
      */
-    public TicketNote setNoteColor(int noteColor) {
+    public TicketNote setNoteColor(ColorEnum noteColor) {
         this.noteColor = noteColor;
         return this;
     }
@@ -762,7 +729,7 @@ public class TicketNote extends KEntity {
      * Get ticket note.
      *
      * @param ticketId the ticket id
-     * @param id the id
+     * @param id       the id
      * @return the ticket note
      * @throws KayakoException the kayako exception
      */
@@ -830,7 +797,7 @@ public class TicketNote extends KEntity {
         } else if (this.getType().equals(TYPE_USER_ORGANIZATION)) {
             this.setUserOrganizationId(Helper.parseInt(rawArrayElement.getAttribute("userorganizationid")));
         }
-        this.setNoteColor(Helper.parseInt(rawArrayElement.getAttribute("notecolor")));
+        this.setNoteColor(ColorEnum.getEnum(rawArrayElement.getAttribute("notecolor")));
         this.setCreatorStaffId(Helper.parseInt(rawArrayElement.getAttribute("creatorstaffid")));
         this.setForStaffId(Helper.parseInt(rawArrayElement.getAttribute("forstaffid")));
         this.setCreatorStaffName(rawArrayElement.getAttribute("creatorstaffname"));
@@ -864,7 +831,7 @@ public class TicketNote extends KEntity {
             ticketNoteHashMap.put("fullname", this.getCreatorStaffName());
         }
         ticketNoteHashMap.put("forstaffid", Integer.toString(this.getForStaffId()));
-        ticketNoteHashMap.put("notecolor", Integer.toString(this.getNoteColor()));
+        ticketNoteHashMap.put("notecolor", this.getNoteColor().getString());
         return ticketNoteHashMap;
     }
 
