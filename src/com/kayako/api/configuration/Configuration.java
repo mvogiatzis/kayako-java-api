@@ -31,15 +31,7 @@ public class Configuration {
      */
     private RESTInterface restClient = null;
 
-    /**
-     * Instantiates a new Configuration.
-     *
-     * @param baseUrl   the base url
-     * @param apiKey    the api key
-     * @param secretKey the secret key
-     * @param testMode  the test mode
-     */
-    public Configuration(String baseUrl, String apiKey, String secretKey, Boolean testMode) {
+    private Configuration(String baseUrl, String apiKey, String secretKey, Boolean testMode) {
         //this("http://swift.kayako.com/api/index.php?", "80866fb4-b6e2-6548-a51sfda37894", "ZWJiNTkzYzMtNmEwNS1dfgfdgdfghdhYzhmMWRkNDVkYmY2ZmQwYjU4MjgtYzY0ghfGQ0LWJkZjktNWE3NmViZDRhMmFk");
         this.baseUrl = baseUrl;
         this.apiKey = apiKey;
@@ -47,15 +39,20 @@ public class Configuration {
         this.debug = testMode;
     }
 
-    /**
-     * Instantiates a new Configuration.
-     *
-     * @param baseUrl   the base url
-     * @param apiKey    the api key
-     * @param secretKey the secret key
-     */
-    public Configuration(String baseUrl, String apiKey, String secretKey) {
-        this(baseUrl, apiKey, secretKey, false);
+    public static Configuration init(String baseUrl, String apiKey, String secretKey) {
+        return init(baseUrl, apiKey, secretKey, false);
+    }
+
+    public static Configuration init(String baseUrl, String apiKey, String secretKey, Boolean testMode) {
+        if (configuration == null) {
+            configuration = new Configuration(baseUrl, apiKey, secretKey, testMode);
+        } else {
+            configuration.setApiKey(apiKey);
+            configuration.setBaseUrl(baseUrl);
+            configuration.setSecretKey(secretKey);
+            configuration.setDebug(testMode);
+        }
+        return configuration;
     }
 
     /**

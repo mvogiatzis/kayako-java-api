@@ -23,7 +23,6 @@ public class XMLHandler extends DefaultHandler {
     String currentValue = null;
     private RawArrayElement rawArrayElement = null;
     //private RawArrayElement openElement = null;
-    private Stack<String> elementStack = new Stack<String>();
     private Stack<RawArrayElement> objectStack = new Stack<RawArrayElement>();
 
     /**

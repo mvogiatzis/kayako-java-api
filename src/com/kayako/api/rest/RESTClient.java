@@ -12,8 +12,7 @@ package com.kayako.api.rest;
 
 import com.kayako.api.configuration.Configuration;
 import com.kayako.api.exception.KayakoException;
-import com.kayako.api.tpl.Base64;
-import com.kayako.api.tpl.BomStrippingInputStreamReader;
+import net.iharder.Base64;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
@@ -23,6 +22,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
@@ -197,7 +197,7 @@ public class RESTClient implements RESTInterface {
                 if (conEn != null && conEn.equals("gzip")) {
                     inputStream = new GZIPInputStream(inputStream);
                 }
-                BomStrippingInputStreamReader reader = new BomStrippingInputStreamReader(inputStream, charset);
+                InputStreamReader reader = new InputStreamReader(inputStream, charset);
 
                 InputSource is = new InputSource(reader);
                 is.setEncoding(charset);
@@ -212,13 +212,6 @@ public class RESTClient implements RESTInterface {
                 } catch (ParserConfigurationException e) {
                     e.printStackTrace();
                 } catch (SAXException e) {
-                    reader.reset();
-                    String firstLine = "";
-                    String s = "";
-                    while ((s = reader.readLine()) != null) {
-                        firstLine += s;
-                    }
-                    log.warning(firstLine);
                     e.printStackTrace();
                 }
                 inputStream.close();
@@ -234,21 +227,7 @@ public class RESTClient implements RESTInterface {
                 // Server returned HTTP error code.
                 log.warning("Not HTTP 200, But Code : " + connection.getResponseCode() + "Response Message : " + connection.getResponseMessage());
                 return null;
-                //TODO - this portion is to be reconsidered
-/*                InputStream inputStream = (InputStream) connection.getContent();
-                String conEn = connection.getContentEncoding();
-                if (conEn != null && conEn.equals("gzip")) {
-                    inputStream = new GZIPInputStream(inputStream);
-                }
-                InputStreamReader reader = new InputStreamReader(inputStream, charset);
-
-                InputSource is = new InputSource(reader);
-                is.setEncoding(charset);
-                BufferedReader bReader = new BufferedReader(new InputStreamReader(connection.getInputStream(), charset));
-                String line;
-                while ((line = bReader.readLine()) != null) {
-                    rawArrayElement.setContent(rawArrayElement.getContent() + "\n" + line);
-                }*/
+                //TODO - this portion can be modified if REST api sends better responses on error
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -262,8 +241,6 @@ public class RESTClient implements RESTInterface {
     private String getRequestData(String controller, String method, ArrayList<String> parameters, HashMap<String, String> data) throws UnsupportedEncodingException {
         Random rand = new Random();
         int salt = rand.nextInt();
-        //for debugging purpose, keep salt fixed and check the signature
-        //salt = 1244;
         String signature = "";
         String url;
         try {
