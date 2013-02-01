@@ -68,9 +68,9 @@ public class Department extends KEntity {
      * @param app   the app
      */
     public Department(String title, TypeAccess type, AppEnum app) {
-        this.setTitle(title);
-        this.setType(type);
-        this.setApp(app);
+        this.title = title;
+        this.type = type;
+        this.app = app;
     }
 
     /**

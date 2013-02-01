@@ -1,5 +1,6 @@
 package com.kayako.api.ticket;
 
+import com.kayako.api.TypeAccess;
 import com.kayako.api.exception.KayakoException;
 import com.kayako.api.rest.KEntity;
 import com.kayako.api.rest.RawArrayElement;
@@ -11,6 +12,7 @@ import java.util.HashMap;
 
 /**
  * The type Ticket priority.
+ *
  * @author Kayako Support System Pvt Ltd
  * @package api
  * @copyright Copyright (c) 2001-2012, Kayako
@@ -18,9 +20,6 @@ import java.util.HashMap;
  * @link http ://www.kayako.com
  */
 public class TicketPriority extends KEntity {
-
-    public static final String TYPE_PUBLIC = "public";
-    public static final String TYPE_PRIVATE = "private";
 
     /**
      * The Controller.
@@ -72,9 +71,9 @@ public class TicketPriority extends KEntity {
      *
      * @apiField
      * @var string
-     * @see  ::TYPE constants.
+     * @see ::TYPE constants.
      */
-    protected String type;
+    protected TypeAccess type;
 
     /**
      * If this ticket type is visible to specific user groups only.
@@ -272,7 +271,7 @@ public class TicketPriority extends KEntity {
      *
      * @return the type
      */
-    public String getType() {
+    public TypeAccess getType() {
         return type;
     }
 
@@ -282,7 +281,7 @@ public class TicketPriority extends KEntity {
      * @param type the type
      * @return the type
      */
-    public TicketPriority setType(String type) {
+    public TicketPriority setType(TypeAccess type) {
         this.type = type;
         return this;
     }
@@ -311,7 +310,8 @@ public class TicketPriority extends KEntity {
      * Gets user groups.
      *
      * @return the user groups
-     * @throws com.kayako.api.exception.KayakoException the kayako exception
+     * @throws com.kayako.api.exception.KayakoException
+     *          the kayako exception
      */
     public HashMap<Integer, UserGroup> getUserGroups() throws KayakoException {
         return getUserGroups(false);
@@ -428,7 +428,6 @@ public class TicketPriority extends KEntity {
         return getAll(controller);
     }
 
-
     //this function will populate the data of the ticket priority instance when supplied with RawArrayElement derived from the xml
     @Override
     public TicketPriority populate(RawArrayElement rawArrayElement) throws KayakoException {
@@ -451,7 +450,7 @@ public class TicketPriority extends KEntity {
             } else if (elementName.equals("displayicon")) {
                 this.setDisplayIcon(component.getContent());
             } else if (elementName.equals("type")) {
-                this.setType(component.getContent());
+                this.setType(TypeAccess.getEnum(component.getContent()));
             } else if (elementName.equals("uservisibilitycustom")) {
                 if (Helper.parseInt(component.getContent()) == 1) {
                     this.setUserVisibilityCustom(true);
