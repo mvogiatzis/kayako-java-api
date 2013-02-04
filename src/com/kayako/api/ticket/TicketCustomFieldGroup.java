@@ -1,6 +1,7 @@
 package com.kayako.api.ticket;
 
 import com.kayako.api.customfield.CustomFieldGroup;
+import com.kayako.api.enums.CustomFieldGroupTypeEnum;
 import com.kayako.api.exception.KayakoException;
 import com.kayako.api.rest.RawArrayElement;
 
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 
 /**
  * The type Ticket custom field group.
+ *
  * @author Kayako Support System Pvt Ltd
  * @package api
  * @copyright Copyright (c) 2001-2012, Kayako
@@ -30,12 +32,13 @@ public class TicketCustomFieldGroup extends CustomFieldGroup {
      * Instantiates a new Ticket custom field group.
      *
      * @param ticketId the ticket id
-     * @param element the raw array element
-     * @throws com.kayako.api.exception.KayakoException the kayako exception
+     * @param element  the raw array element
+     * @throws com.kayako.api.exception.KayakoException
+     *          the kayako exception
      */
     public TicketCustomFieldGroup(int ticketId, RawArrayElement element) throws KayakoException {
         this.ticketId = ticketId;
-        this.type = TYPE_TICKET;
+        this.type = CustomFieldGroupTypeEnum.TICKET;
         this.populate(element);
     }
 
@@ -46,7 +49,7 @@ public class TicketCustomFieldGroup extends CustomFieldGroup {
      */
     public TicketCustomFieldGroup(int ticketId) {
         this.ticketId = ticketId;
-        this.type = TYPE_TICKET;
+        this.type = CustomFieldGroupTypeEnum.TICKET;
     }
 
     /**

@@ -1,5 +1,6 @@
 package com.kayako.api.customfield;
 
+import com.kayako.api.enums.CustomFieldGroupTypeEnum;
 import com.kayako.api.exception.KayakoException;
 import com.kayako.api.rest.KEntity;
 import com.kayako.api.rest.RawArrayElement;
@@ -19,11 +20,6 @@ import java.util.HashMap;
  */
 public abstract class CustomFieldGroup extends KEntity {
 
-    public static final int TYPE_TICKET = 0;
-    public static final int TYPE_USER = 1;
-    public static final int TYPE_USER_ORGANIZATION = 2;
-    public static final int TYPE_USER_LIVECHAT = 3;
-    public static final int TYPE_USER_TIME_TRACK = 4;
     /**
      * The Controller.
      */
@@ -62,11 +58,8 @@ public abstract class CustomFieldGroup extends KEntity {
 
     /**
      * Type of custom field group.
-     *
-     * @var int
-     * @see ::TYPE constants
      */
-    protected int type;
+    protected CustomFieldGroupTypeEnum type;
 
     /**
      * Gets fields.
@@ -173,7 +166,7 @@ public abstract class CustomFieldGroup extends KEntity {
      *
      * @return the type
      */
-    public int getType() {
+    public CustomFieldGroupTypeEnum getType() {
         return type;
     }
 
@@ -183,7 +176,7 @@ public abstract class CustomFieldGroup extends KEntity {
      * @param type the type
      * @return the type
      */
-    public CustomFieldGroup setType(int type) {
+    public CustomFieldGroup setType(CustomFieldGroupTypeEnum type) {
         this.type = type;
         return this;
     }
@@ -193,7 +186,8 @@ public abstract class CustomFieldGroup extends KEntity {
      *
      * @param id the id
      * @return the custom field group
-     * @throws com.kayako.api.exception.KayakoException the kayako exception
+     * @throws com.kayako.api.exception.KayakoException
+     *          the kayako exception
      */
     public static CustomFieldGroup get(int id) throws KayakoException {
         throw new KayakoException("This method is not available for this type of objects.");
