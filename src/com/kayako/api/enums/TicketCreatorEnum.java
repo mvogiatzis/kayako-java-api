@@ -9,9 +9,17 @@ package com.kayako.api.enums;
  * @license http ://www.kayako.com/license
  * @link http ://www.kayako.com
  */
-public enum CreatorEnum {
+public enum TicketCreatorEnum {
 
-    AUTO, STAFF, USER, CLIENT;
+    /**
+     * The AUTO.
+     */AUTO, /**
+     * The STAFF.
+     */STAFF, /**
+     * The USER.
+     */USER, /**
+     * The CLIENT.
+     */CLIENT;
 
     /**
      * Gets string.
@@ -39,7 +47,7 @@ public enum CreatorEnum {
      * @param access the access
      * @return the enum
      */
-    public static CreatorEnum getEnum(String access) {
+    public static TicketCreatorEnum getEnum(String access) {
         if (access.equalsIgnoreCase("0")) {
             return AUTO;
         } else if (access.equalsIgnoreCase("1")) {

@@ -1,5 +1,6 @@
 package com.kayako.api.ticket;
 
+import com.kayako.api.enums.TicketPostCreatorEnum;
 import com.kayako.api.exception.KayakoException;
 import com.kayako.api.rest.KEntity;
 import com.kayako.api.rest.RawArrayElement;
@@ -21,46 +22,6 @@ import java.util.HashMap;
  * @link http ://www.kayako.com
  */
 public class TicketPost extends KEntity {
-
-    /**
-     * Post creator type - staff user.
-     */
-    public static final int CREATOR_STAFF = 1;
-
-    /**
-     * Post creator type - user.
-     *
-     * @param int
-     */
-    public static final int CREATOR_USER = 2;
-
-    /**
-     * Post creator type - user.
-     *
-     * @param int
-     */
-    public static final int CREATOR_CLIENT = 2;
-
-    /**
-     * Post creator type - owner of e-mail marked as CC in ticket properties.
-     *
-     * @param int
-     */
-    public static final int CREATOR_CC = 3;
-
-    /**
-     * Post creator type - owner of e-mail marked as BCC in ticket properties.
-     *
-     * @param int
-     */
-    public static final int CREATOR_BCC = 4;
-
-    /**
-     * Post creator type - owner of e-mail marked as Third Party in ticket properties.
-     *
-     * @param int
-     */
-    public static final int CREATOR_THIRDPARTY = 5;
 
     /**
      * The Controller.
@@ -143,11 +104,8 @@ public class TicketPost extends KEntity {
      * Type of this ticket post creator.
      * <p/>
      * getter=getCreatorType
-     *
-     * @param int
-     * @see ::CREATOR constants.
      */
-    protected int creator;
+    protected TicketPostCreatorEnum creator;
 
     /**
      * Whether this post was created by owner of e-mail marked as Third Party in ticket properties.
@@ -378,7 +336,7 @@ public class TicketPost extends KEntity {
     public TicketPost setUserId(int userId) {
         this.userId = userId;
         if (userId > 0) {
-            this.creator = CREATOR_USER;
+            this.creator = TicketPostCreatorEnum.USER;
             this.staffId = 0;
             this.staff = null;
             return this;
@@ -495,15 +453,15 @@ public class TicketPost extends KEntity {
      */
     public int getCreator() {
         switch (this.creator) {
-            case CREATOR_USER:
+            case USER:
                 return this.userId;
-            case CREATOR_STAFF:
+            case STAFF:
                 return this.staffId;
         }
-        return creator;
+        return 0;
     }
 
-    public int getCreatorType() {
+    public TicketPostCreatorEnum getCreatorType() {
         return this.creator;
     }
 
@@ -514,12 +472,12 @@ public class TicketPost extends KEntity {
      * @param type      the type
      * @return the creator
      */
-    public TicketPost setCreator(int creatorId, int type) {
+    public TicketPost setCreator(int creatorId, TicketPostCreatorEnum type) {
         switch (type) {
-            case CREATOR_USER:
+            case USER:
                 this.setUserId(creatorId);
                 break;
-            case CREATOR_STAFF:
+            case STAFF:
                 this.setStaffId(creatorId);
                 break;
         }
@@ -532,7 +490,7 @@ public class TicketPost extends KEntity {
      * @param creator the creator
      * @return the creator
      */
-    public TicketPost setCreator(int creator) {
+    public TicketPost setCreator(TicketPostCreatorEnum creator) {
         this.creator = creator;
         return this;
     }
@@ -637,7 +595,7 @@ public class TicketPost extends KEntity {
     public TicketPost setStaffId(int staffId) {
         this.staffId = staffId;
         if (staffId > 0) {
-            this.creator = CREATOR_STAFF;
+            this.creator = TicketPostCreatorEnum.STAFF;
             this.user = null;
             this.userId = 0;
             return this;
@@ -730,7 +688,8 @@ public class TicketPost extends KEntity {
      * Gets attachments.
      *
      * @return the attachments
-     * @throws com.kayako.api.exception.KayakoException the kayako exception
+     * @throws com.kayako.api.exception.KayakoException
+     *          the kayako exception
      */
     public ArrayList<TicketAttachment> getAttachments() throws KayakoException {
         return this.getAttachments(false);
@@ -800,7 +759,7 @@ public class TicketPost extends KEntity {
         this.staff = null;
         this.userId = user.getId();
         this.staffId = 0;
-        this.creator = CREATOR_USER;
+        this.creator = TicketPostCreatorEnum.USER;
         return this;
     }
 
@@ -839,7 +798,7 @@ public class TicketPost extends KEntity {
         this.staffId = staff.getId();
         this.userId = 0;
         this.user = null;
-        this.creator = staff != null ? CREATOR_STAFF : 0;
+        this.creator = staff != null ? TicketPostCreatorEnum.STAFF : null;
         return this;
     }
 
@@ -1023,7 +982,7 @@ public class TicketPost extends KEntity {
             } else if (elementName.equals("hasattachment")) {
                 this.setHasAttachment(Helper.parseInt(component.getContent()) == 1);
             } else if (elementName.equals("creator")) {
-                this.setCreator(Helper.parseInt(component.getContent()));
+                this.setCreator(TicketPostCreatorEnum.getEnum(component.getContent()));
             } else if (elementName.equals("isthirdparty")) {
                 this.setThirdParty(Helper.parseInt(component.getContent()) == 1);
             } else if (elementName.equals("ishtml")) {
@@ -1068,10 +1027,10 @@ public class TicketPost extends KEntity {
         ticketPostHashMap.put("isprivate", this.isPrivate() ? "1" : "0");
 
         switch (this.getCreatorType()) {
-            case CREATOR_STAFF:
+            case STAFF:
                 ticketPostHashMap.put("staffid", Integer.toString(this.getStaffId()));
                 break;
-            case CREATOR_USER:
+            case USER:
                 ticketPostHashMap.put("userid", Integer.toString(this.getUserId()));
                 break;
         }
