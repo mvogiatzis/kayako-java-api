@@ -1,5 +1,6 @@
 package com.kayako.api.customfield;
 
+import com.kayako.api.enums.CustomFieldDefinitionTypeEnum;
 import com.kayako.api.exception.KayakoException;
 import com.kayako.api.rest.KEntity;
 import com.kayako.api.rest.RawArrayElement;
@@ -17,61 +18,6 @@ import java.util.ArrayList;
  * @link http ://www.kayako.com
  */
 public class CustomFieldDefinition extends KEntity {
-
-    /**
-     * The constant TYPE_TEXT.
-     */
-    public static final int TYPE_TEXT = 1;
-
-    /**
-     * The constant TYPE_TEXTAREA.
-     */
-    public static final int TYPE_TEXTAREA = 2;
-
-    /**
-     * The constant TYPE_PASSWORD.
-     */
-    public static final int TYPE_PASSWORD = 3;
-
-    /**
-     * The constant TYPE_CHECKBOX.
-     */
-    public static final int TYPE_CHECKBOX = 4;
-
-    /**
-     * The constant TYPE_RADIO.
-     */
-    public static final int TYPE_RADIO = 5;
-
-    /**
-     * The constant TYPE_SELECT.
-     */
-    public static final int TYPE_SELECT = 6;
-
-    /**
-     * The constant TYPE_MULTI_SELECT.
-     */
-    public static final int TYPE_MULTI_SELECT = 7;
-
-    /**
-     * The constant TYPE_CUSTOM.
-     */
-    public static final int TYPE_CUSTOM = 8;
-
-    /**
-     * The constant TYPE_LINKED_SELECT.
-     */
-    public static final int TYPE_LINKED_SELECT = 9;
-
-    /**
-     * The constant TYPE_DATE.
-     */
-    public static final int TYPE_DATE = 10;
-
-    /**
-     * The constant TYPE_FILE.
-     */
-    public static final int TYPE_FILE = 11;
 
     /**
      * The Controller.
@@ -92,7 +38,8 @@ public class CustomFieldDefinition extends KEntity {
      * Instantiates a new Custom field definition.
      *
      * @param element the raw array element
-     * @throws com.kayako.api.exception.KayakoException the kayako exception
+     * @throws com.kayako.api.exception.KayakoException
+     *          the kayako exception
      */
     public CustomFieldDefinition(RawArrayElement element) throws KayakoException {
         this.populate(element);
@@ -120,7 +67,7 @@ public class CustomFieldDefinition extends KEntity {
      * @apiField name =fieldtype
      * @var int
      */
-    protected int type;
+    protected CustomFieldDefinitionTypeEnum type;
 
     /**
      * Field name.
@@ -226,7 +173,7 @@ public class CustomFieldDefinition extends KEntity {
         //attribute =  title, id  , type, name
         this.setId(Helper.parseInt(element.getAttribute("customfieldid")));
         this.setGroupId(Helper.parseInt(element.getAttribute("customfieldgroupid")));
-        this.setType(Helper.parseInt(element.getAttribute("fieldtype")));
+        this.setType(CustomFieldDefinitionTypeEnum.getEnum(element.getAttribute("fieldtype")));
         this.setName(element.getAttribute("fieldname"));
         this.setTitle(element.getAttribute("title"));
         this.setDefaultValue(element.getAttribute("defaultvalue"));
@@ -498,11 +445,11 @@ public class CustomFieldDefinition extends KEntity {
     public ArrayList<CustomFieldOption> getOptions(Boolean refresh) throws KayakoException {
         if (this.options.size() == 0 || refresh) {
             switch (this.getType()) {
-                case TYPE_CHECKBOX:
-                case TYPE_LINKED_SELECT:
-                case TYPE_MULTI_SELECT:
-                case TYPE_RADIO:
-                case TYPE_SELECT:
+                case CHECKBOX:
+                case LINKED_SELECT:
+                case MULTI_SELECT:
+                case RADIO:
+                case SELECT:
                     ArrayList<RawArrayElement> optionsRaw = CustomFieldOption.getAll(this.getId()).getComponents();
                     for (RawArrayElement optionRaw : optionsRaw) {
                         this.addOption(new CustomFieldOption().populate(optionRaw));
@@ -525,11 +472,11 @@ public class CustomFieldDefinition extends KEntity {
     public ArrayList<CustomFieldOption> getDefaultOptions(Boolean refresh) throws KayakoException {
         if (this.options.size() == 0 || refresh) {
             switch (this.getType()) {
-                case TYPE_CHECKBOX:
-                case TYPE_LINKED_SELECT:
-                case TYPE_MULTI_SELECT:
-                case TYPE_RADIO:
-                case TYPE_SELECT:
+                case CHECKBOX:
+                case LINKED_SELECT:
+                case MULTI_SELECT:
+                case RADIO:
+                case SELECT:
                     ArrayList<RawArrayElement> optionsRaw = CustomFieldOption.getAll(this.getId()).filterByComponentAttribute("isselected", "0").getComponents();
                     for (RawArrayElement optionRaw : optionsRaw) {
                         this.addOption(new CustomFieldOption().populate(optionRaw));
@@ -650,7 +597,7 @@ public class CustomFieldDefinition extends KEntity {
      *
      * @return the type
      */
-    public int getType() {
+    public CustomFieldDefinitionTypeEnum getType() {
         return type;
     }
 
@@ -659,7 +606,7 @@ public class CustomFieldDefinition extends KEntity {
      *
      * @param type the type
      */
-    public void setType(int type) {
+    public void setType(CustomFieldDefinitionTypeEnum type) {
         this.type = type;
     }
 

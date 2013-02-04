@@ -1,5 +1,6 @@
 package com.kayako.api.customfield;
 
+import com.kayako.api.enums.CustomFieldDefinitionTypeEnum;
 import com.kayako.api.exception.KayakoException;
 import com.kayako.api.rest.RawArrayElement;
 
@@ -18,33 +19,34 @@ public class CustomFieldFactory {
      * Create custom field.
      *
      * @param customFieldGroup the custom field group
-     * @param element  the raw array element
+     * @param element          the raw array element
      * @return the custom field
-     * @throws com.kayako.api.exception.KayakoException the kayako exception
+     * @throws com.kayako.api.exception.KayakoException
+     *          the kayako exception
      */
     public static CustomField createCustomField(CustomFieldGroup customFieldGroup, RawArrayElement element) throws KayakoException {
         if (element == null || !element.getElementName().equals(CustomField.getObjectXmlName())) {
             throw new KayakoException("Invalid XML Element Supplied");
         }
-        int type = Integer.parseInt(element.getAttribute("type"));
+        CustomFieldDefinitionTypeEnum type = CustomFieldDefinitionTypeEnum.getEnum(element.getAttribute("type"));
 
         switch (type) {
-            case CustomFieldDefinition.TYPE_FILE:
+            case FILE:
                 return new CustomFieldFile(customFieldGroup).populate(element);
-            case CustomFieldDefinition.TYPE_LINKED_SELECT:
+            case LINKED_SELECT:
                 return new CustomFieldLinkedSelect(customFieldGroup).populate(element);
-            case CustomFieldDefinition.TYPE_CHECKBOX:
-            case CustomFieldDefinition.TYPE_MULTI_SELECT:
+            case CHECKBOX:
+            case MULTI_SELECT:
                 return new CustomFieldMultiSelect(customFieldGroup).populate(element);
-            case CustomFieldDefinition.TYPE_RADIO:
-            case CustomFieldDefinition.TYPE_SELECT:
+            case RADIO:
+            case SELECT:
                 return new CustomFieldSelect(customFieldGroup).populate(element);
-            case CustomFieldDefinition.TYPE_DATE:
+            case DATE:
                 return new CustomFieldDate(customFieldGroup).populate(element);
-            case CustomFieldDefinition.TYPE_CUSTOM:
-            case CustomFieldDefinition.TYPE_PASSWORD:
-            case CustomFieldDefinition.TYPE_TEXT:
-            case CustomFieldDefinition.TYPE_TEXTAREA:
+            case CUSTOM:
+            case PASSWORD:
+            case TEXT:
+            case TEXTAREA:
                 return new CustomField(customFieldGroup).populate(element);
 
         }
