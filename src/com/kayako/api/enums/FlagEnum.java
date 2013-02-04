@@ -1,7 +1,7 @@
-package com.kayako.api;
+package com.kayako.api.enums;
 
 /**
- * The mode Enumeration.
+ * The Flag Enumeration.
  *
  * @author Kayako Support System Pvt Ltd
  * @package api
@@ -9,18 +9,8 @@ package com.kayako.api;
  * @license http ://www.kayako.com/license
  * @link http ://www.kayako.com
  */
-public enum CreationModeEnum {
-    /**
-     * The SUPPORT CENTRE.
-     */SUPPORT_CENTRE, /**
-     * The STAFF _ cP.
-     */STAFF_CP, /**
-     * The EMAIL.
-     */EMAIL, /**
-     * The API.
-     */API, /**
-     * The SITE BADGE.
-     */SITE_BADGE;
+public enum FlagEnum {
+    NONE, PURPLE, ORANGE, GREEN, YELLOW, RED, BLUE;
 
     /**
      * Gets string.
@@ -29,16 +19,20 @@ public enum CreationModeEnum {
      */
     public String getString() {
         switch (this) {
-            case SUPPORT_CENTRE:
+            case NONE:
+                return "0";
+            case PURPLE:
                 return "1";
-            case STAFF_CP:
+            case ORANGE:
                 return "2";
-            case EMAIL:
+            case GREEN:
                 return "3";
-            case API:
+            case YELLOW:
                 return "4";
-            case SITE_BADGE:
+            case RED:
                 return "5";
+            case BLUE:
+                return "6";
             default:
                 return "";
         }
@@ -51,17 +45,21 @@ public enum CreationModeEnum {
      * @param access the access
      * @return the enum
      */
-    public static CreationModeEnum getEnum(String access) {
-        if (access.equalsIgnoreCase("1")) {
-            return SUPPORT_CENTRE;
+    public static FlagEnum getEnum(String access) {
+        if (access.equalsIgnoreCase("0")) {
+            return NONE;
+        } else if (access.equalsIgnoreCase("1")) {
+            return PURPLE;
         } else if (access.equalsIgnoreCase("2")) {
-            return STAFF_CP;
+            return ORANGE;
         } else if (access.equalsIgnoreCase("3")) {
-            return EMAIL;
+            return GREEN;
         } else if (access.equalsIgnoreCase("4")) {
-            return API;
+            return YELLOW;
         } else if (access.equalsIgnoreCase("5")) {
-            return SITE_BADGE;
+            return RED;
+        } else if (access.equalsIgnoreCase("6")) {
+            return BLUE;
         }
         return null;
     }

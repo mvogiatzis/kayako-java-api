@@ -1,6 +1,6 @@
 package com.kayako.api.ticket;
 
-import com.kayako.api.AccessTypeEnum;
+import com.kayako.api.enums.AccessTypeEnum;
 import com.kayako.api.exception.KayakoException;
 import com.kayako.api.rest.KEntity;
 import com.kayako.api.rest.RawArrayElement;

@@ -1,7 +1,11 @@
 package com.kayako.api.ticket;
 
-import com.kayako.api.*;
 import com.kayako.api.customfield.CustomFieldGroup;
+import com.kayako.api.department.Department;
+import com.kayako.api.enums.CreationModeEnum;
+import com.kayako.api.enums.CreationTypeEnum;
+import com.kayako.api.enums.CreatorEnum;
+import com.kayako.api.enums.FlagEnum;
 import com.kayako.api.exception.KayakoException;
 import com.kayako.api.rest.KEntityCustom;
 import com.kayako.api.rest.RawArrayElement;

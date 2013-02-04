@@ -1,4 +1,4 @@
-package com.kayako.api;
+package com.kayako.api.enums;
 
 /**
  * The type Enumeration.
@@ -9,12 +9,12 @@ package com.kayako.api;
  * @license http ://www.kayako.com/license
  * @link http ://www.kayako.com
  */
-public enum CreationTypeEnum {
+public enum AccessTypeEnum {
     /**
-     * The DEFAULT.
-     */DEFAULT, /**
-     * The PHONE.
-     */PHONE;
+     * The PUBLIC.
+     */PUBLIC, /**
+     * The PRIVATE.
+     */PRIVATE;
 
     /**
      * Gets string.
@@ -23,10 +23,10 @@ public enum CreationTypeEnum {
      */
     public String getString() {
         switch (this) {
-            case DEFAULT:
-                return "1";
-            case PHONE:
-                return "2";
+            case PUBLIC:
+                return "public";
+            case PRIVATE:
+                return "private";
             default:
                 return "";
         }
@@ -39,11 +39,11 @@ public enum CreationTypeEnum {
      * @param access the access
      * @return the enum
      */
-    public static CreationTypeEnum getEnum(String access) {
-        if (access.equalsIgnoreCase("2")) {
-            return DEFAULT;
+    public static AccessTypeEnum getEnum(String access) {
+        if (access.equalsIgnoreCase("public")) {
+            return PUBLIC;
         } else {
-            return PHONE;
+            return PRIVATE;
         }
     }
 }

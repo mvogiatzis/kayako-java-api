@@ -1,7 +1,7 @@
-package com.kayako.api;
+package com.kayako.api.enums;
 
 /**
- * The App Enumeration.
+ * The type Enumeration.
  *
  * @author Kayako Support System Pvt Ltd
  * @package api
@@ -9,12 +9,12 @@ package com.kayako.api;
  * @license http ://www.kayako.com/license
  * @link http ://www.kayako.com
  */
-public enum AppEnum {
+public enum CreationTypeEnum {
     /**
-     * The TICKETS.
-     */TICKETS, /**
-     * The LIVE _ cHAT.
-     */LIVE_CHAT;
+     * The DEFAULT.
+     */DEFAULT, /**
+     * The PHONE.
+     */PHONE;
 
     /**
      * Gets string.
@@ -23,10 +23,10 @@ public enum AppEnum {
      */
     public String getString() {
         switch (this) {
-            case TICKETS:
-                return "tickets";
-            case LIVE_CHAT:
-                return "livechat";
+            case DEFAULT:
+                return "1";
+            case PHONE:
+                return "2";
             default:
                 return "";
         }
@@ -39,11 +39,11 @@ public enum AppEnum {
      * @param access the access
      * @return the enum
      */
-    public static AppEnum getEnum(String access) {
-        if (access.equalsIgnoreCase("tickets")) {
-            return TICKETS;
+    public static CreationTypeEnum getEnum(String access) {
+        if (access.equalsIgnoreCase("2")) {
+            return DEFAULT;
         } else {
-            return LIVE_CHAT;
+            return PHONE;
         }
     }
 }

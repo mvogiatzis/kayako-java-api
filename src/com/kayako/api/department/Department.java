@@ -1,5 +1,7 @@
-package com.kayako.api;
+package com.kayako.api.department;
 
+import com.kayako.api.enums.AccessTypeEnum;
+import com.kayako.api.enums.AppEnum;
 import com.kayako.api.exception.KayakoException;
 import com.kayako.api.rest.KEntity;
 import com.kayako.api.rest.RawArrayElement;

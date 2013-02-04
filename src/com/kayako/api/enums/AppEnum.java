@@ -1,7 +1,7 @@
-package com.kayako.api;
+package com.kayako.api.enums;
 
 /**
- * The type Enumeration.
+ * The App Enumeration.
  *
  * @author Kayako Support System Pvt Ltd
  * @package api
@@ -9,12 +9,12 @@ package com.kayako.api;
  * @license http ://www.kayako.com/license
  * @link http ://www.kayako.com
  */
-public enum AccessTypeEnum {
+public enum AppEnum {
     /**
-     * The PUBLIC.
-     */PUBLIC, /**
-     * The PRIVATE.
-     */PRIVATE;
+     * The TICKETS.
+     */TICKETS, /**
+     * The LIVE _ cHAT.
+     */LIVE_CHAT;
 
     /**
      * Gets string.
@@ -23,10 +23,10 @@ public enum AccessTypeEnum {
      */
     public String getString() {
         switch (this) {
-            case PUBLIC:
-                return "public";
-            case PRIVATE:
-                return "private";
+            case TICKETS:
+                return "tickets";
+            case LIVE_CHAT:
+                return "livechat";
             default:
                 return "";
         }
@@ -39,11 +39,11 @@ public enum AccessTypeEnum {
      * @param access the access
      * @return the enum
      */
-    public static AccessTypeEnum getEnum(String access) {
-        if (access.equalsIgnoreCase("public")) {
-            return PUBLIC;
+    public static AppEnum getEnum(String access) {
+        if (access.equalsIgnoreCase("tickets")) {
+            return TICKETS;
         } else {
-            return PRIVATE;
+            return LIVE_CHAT;
         }
     }
 }

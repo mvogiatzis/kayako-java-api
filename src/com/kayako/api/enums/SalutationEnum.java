@@ -1,4 +1,4 @@
-package com.kayako.api;
+package com.kayako.api.enums;
 
 /**
  * The Salutation Enumeration.

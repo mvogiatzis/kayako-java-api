@@ -1,6 +1,6 @@
 package com.kayako.api.ticket;
 
-import com.kayako.api.ColorEnum;
+import com.kayako.api.enums.ColorEnum;
 import com.kayako.api.exception.KayakoException;
 import com.kayako.api.rest.KEntity;
 import com.kayako.api.rest.RawArrayElement;
