@@ -205,15 +205,15 @@ public abstract class CustomFieldGroup extends KEntity {
     }
 
     @Override
-    public CustomFieldGroup populate(RawArrayElement rawArrayElement) throws KayakoException {
-        if (!rawArrayElement.getElementName().equals(objectXmlName)) {
+    public CustomFieldGroup populate(RawArrayElement element) throws KayakoException {
+        if (!element.getElementName().equals(objectXmlName)) {
             throw new KayakoException();
         }
 
         //attribute =  title, id
-        this.setTitle(rawArrayElement.getAttribute("title")).setId(Helper.parseInt(rawArrayElement.getAttribute("id")));
+        this.setTitle(element.getAttribute("title")).setId(Helper.parseInt(element.getAttribute("id")));
 
-        for (RawArrayElement component : rawArrayElement.getComponents()) {
+        for (RawArrayElement component : element.getComponents()) {
             String elementName = component.getElementName();
             if (elementName.equalsIgnoreCase("field")) {
                 this.fields.add(CustomFieldFactory.createCustomField(this, component));

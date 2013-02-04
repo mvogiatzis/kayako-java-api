@@ -490,9 +490,9 @@ public class TicketAttachment extends KEntity {
         return refineToArray(getAll(ticketId));
     }
 
-    private static ArrayList<TicketAttachment> refineToArray(RawArrayElement rawArrayElement) throws KayakoException {
+    private static ArrayList<TicketAttachment> refineToArray(RawArrayElement element) throws KayakoException {
         ArrayList<TicketAttachment> TicketAttachments = new ArrayList<TicketAttachment>();
-        for (RawArrayElement rawArrayElementTicketAttachment : rawArrayElement.getComponents()) {
+        for (RawArrayElement rawArrayElementTicketAttachment : element.getComponents()) {
             TicketAttachments.add(new TicketAttachment().populate(rawArrayElementTicketAttachment));
         }
         return TicketAttachments;
@@ -500,12 +500,12 @@ public class TicketAttachment extends KEntity {
 
     //this function will populate the data of the ticket attachment instance when supplied with RawArrayElement derived from the xml
     @Override
-    public TicketAttachment populate(RawArrayElement rawArrayElement) throws KayakoException {
-        if (!rawArrayElement.getElementName().equals(objectXmlName)) {
+    public TicketAttachment populate(RawArrayElement element) throws KayakoException {
+        if (!element.getElementName().equals(objectXmlName)) {
             throw new KayakoException();
         }
 
-        ArrayList<RawArrayElement> components = rawArrayElement.getComponents();
+        ArrayList<RawArrayElement> components = element.getComponents();
         for (RawArrayElement component : components) {
             String elementName = component.getElementName();
             if (!component.isComposite() && component.getContent() == null) {

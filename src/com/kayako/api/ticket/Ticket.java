@@ -675,8 +675,8 @@ public class Ticket extends KEntityCustom {
         if (customFieldGroups.size() > 0 && !refresh) {
             return customFieldGroups;
         }
-        RawArrayElement rawArrayElement = TicketCustomFieldGroup.getAll(this.getId());
-        for (RawArrayElement component : rawArrayElement.getComponents()) {
+        RawArrayElement element = TicketCustomFieldGroup.getAll(this.getId());
+        for (RawArrayElement component : element.getComponents()) {
             customFieldGroups.add(new TicketCustomFieldGroup(this.getId(), component));
         }
         this.customFieldGroups = customFieldGroups;
@@ -2193,7 +2193,7 @@ public class Ticket extends KEntityCustom {
     public static RawArrayElement getAll(ArrayList<?> departments, ArrayList<?> ticketStatuses, ArrayList<?> owners, ArrayList<?> users) throws KayakoException {
         ArrayList<String> searchParams = new ArrayList<String>();
         searchParams.add("ListAll");
-        RawArrayElement rawArrayElement = new RawArrayElement();
+        RawArrayElement element = new RawArrayElement();
         if (departments.isEmpty()) {
             throw new KayakoException();
         }
@@ -2247,9 +2247,9 @@ public class Ticket extends KEntityCustom {
         return refineToArray(getAll(departments, ticketStatuses, owners, users));
     }
 
-    private static ArrayList<Ticket> refineToArray(RawArrayElement rawArrayElement) throws KayakoException {
+    private static ArrayList<Ticket> refineToArray(RawArrayElement element) throws KayakoException {
         ArrayList<Ticket> tickets = new ArrayList<Ticket>();
-        for (RawArrayElement rawArrayElementTicket : rawArrayElement.getComponents()) {
+        for (RawArrayElement rawArrayElementTicket : element.getComponents()) {
             tickets.add(new Ticket().populate(rawArrayElementTicket));
         }
         return tickets;
@@ -2447,15 +2447,15 @@ public class Ticket extends KEntityCustom {
     }
 
     @Override
-    public Ticket populate(RawArrayElement rawArrayElement) throws KayakoException {
-        if (!rawArrayElement.getElementName().equals(objectXmlName)) {
+    public Ticket populate(RawArrayElement element) throws KayakoException {
+        if (!element.getElementName().equals(objectXmlName)) {
             throw new KayakoException("Unexpected element name in received XML.");
         }
 
-        ArrayList<RawArrayElement> components = rawArrayElement.getComponents();
+        ArrayList<RawArrayElement> components = element.getComponents();
 
-        this.setId(Helper.parseInt(rawArrayElement.getAttribute("id")));
-        this.setFlagType(Helper.parseInt(rawArrayElement.getAttribute("flagtype")));
+        this.setId(Helper.parseInt(element.getAttribute("id")));
+        this.setFlagType(Helper.parseInt(element.getAttribute("flagtype")));
         for (RawArrayElement component : components) {
             String elementName = component.getElementName();
             if (!component.isComposite() && component.getContent() == null) {

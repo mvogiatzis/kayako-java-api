@@ -183,10 +183,10 @@ abstract public class KEntity {
      * @return the all
      */
     public static RawArrayElement getAll(String controller, ArrayList<String> searchParams) {
-        RawArrayElement rawArrayElement;
+        RawArrayElement element;
 
-        rawArrayElement = new RESTClient().initialize(Configuration.getConfiguration()).get(controller, searchParams);
-        return rawArrayElement;
+        element = new RESTClient().initialize(Configuration.getConfiguration()).get(controller, searchParams);
+        return element;
     }
 
     /**
@@ -239,11 +239,11 @@ abstract public class KEntity {
     /**
      * Populate k entity.
      *
-     * @param rawArrayElement the raw array element
+     * @param element the raw array element
      * @return the k entity
      * @throws KayakoException the kayako exception
      */
-    public abstract KEntity populate(RawArrayElement rawArrayElement) throws KayakoException;
+    public abstract KEntity populate(RawArrayElement element) throws KayakoException;
 
     /**
      * Build hash map.

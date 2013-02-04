@@ -136,15 +136,15 @@ public class CustomFieldFile extends CustomField {
     }
 
     @Override
-    public CustomFieldFile populate(RawArrayElement rawArrayElement) throws KayakoException {
-        if (!rawArrayElement.getElementName().equals(objectXmlName)) {
+    public CustomFieldFile populate(RawArrayElement element) throws KayakoException {
+        if (!element.getElementName().equals(objectXmlName)) {
             throw new KayakoException();
         }
 
-        this.setFileName(rawArrayElement.getAttribute("filename"));
+        this.setFileName(element.getAttribute("filename"));
 
         try {
-            this.setContents(Base64.decode(rawArrayElement.getContent()));
+            this.setContents(Base64.decode(element.getContent()));
         } catch (IOException e) {
             e.printStackTrace();
         }

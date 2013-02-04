@@ -30,13 +30,13 @@ public class TicketCustomFieldGroup extends CustomFieldGroup {
      * Instantiates a new Ticket custom field group.
      *
      * @param ticketId the ticket id
-     * @param rawArrayElement the raw array element
+     * @param element the raw array element
      * @throws com.kayako.api.exception.KayakoException the kayako exception
      */
-    public TicketCustomFieldGroup(int ticketId, RawArrayElement rawArrayElement) throws KayakoException {
+    public TicketCustomFieldGroup(int ticketId, RawArrayElement element) throws KayakoException {
         this.ticketId = ticketId;
         this.type = TYPE_TICKET;
-        this.populate(rawArrayElement);
+        this.populate(element);
     }
 
     /**
@@ -58,8 +58,8 @@ public class TicketCustomFieldGroup extends CustomFieldGroup {
     static public RawArrayElement getAll(int ticketId) {
         ArrayList<String> params = new ArrayList<String>();
         params.add(Integer.toString(ticketId));
-        RawArrayElement rawArrayElement = getAll(controller, params);
-        return rawArrayElement;
+        RawArrayElement element = getAll(controller, params);
+        return element;
     }
 
     /**

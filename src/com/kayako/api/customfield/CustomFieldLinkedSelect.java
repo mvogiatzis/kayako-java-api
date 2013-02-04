@@ -33,9 +33,9 @@ public class CustomFieldLinkedSelect extends CustomFieldSelect {
     }
 
     @Override
-    public CustomFieldLinkedSelect populate(RawArrayElement rawArrayElement) throws KayakoException {
-        super.populate(rawArrayElement);
-        String[] values = rawArrayElement.getContent().split(PARENT_CHILD_SEPARATOR);
+    public CustomFieldLinkedSelect populate(RawArrayElement element) throws KayakoException {
+        super.populate(element);
+        String[] values = element.getContent().split(PARENT_CHILD_SEPARATOR);
         if (values.length > 1) {
             this.setSelectedOption(this.getOption(values[1]));
         }

@@ -317,15 +317,15 @@ public class CustomField extends KEntity {
     }
 
     @Override
-    public CustomField populate(RawArrayElement rawArrayElement) throws KayakoException {
-        if (!rawArrayElement.getElementName().equals(objectXmlName)) {
+    public CustomField populate(RawArrayElement element) throws KayakoException {
+        if (!element.getElementName().equals(objectXmlName)) {
             throw new KayakoException();
         }
 
         //attribute =  title, id  , type, name
-        this.setTitle(rawArrayElement.getAttribute("title")).setId(Helper.parseInt(rawArrayElement.getAttribute("id")));
-        this.setName(rawArrayElement.getAttribute("name")).setType(Helper.parseInt(rawArrayElement.getAttribute("type")));
-        this.setRawValue(rawArrayElement.getContent());
+        this.setTitle(element.getAttribute("title")).setId(Helper.parseInt(element.getAttribute("id")));
+        this.setName(element.getAttribute("name")).setType(Helper.parseInt(element.getAttribute("type")));
+        this.setRawValue(element.getContent());
         return this;
 
     }

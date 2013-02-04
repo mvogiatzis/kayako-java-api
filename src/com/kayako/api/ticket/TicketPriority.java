@@ -430,12 +430,12 @@ public class TicketPriority extends KEntity {
 
     //this function will populate the data of the ticket priority instance when supplied with RawArrayElement derived from the xml
     @Override
-    public TicketPriority populate(RawArrayElement rawArrayElement) throws KayakoException {
-        if (!rawArrayElement.getElementName().equals(objectXmlName)) {
+    public TicketPriority populate(RawArrayElement element) throws KayakoException {
+        if (!element.getElementName().equals(objectXmlName)) {
             throw new KayakoException();
         }
 
-        ArrayList<RawArrayElement> components = rawArrayElement.getComponents();
+        ArrayList<RawArrayElement> components = element.getComponents();
         for (RawArrayElement component : components) {
             String elementName = component.getElementName();
             if (!component.isComposite() && component.getContent() == null) {

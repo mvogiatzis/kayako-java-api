@@ -30,11 +30,11 @@ public class StaffGroup extends KEntity {
     /**
      * Instantiates a new Staff group.
      *
-     * @param rawArrayElement the raw array element
+     * @param element the raw array element
      * @throws com.kayako.api.exception.KayakoException the kayako exception
      */
-    public StaffGroup(RawArrayElement rawArrayElement) throws KayakoException {
-        this.populate(rawArrayElement);
+    public StaffGroup(RawArrayElement element) throws KayakoException {
+        this.populate(element);
     }
 
     /**
@@ -244,12 +244,12 @@ public class StaffGroup extends KEntity {
 
     //this function will populate the data of the staff Group instance when supplied with RawArrayElement derived from the xml
     @Override
-    public StaffGroup populate(RawArrayElement rawArrayElement) throws KayakoException {
-        if (!rawArrayElement.getElementName().equals(objectXmlName)) {
+    public StaffGroup populate(RawArrayElement element) throws KayakoException {
+        if (!element.getElementName().equals(objectXmlName)) {
             throw new KayakoException();
         }
 
-        ArrayList<RawArrayElement> components = rawArrayElement.getComponents();
+        ArrayList<RawArrayElement> components = element.getComponents();
         for (RawArrayElement component : components) {
             String elementName = component.getElementName();
             if (!component.isComposite() && component.getContent() == null) {

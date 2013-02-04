@@ -21,7 +21,7 @@ public class XMLHandler extends DefaultHandler {
 
     Boolean currentElement = false;
     String currentValue = null;
-    private RawArrayElement rawArrayElement = null;
+    private RawArrayElement element = null;
     //private RawArrayElement openElement = null;
     private Stack<RawArrayElement> objectStack = new Stack<RawArrayElement>();
 
@@ -41,8 +41,8 @@ public class XMLHandler extends DefaultHandler {
             attributeMap.put(attributes.getQName(i), attributes.getValue(i));
         }
         RawArrayElement temp = new RawArrayElement(qName, attributeMap);
-        if (rawArrayElement == null) {
-            rawArrayElement = temp;
+        if (element == null) {
+            element = temp;
         }
         if (!objectStack.empty()) {
             RawArrayElement parentTemp = objectStack.pop().put(temp);
@@ -89,11 +89,11 @@ public class XMLHandler extends DefaultHandler {
      * @return the raw array element
      */
     public RawArrayElement getRawArrayElement() {
-        return rawArrayElement;
+        return element;
     }
 
     private RawArrayElement getCurrentElement() {
-        return this.rawArrayElement;
+        return this.element;
     }
 
 }

@@ -940,9 +940,9 @@ public class TicketPost extends KEntity {
         return getAll(controller, searchParams);
     }
 
-    private static ArrayList<TicketPost> refineToArray(RawArrayElement rawArrayElement) throws KayakoException {
+    private static ArrayList<TicketPost> refineToArray(RawArrayElement element) throws KayakoException {
         ArrayList<TicketPost> TicketPosts = new ArrayList<TicketPost>();
-        for (RawArrayElement rawArrayElementTicketPost : rawArrayElement.getComponents()) {
+        for (RawArrayElement rawArrayElementTicketPost : element.getComponents()) {
             TicketPosts.add(new TicketPost().populate(rawArrayElementTicketPost));
         }
         return TicketPosts;
@@ -993,12 +993,12 @@ public class TicketPost extends KEntity {
 
     //this function will populate the data of the ticket post instance when supplied with RawArrayElement derived from the xml
     @Override
-    public TicketPost populate(RawArrayElement rawArrayElement) throws KayakoException {
-        if (!rawArrayElement.getElementName().equals(objectXmlName)) {
+    public TicketPost populate(RawArrayElement element) throws KayakoException {
+        if (!element.getElementName().equals(objectXmlName)) {
             throw new KayakoException();
         }
 
-        ArrayList<RawArrayElement> components = rawArrayElement.getComponents();
+        ArrayList<RawArrayElement> components = element.getComponents();
         for (RawArrayElement component : components) {
             String elementName = component.getElementName();
             if (!component.isComposite() && component.getContent() == null) {

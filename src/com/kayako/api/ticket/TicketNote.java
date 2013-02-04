@@ -706,9 +706,9 @@ public class TicketNote extends KEntity {
         return getAll(controller, searchParams);
     }
 
-    private static ArrayList<TicketNote> refineToArray(RawArrayElement rawArrayElement) throws KayakoException {
+    private static ArrayList<TicketNote> refineToArray(RawArrayElement element) throws KayakoException {
         ArrayList<TicketNote> TicketNotes = new ArrayList<TicketNote>();
-        for (RawArrayElement rawArrayElementTicketNote : rawArrayElement.getComponents()) {
+        for (RawArrayElement rawArrayElementTicketNote : element.getComponents()) {
             TicketNotes.add(new TicketNote().populate(rawArrayElementTicketNote));
         }
         return TicketNotes;
@@ -785,24 +785,24 @@ public class TicketNote extends KEntity {
 
     //this function will populate the data of the ticket note instance when supplied with RawArrayElement derived from the xml
     @Override
-    public TicketNote populate(RawArrayElement rawArrayElement) throws KayakoException {
-        if (!rawArrayElement.getElementName().equals(objectXmlName)) {
+    public TicketNote populate(RawArrayElement element) throws KayakoException {
+        if (!element.getElementName().equals(objectXmlName)) {
             throw new KayakoException();
         }
-        this.setType(rawArrayElement.getAttribute("type")).setId(Helper.parseInt(rawArrayElement.getAttribute("id")));
+        this.setType(element.getAttribute("type")).setId(Helper.parseInt(element.getAttribute("id")));
         if (this.getType().equals(TYPE_TICKET)) {
-            this.setTicketId(Helper.parseInt(rawArrayElement.getAttribute("ticketid")));
+            this.setTicketId(Helper.parseInt(element.getAttribute("ticketid")));
         } else if (this.getType().equals(TYPE_USER)) {
-            this.setUserId(Helper.parseInt(rawArrayElement.getAttribute("userid")));
+            this.setUserId(Helper.parseInt(element.getAttribute("userid")));
         } else if (this.getType().equals(TYPE_USER_ORGANIZATION)) {
-            this.setUserOrganizationId(Helper.parseInt(rawArrayElement.getAttribute("userorganizationid")));
+            this.setUserOrganizationId(Helper.parseInt(element.getAttribute("userorganizationid")));
         }
-        this.setNoteColor(ColorEnum.getEnum(rawArrayElement.getAttribute("notecolor")));
-        this.setCreatorStaffId(Helper.parseInt(rawArrayElement.getAttribute("creatorstaffid")));
-        this.setForStaffId(Helper.parseInt(rawArrayElement.getAttribute("forstaffid")));
-        this.setCreatorStaffName(rawArrayElement.getAttribute("creatorstaffname"));
-        this.setCreationDate(Helper.parseInt(rawArrayElement.getAttribute("creationdate")));
-        this.setContents(rawArrayElement.getContent());
+        this.setNoteColor(ColorEnum.getEnum(element.getAttribute("notecolor")));
+        this.setCreatorStaffId(Helper.parseInt(element.getAttribute("creatorstaffid")));
+        this.setForStaffId(Helper.parseInt(element.getAttribute("forstaffid")));
+        this.setCreatorStaffName(element.getAttribute("creatorstaffname"));
+        this.setCreationDate(Helper.parseInt(element.getAttribute("creationdate")));
+        this.setContents(element.getContent());
         return this;
     }
 

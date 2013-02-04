@@ -149,7 +149,7 @@ public class RESTClient implements RESTInterface {
      * @return the raw array element
      */
     protected RawArrayElement processRequest(String controller, String method, ArrayList<String> parameters, HashMap<String, String> data, HashMap<String, HashMap<String, String>> files) {
-        RawArrayElement rawArrayElement = new RawArrayElement();
+        RawArrayElement element = new RawArrayElement();
         try {
             String url = this.getRequestData(controller, method, parameters, data);
             URL swiftURL = new URL(url);
@@ -218,10 +218,10 @@ public class RESTClient implements RESTInterface {
                 }
                 inputStream.close();
                 connection.disconnect();
-                rawArrayElement = myHandler.getRawArrayElement();
+                element = myHandler.getRawArrayElement();
 
                 if (this.config.isDebug()) {
-                    log.warning(rawArrayElement.toString());
+                    log.warning(element.toString());
                 }
 
             } else {
@@ -234,7 +234,7 @@ public class RESTClient implements RESTInterface {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return rawArrayElement;
+        return element;
     }
 
     /**

@@ -112,13 +112,13 @@ public class CustomFieldDate extends CustomField {
     }
 
     @Override
-    public CustomFieldDate populate(RawArrayElement rawArrayElement) throws KayakoException {
-        if (!rawArrayElement.getElementName().equals(objectXmlName)) {
+    public CustomFieldDate populate(RawArrayElement element) throws KayakoException {
+        if (!element.getElementName().equals(objectXmlName)) {
             throw new KayakoException();
         }
 
         //content = timestamp
-        this.setTimestamp(new Timestamp(Helper.parseLong(rawArrayElement.getContent())));
+        this.setTimestamp(new Timestamp(Helper.parseLong(element.getContent())));
         return this;
 
     }

@@ -91,11 +91,11 @@ public class CustomFieldDefinition extends KEntity {
     /**
      * Instantiates a new Custom field definition.
      *
-     * @param rawArrayElement the raw array element
+     * @param element the raw array element
      * @throws com.kayako.api.exception.KayakoException the kayako exception
      */
-    public CustomFieldDefinition(RawArrayElement rawArrayElement) throws KayakoException {
-        this.populate(rawArrayElement);
+    public CustomFieldDefinition(RawArrayElement element) throws KayakoException {
+        this.populate(element);
     }
 
     /**
@@ -219,24 +219,24 @@ public class CustomFieldDefinition extends KEntity {
     static private RawArrayElement rawDefinitions = null;
 
     @Override
-    public KEntity populate(RawArrayElement rawArrayElement) throws KayakoException {
-        if (!rawArrayElement.getElementName().equals(objectXmlName)) {
+    public KEntity populate(RawArrayElement element) throws KayakoException {
+        if (!element.getElementName().equals(objectXmlName)) {
             throw new KayakoException();
         }
         //attribute =  title, id  , type, name
-        this.setId(Helper.parseInt(rawArrayElement.getAttribute("customfieldid")));
-        this.setGroupId(Helper.parseInt(rawArrayElement.getAttribute("customfieldgroupid")));
-        this.setType(Helper.parseInt(rawArrayElement.getAttribute("fieldtype")));
-        this.setName(rawArrayElement.getAttribute("fieldname"));
-        this.setTitle(rawArrayElement.getAttribute("title"));
-        this.setDefaultValue(rawArrayElement.getAttribute("defaultvalue"));
-        this.setRequired(Helper.parseInt(rawArrayElement.getAttribute("isrequired")) == 1);
-        this.setUserEditable(Helper.parseInt(rawArrayElement.getAttribute("usereditable")) == 1);
-        this.setStaffEditable(Helper.parseInt(rawArrayElement.getAttribute("staffeditable")) == 1);
-        this.setRegexpValidate(rawArrayElement.getAttribute("regexpvalidate"));
-        this.setDisplayOrder(Helper.parseInt(rawArrayElement.getAttribute("displayorder")));
-        this.setEncrypted(Helper.parseInt(rawArrayElement.getAttribute("encryptindb")) == 1);
-        this.setDescription(rawArrayElement.getAttribute("description"));
+        this.setId(Helper.parseInt(element.getAttribute("customfieldid")));
+        this.setGroupId(Helper.parseInt(element.getAttribute("customfieldgroupid")));
+        this.setType(Helper.parseInt(element.getAttribute("fieldtype")));
+        this.setName(element.getAttribute("fieldname"));
+        this.setTitle(element.getAttribute("title"));
+        this.setDefaultValue(element.getAttribute("defaultvalue"));
+        this.setRequired(Helper.parseInt(element.getAttribute("isrequired")) == 1);
+        this.setUserEditable(Helper.parseInt(element.getAttribute("usereditable")) == 1);
+        this.setStaffEditable(Helper.parseInt(element.getAttribute("staffeditable")) == 1);
+        this.setRegexpValidate(element.getAttribute("regexpvalidate"));
+        this.setDisplayOrder(Helper.parseInt(element.getAttribute("displayorder")));
+        this.setEncrypted(Helper.parseInt(element.getAttribute("encryptindb")) == 1);
+        this.setDescription(element.getAttribute("description"));
         return this;
     }
 
@@ -690,9 +690,9 @@ public class CustomFieldDefinition extends KEntity {
         return definitions;
     }
 
-    private static ArrayList<CustomFieldDefinition> refineToArray(RawArrayElement rawArrayElement) throws KayakoException {
+    private static ArrayList<CustomFieldDefinition> refineToArray(RawArrayElement element) throws KayakoException {
         ArrayList<CustomFieldDefinition> customFieldDefinitions = new ArrayList<CustomFieldDefinition>();
-        for (RawArrayElement rawArrayElementCustomFieldDefinition : rawArrayElement.getComponents()) {
+        for (RawArrayElement rawArrayElementCustomFieldDefinition : element.getComponents()) {
             customFieldDefinitions.add(new CustomFieldDefinition(rawArrayElementCustomFieldDefinition));
         }
         return customFieldDefinitions;

@@ -76,11 +76,11 @@ public class CustomFieldSelect extends CustomField {
     }
 
     @Override
-    public CustomFieldSelect populate(RawArrayElement rawArrayElement) throws KayakoException {
-        super.populate(rawArrayElement);
-        int id = Helper.parseInt(rawArrayElement.getContent());
+    public CustomFieldSelect populate(RawArrayElement element) throws KayakoException {
+        super.populate(element);
+        int id = Helper.parseInt(element.getContent());
         if (id == 0) {
-            this.setSelectedOption(this.getOption(rawArrayElement.getContent()));
+            this.setSelectedOption(this.getOption(element.getContent()));
         } else {
             this.setSelectedOption(this.getOption(id));
         }

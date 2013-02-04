@@ -273,17 +273,17 @@ public class CustomFieldOption extends KEntity {
     }
 
     @Override
-    public CustomFieldOption populate(RawArrayElement rawArrayElement) throws KayakoException {
-        if (!rawArrayElement.getElementName().equals(objectXmlName)) {
+    public CustomFieldOption populate(RawArrayElement element) throws KayakoException {
+        if (!element.getElementName().equals(objectXmlName)) {
             throw new KayakoException();
         }
         //content = timestamp
-        this.setId(Helper.parseInt(rawArrayElement.getAttribute("customfieldoptionid")));
-        this.setFieldId(Helper.parseInt(rawArrayElement.getAttribute("customfieldid")));
-        this.setValue(rawArrayElement.getAttribute("optionvalue"));
-        this.setDisplayOrder(Helper.parseInt(rawArrayElement.getAttribute("displayorder")));
-        this.setSelected(Helper.parseInt(rawArrayElement.getAttribute("isselected")) > 0);
-        this.setParentOptionId(Helper.parseInt(rawArrayElement.getAttribute("parentcustomfieldoptionid")));
+        this.setId(Helper.parseInt(element.getAttribute("customfieldoptionid")));
+        this.setFieldId(Helper.parseInt(element.getAttribute("customfieldid")));
+        this.setValue(element.getAttribute("optionvalue"));
+        this.setDisplayOrder(Helper.parseInt(element.getAttribute("displayorder")));
+        this.setSelected(Helper.parseInt(element.getAttribute("isselected")) > 0);
+        this.setParentOptionId(Helper.parseInt(element.getAttribute("parentcustomfieldoptionid")));
         return this;
     }
 

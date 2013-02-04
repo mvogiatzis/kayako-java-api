@@ -43,11 +43,11 @@ public class Staff extends KEntity {
     /**
      * Instantiates a new Staff.
      *
-     * @param rawArrayElement the raw array element
+     * @param element the raw array element
      * @throws com.kayako.api.exception.KayakoException the kayako exception
      */
-    public Staff(RawArrayElement rawArrayElement) throws KayakoException {
-        this.populate(rawArrayElement);
+    public Staff(RawArrayElement element) throws KayakoException {
+        this.populate(element);
     }
 
     /**
@@ -624,12 +624,12 @@ public class Staff extends KEntity {
 
     //this function will populate the data of the staff instance when supplied with RawArrayElement derived from the xml
     @Override
-    public Staff populate(RawArrayElement rawArrayElement) throws KayakoException {
-        if (!rawArrayElement.getElementName().equals(objectXmlName)) {
+    public Staff populate(RawArrayElement element) throws KayakoException {
+        if (!element.getElementName().equals(objectXmlName)) {
             throw new KayakoException();
         }
 
-        ArrayList<RawArrayElement> components = rawArrayElement.getComponents();
+        ArrayList<RawArrayElement> components = element.getComponents();
         for (RawArrayElement component : components) {
             String elementName = component.getElementName();
             if (!component.isComposite() && component.getContent() == null) {

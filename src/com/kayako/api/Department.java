@@ -528,9 +528,9 @@ public class Department extends KEntity {
         return KEntity.getAll(controller);
     }
 
-    private static ArrayList<Department> refineToArray(RawArrayElement rawArrayElement) throws KayakoException {
+    private static ArrayList<Department> refineToArray(RawArrayElement element) throws KayakoException {
         ArrayList<Department> departments = new ArrayList<Department>();
-        for (RawArrayElement rawArrayElementDepartment : rawArrayElement.getComponents()) {
+        for (RawArrayElement rawArrayElementDepartment : element.getComponents()) {
             departments.add(new Department().populate(rawArrayElementDepartment));
         }
         return departments;
@@ -628,12 +628,12 @@ public class Department extends KEntity {
 
     //this function will populate the data of the department instance when supplied with RawArrayElement derived from the xml
     @Override
-    public Department populate(RawArrayElement rawArrayElement) throws KayakoException {
-        if (!rawArrayElement.getElementName().equals(objectXmlName)) {
+    public Department populate(RawArrayElement element) throws KayakoException {
+        if (!element.getElementName().equals(objectXmlName)) {
             throw new KayakoException();
         }
 
-        ArrayList<RawArrayElement> components = rawArrayElement.getComponents();
+        ArrayList<RawArrayElement> components = element.getComponents();
         for (RawArrayElement component : components) {
             String elementName = component.getElementName();
             if (!component.isComposite() && component.getContent() == null) {

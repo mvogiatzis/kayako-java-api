@@ -648,9 +648,9 @@ public class TicketTimeTrack extends KEntity {
         return getAll(controller, searchParams);
     }
 
-    private static ArrayList<TicketTimeTrack> refineToArray(RawArrayElement rawArrayElement) throws KayakoException {
+    private static ArrayList<TicketTimeTrack> refineToArray(RawArrayElement element) throws KayakoException {
         ArrayList<TicketTimeTrack> TicketTimeTracks = new ArrayList<TicketTimeTrack>();
-        for (RawArrayElement rawArrayElementTicketTimeTrack : rawArrayElement.getComponents()) {
+        for (RawArrayElement rawArrayElementTicketTimeTrack : element.getComponents()) {
             TicketTimeTracks.add(new TicketTimeTrack().populate(rawArrayElementTicketTimeTrack));
         }
         return TicketTimeTracks;
@@ -699,17 +699,17 @@ public class TicketTimeTrack extends KEntity {
 
     //this function will populate the data of the ticket time track instance when supplied with RawArrayElement derived from the xml
     @Override
-    public TicketTimeTrack populate(RawArrayElement rawArrayElement) throws KayakoException {
-        if (!rawArrayElement.getElementName().equals(objectXmlName)) {
+    public TicketTimeTrack populate(RawArrayElement element) throws KayakoException {
+        if (!element.getElementName().equals(objectXmlName)) {
             throw new KayakoException();
         }
-        this.setId(Helper.parseInt(rawArrayElement.getAttribute("id"))).setTicketId(Helper.parseInt(rawArrayElement.getAttribute("ticketid")));
-        this.setTimeWorked(Helper.parseInt(rawArrayElement.getAttribute("timeworked"))).setTimeBillable(Helper.parseInt(rawArrayElement.getAttribute("timebillable")));
-        this.setBillDate(Helper.parseInt(rawArrayElement.getAttribute("billdate"))).setWorkDate(Helper.parseInt(rawArrayElement.getAttribute("workdate")));
-        this.setNoteColor(Helper.parseInt(rawArrayElement.getAttribute("notecolor")));
-        this.setCreatorStaffName(rawArrayElement.getAttribute("creatorstaffname")).setCreatorStaffId(Helper.parseInt(rawArrayElement.getAttribute("creatorstaffid")));
-        this.setWorkerStaffName(rawArrayElement.getAttribute("workerstaffname")).setWorkerStaffId(Helper.parseInt(rawArrayElement.getAttribute("workerstaffid")));
-        this.setContents(rawArrayElement.getContent());
+        this.setId(Helper.parseInt(element.getAttribute("id"))).setTicketId(Helper.parseInt(element.getAttribute("ticketid")));
+        this.setTimeWorked(Helper.parseInt(element.getAttribute("timeworked"))).setTimeBillable(Helper.parseInt(element.getAttribute("timebillable")));
+        this.setBillDate(Helper.parseInt(element.getAttribute("billdate"))).setWorkDate(Helper.parseInt(element.getAttribute("workdate")));
+        this.setNoteColor(Helper.parseInt(element.getAttribute("notecolor")));
+        this.setCreatorStaffName(element.getAttribute("creatorstaffname")).setCreatorStaffId(Helper.parseInt(element.getAttribute("creatorstaffid")));
+        this.setWorkerStaffName(element.getAttribute("workerstaffname")).setWorkerStaffId(Helper.parseInt(element.getAttribute("workerstaffid")));
+        this.setContents(element.getContent());
         return this;
     }
 

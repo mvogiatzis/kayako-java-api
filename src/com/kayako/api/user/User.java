@@ -774,9 +774,9 @@ public class User extends KEntity {
         return User.getAllUsers(startingUserId, DEFAULT_MAX_USERS);
     }
 
-    private static ArrayList<User> refineToArray(RawArrayElement rawArrayElement) throws KayakoException {
+    private static ArrayList<User> refineToArray(RawArrayElement element) throws KayakoException {
         ArrayList<User> users = new ArrayList<User>();
-        for (RawArrayElement rawArrayElementUser : rawArrayElement.getComponents()) {
+        for (RawArrayElement rawArrayElementUser : element.getComponents()) {
             users.add(new User().populate(rawArrayElementUser));
         }
         return users;
@@ -850,12 +850,12 @@ public class User extends KEntity {
 
     //this function will populate the data of the user instance when supplied with RawArrayElement derived from the xml
     @Override
-    public User populate(RawArrayElement rawArrayElement) throws KayakoException {
-        if (!rawArrayElement.getElementName().equals(objectXmlName)) {
+    public User populate(RawArrayElement element) throws KayakoException {
+        if (!element.getElementName().equals(objectXmlName)) {
             throw new KayakoException();
         }
 
-        ArrayList<RawArrayElement> components = rawArrayElement.getComponents();
+        ArrayList<RawArrayElement> components = element.getComponents();
         for (RawArrayElement component : components) {
             String elementName = component.getElementName();
             if (!component.isComposite() && component.getContent() == null) {

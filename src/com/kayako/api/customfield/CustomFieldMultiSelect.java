@@ -101,9 +101,9 @@ public class CustomFieldMultiSelect extends CustomField {
     //TODO setValue, getValue
 
     @Override
-    public CustomFieldMultiSelect populate(RawArrayElement rawArrayElement) throws KayakoException {
-        super.populate(rawArrayElement);
-        String[] values = rawArrayElement.getContent().split(VALUE_SEPARATOR);
+    public CustomFieldMultiSelect populate(RawArrayElement element) throws KayakoException {
+        super.populate(element);
+        String[] values = element.getContent().split(VALUE_SEPARATOR);
         for (String value : values) {
             this.addToOptions(this.getOption(value));
         }
