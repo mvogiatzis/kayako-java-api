@@ -38,7 +38,7 @@ public class Department extends KEntity {
      * Instantiates a new Department.
      */
     public Department() {
-        this.setType(TypeAccess.PUBLIC);
+        this.setType(AccessTypeEnum.PUBLIC);
     }
 
     /**
@@ -47,7 +47,7 @@ public class Department extends KEntity {
      * @param title the title
      */
     public Department(String title) {
-        this(title, TypeAccess.PUBLIC);
+        this(title, AccessTypeEnum.PUBLIC);
     }
 
     /**
@@ -56,7 +56,7 @@ public class Department extends KEntity {
      * @param title the title
      * @param type  the type
      */
-    public Department(String title, TypeAccess type) {
+    public Department(String title, AccessTypeEnum type) {
         this(title, type, AppEnum.TICKETS);
     }
 
@@ -67,7 +67,7 @@ public class Department extends KEntity {
      * @param type  the type
      * @param app   the app
      */
-    public Department(String title, TypeAccess type, AppEnum app) {
+    public Department(String title, AccessTypeEnum type, AppEnum app) {
         this.title = title;
         this.type = type;
         this.app = app;
@@ -138,7 +138,7 @@ public class Department extends KEntity {
      */
     private HashMap<Integer, UserGroup> userGroups = new HashMap<Integer, UserGroup>();
 
-    protected TypeAccess type;
+    protected AccessTypeEnum type;
 
     /**
      * Department app.
@@ -424,7 +424,7 @@ public class Department extends KEntity {
      *
      * @return the type
      */
-    public TypeAccess getType() {
+    public AccessTypeEnum getType() {
         return type;
     }
 
@@ -434,7 +434,7 @@ public class Department extends KEntity {
      * @param type the type
      * @return the type
      */
-    public Department setType(TypeAccess type) {
+    public Department setType(AccessTypeEnum type) {
         this.type = type;
         return this;
     }
@@ -572,7 +572,7 @@ public class Department extends KEntity {
      * @return Department department
      */
     public Department createSubDepartment(String title) {
-        return this.createSubDepartment(title, TypeAccess.PUBLIC);
+        return this.createSubDepartment(title, AccessTypeEnum.PUBLIC);
     }
 
     /**
@@ -622,7 +622,7 @@ public class Department extends KEntity {
      * @param type  the type
      * @return the department
      */
-    public Department createSubDepartment(String title, TypeAccess type) {
+    public Department createSubDepartment(String title, AccessTypeEnum type) {
         return new Department(title, type, this.getApp()).setParentDepartment(this);
     }
 
@@ -650,7 +650,7 @@ public class Department extends KEntity {
             } else if (elementName.equals("displayicon")) {
                 this.setDisplayIcon(component.getContent());
             } else if (elementName.equals("type")) {
-                this.setType(TypeAccess.getEnum(component.getContent()));
+                this.setType(AccessTypeEnum.getEnum(component.getContent()));
             } else if (elementName.equals("app")) {
                 this.setApp(AppEnum.getEnum(component.getContent()));
             } else if (elementName.equals("uservisibilitycustom")) {

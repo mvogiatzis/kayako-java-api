@@ -1,7 +1,7 @@
 package com.kayako.api.ticket;
 
+import com.kayako.api.AccessTypeEnum;
 import com.kayako.api.Department;
-import com.kayako.api.TypeAccess;
 import com.kayako.api.exception.KayakoException;
 import com.kayako.api.rest.KEntity;
 import com.kayako.api.rest.RawArrayElement;
@@ -131,7 +131,7 @@ public class TicketStatus extends KEntity {
      */
     protected String color;
 
-    protected TypeAccess type;
+    protected AccessTypeEnum type;
 
     /**
      * If enabled, Kayako will automatically clear the due time for a ticket when the ticket status changes to this status.
@@ -491,7 +491,7 @@ public class TicketStatus extends KEntity {
      *
      * @return the type
      */
-    public TypeAccess getType() {
+    public AccessTypeEnum getType() {
         return type;
     }
 
@@ -500,7 +500,7 @@ public class TicketStatus extends KEntity {
      *
      * @param type the type
      */
-    public TicketStatus setType(TypeAccess type) {
+    public TicketStatus setType(AccessTypeEnum type) {
         this.type = type;
         return this;
     }
@@ -661,7 +661,7 @@ public class TicketStatus extends KEntity {
             } else if (elementName.equals("displayicon")) {
                 this.setDisplayIcon(component.getContent());
             } else if (elementName.equals("type")) {
-                this.setType(TypeAccess.getEnum(component.getContent()));
+                this.setType(AccessTypeEnum.getEnum(component.getContent()));
             } else if (elementName.equals("statuscolor")) {
                 this.setColor(component.getContent());
             } else if (elementName.equals("statusbgcolor")) {

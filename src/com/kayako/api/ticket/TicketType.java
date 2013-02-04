@@ -1,7 +1,7 @@
 package com.kayako.api.ticket;
 
+import com.kayako.api.AccessTypeEnum;
 import com.kayako.api.Department;
-import com.kayako.api.TypeAccess;
 import com.kayako.api.exception.KayakoException;
 import com.kayako.api.rest.KEntity;
 import com.kayako.api.rest.RawArrayElement;
@@ -77,7 +77,7 @@ public class TicketType extends KEntity {
      */
     protected String displayIcon;
 
-    protected TypeAccess type;
+    protected AccessTypeEnum type;
 
     /**
      * If this ticket type is visible to specific user groups only.
@@ -146,7 +146,7 @@ public class TicketType extends KEntity {
      *
      * @return the type
      */
-    public TypeAccess getType() {
+    public AccessTypeEnum getType() {
 
         return type;
     }
@@ -156,7 +156,7 @@ public class TicketType extends KEntity {
      *
      * @param type the type
      */
-    public void setType(TypeAccess type) {
+    public void setType(AccessTypeEnum type) {
         this.type = type;
     }
 
@@ -445,7 +445,7 @@ public class TicketType extends KEntity {
             } else if (elementName.equals("displayicon")) {
                 this.setDisplayIcon(component.getContent());
             } else if (elementName.equals("type")) {
-                this.setType(TypeAccess.getEnum(component.getContent()));
+                this.setType(AccessTypeEnum.getEnum(component.getContent()));
             } else if (elementName.equals("uservisibilitycustom")) {
                 if (Helper.parseInt(component.getContent()) == 1) {
                     this.setUserVisibilityCustom(true);

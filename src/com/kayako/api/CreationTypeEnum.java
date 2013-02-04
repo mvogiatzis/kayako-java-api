@@ -9,7 +9,7 @@ package com.kayako.api;
  * @license http ://www.kayako.com/license
  * @link http ://www.kayako.com
  */
-public enum TypeAccess {
+public enum CreationTypeEnum {
     /**
      * The PUBLIC.
      */PUBLIC, /**
@@ -39,7 +39,7 @@ public enum TypeAccess {
      * @param access the access
      * @return the enum
      */
-    public static TypeAccess getEnum(String access) {
+    public static CreationTypeEnum getEnum(String access) {
         if (access.equalsIgnoreCase("public")) {
             return PUBLIC;
         } else {
