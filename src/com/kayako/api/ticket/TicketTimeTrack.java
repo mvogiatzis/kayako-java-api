@@ -1,5 +1,6 @@
 package com.kayako.api.ticket;
 
+import com.kayako.api.enums.ColorEnum;
 import com.kayako.api.exception.KayakoException;
 import com.kayako.api.rest.KEntity;
 import com.kayako.api.rest.RawArrayElement;
@@ -11,6 +12,7 @@ import java.util.HashMap;
 
 /**
  * The type Ticket time track.
+ *
  * @author Kayako Support System Pvt Ltd
  * @package api
  * @copyright Copyright (c) 2001-2012, Kayako
@@ -18,41 +20,6 @@ import java.util.HashMap;
  * @link http ://www.kayako.com
  */
 public class TicketTimeTrack extends KEntity {
-
-    /**
-     * Color of time track - yellow.
-     *
-     * @var int
-     */
-    public static final int COLOR_YELLOW = 1;
-
-    /**
-     * Color of time track - purple.
-     *
-     * @var int
-     */
-    public static final int COLOR_PURPLE = 2;
-
-    /**
-     * Color of time track - blue.
-     *
-     * @var int
-     */
-    public static final int COLOR_BLUE = 3;
-
-    /**
-     * Color of time track - green.
-     *
-     * @var int
-     */
-    public static final int COLOR_GREEN = 4;
-
-    /**
-     * Color of time track - red.
-     *
-     * @var int
-     */
-    public static final int COLOR_RED = 5;
 
     /**
      * The Controller.
@@ -145,12 +112,8 @@ public class TicketTimeTrack extends KEntity {
 
     /**
      * Ticket time track note color.
-     *
-     * @apiField
-     * @var int
-     * @see  ::COLOR constants.
      */
-    protected int noteColor;
+    protected ColorEnum noteColor;
 
     /**
      * Note contents of this ticket time track.
@@ -190,10 +153,10 @@ public class TicketTimeTrack extends KEntity {
     /**
      * Instantiates a new Ticket time track.
      *
-     * @param ticket the ticket
-     * @param contents the contents
-     * @param staff the staff
-     * @param timeWorked the time worked
+     * @param ticket       the ticket
+     * @param contents     the contents
+     * @param staff        the staff
+     * @param timeWorked   the time worked
      * @param timeBillable the time billable
      */
     public TicketTimeTrack(Ticket ticket, String contents, Staff staff, int timeWorked, int timeBillable) {
@@ -204,10 +167,10 @@ public class TicketTimeTrack extends KEntity {
     /**
      * Instantiates a new Ticket time track.
      *
-     * @param ticket the ticket
-     * @param contents the contents
-     * @param staff the staff
-     * @param timeWorked the time worked
+     * @param ticket       the ticket
+     * @param contents     the contents
+     * @param staff        the staff
+     * @param timeWorked   the time worked
      * @param timeBillable the time billable
      */
     public TicketTimeTrack(Ticket ticket, String contents, Staff staff, String timeWorked, String timeBillable) {
@@ -305,7 +268,8 @@ public class TicketTimeTrack extends KEntity {
      * Gets ticket.
      *
      * @return the ticket
-     * @throws com.kayako.api.exception.KayakoException the kayako exception
+     * @throws com.kayako.api.exception.KayakoException
+     *          the kayako exception
      */
     public Ticket getTicket() throws KayakoException {
         return this.getTicket(false);
@@ -563,7 +527,7 @@ public class TicketTimeTrack extends KEntity {
      *
      * @return the note color
      */
-    public int getNoteColor() {
+    public ColorEnum getNoteColor() {
         return noteColor;
     }
 
@@ -573,7 +537,7 @@ public class TicketTimeTrack extends KEntity {
      * @param noteColor the note color
      * @return the note color
      */
-    public TicketTimeTrack setNoteColor(int noteColor) {
+    public TicketTimeTrack setNoteColor(ColorEnum noteColor) {
         this.noteColor = noteColor;
         return this;
     }
@@ -671,7 +635,7 @@ public class TicketTimeTrack extends KEntity {
      * Get ticket time track.
      *
      * @param ticketId the ticket id
-     * @param id the id
+     * @param id       the id
      * @return the ticket time track
      * @throws KayakoException the kayako exception
      */
@@ -706,7 +670,7 @@ public class TicketTimeTrack extends KEntity {
         this.setId(Helper.parseInt(element.getAttribute("id"))).setTicketId(Helper.parseInt(element.getAttribute("ticketid")));
         this.setTimeWorked(Helper.parseInt(element.getAttribute("timeworked"))).setTimeBillable(Helper.parseInt(element.getAttribute("timebillable")));
         this.setBillDate(Helper.parseInt(element.getAttribute("billdate"))).setWorkDate(Helper.parseInt(element.getAttribute("workdate")));
-        this.setNoteColor(Helper.parseInt(element.getAttribute("notecolor")));
+        this.setNoteColor(ColorEnum.getEnum(element.getAttribute("notecolor")));
         this.setCreatorStaffName(element.getAttribute("creatorstaffname")).setCreatorStaffId(Helper.parseInt(element.getAttribute("creatorstaffid")));
         this.setWorkerStaffName(element.getAttribute("workerstaffname")).setWorkerStaffId(Helper.parseInt(element.getAttribute("workerstaffid")));
         this.setContents(element.getContent());
@@ -735,7 +699,7 @@ public class TicketTimeTrack extends KEntity {
         if (this.getWorkerStaffId() != 0) {
             ticketTimeTrackHashMap.put("workerstaffid", Integer.toString(this.getWorkerStaffId()));
         }
-        ticketTimeTrackHashMap.put("notecolor", Integer.toString(this.getNoteColor()));
+        ticketTimeTrackHashMap.put("notecolor", this.getNoteColor().getString());
         return ticketTimeTrackHashMap;
     }
 

@@ -1,6 +1,7 @@
 package com.kayako.api.ticket;
 
 import com.kayako.api.enums.ColorEnum;
+import com.kayako.api.enums.TicketNoteTypeEnum;
 import com.kayako.api.exception.KayakoException;
 import com.kayako.api.rest.KEntity;
 import com.kayako.api.rest.RawArrayElement;
@@ -22,27 +23,6 @@ import java.util.HashMap;
  * @link http ://www.kayako.com
  */
 public class TicketNote extends KEntity {
-
-    /**
-     * Note type - connected to ticket.
-     *
-     * @var string
-     */
-    public static final String TYPE_TICKET = "ticket";
-
-    /**
-     * Note type - connected to user.
-     *
-     * @var string
-     */
-    public static final String TYPE_USER = "user";
-
-    /**
-     * Note type - connected to user organization.
-     *
-     * @var string
-     */
-    public static final String TYPE_USER_ORGANIZATION = "userorganization";
 
     /**
      * The Controller.
@@ -87,12 +67,8 @@ public class TicketNote extends KEntity {
 
     /**
      * Note type.
-     *
-     * @apiField
-     * @var string
-     * @see ::TYPE static final Stringants.
      */
-    protected String type = TYPE_TICKET;
+    protected TicketNoteTypeEnum type = TicketNoteTypeEnum.TICKET;
 
     /**
      * Ticket note color.
@@ -266,7 +242,7 @@ public class TicketNote extends KEntity {
      * @return the ticket id
      */
     public int getTicketId() {
-        if (this.getType().equals(TYPE_TICKET)) {
+        if (this.getType().equals(TicketNoteTypeEnum.TICKET)) {
             return ticketId;
         } else {
             return 0;
@@ -283,7 +259,7 @@ public class TicketNote extends KEntity {
         this.ticketId = ticketId;
         this.ticket = null;
         if (ticketId > 0) {
-            this.type = TYPE_TICKET;
+            this.type = TicketNoteTypeEnum.TICKET;
         }
         return this;
     }
@@ -294,7 +270,7 @@ public class TicketNote extends KEntity {
      * @return the user id
      */
     public int getUserId() {
-        if (!this.getType().equals(TYPE_USER)) {
+        if (!this.getType().equals(TicketNoteTypeEnum.USER)) {
             return 0;
         }
         return userId;
@@ -350,7 +326,7 @@ public class TicketNote extends KEntity {
      * @throws KayakoException the kayako exception
      */
     public User getUser(Boolean refresh) throws KayakoException {
-        if (!this.getType().equals(TYPE_USER)) {
+        if (!this.getType().equals(TicketNoteTypeEnum.USER)) {
             return null;
         }
         if ((this.user == null || refresh) && this.getUserId() > 0) {
@@ -368,7 +344,7 @@ public class TicketNote extends KEntity {
     public TicketNote setUser(User user) {
         this.user = user;
         this.userId = user.getId();
-        this.type = TYPE_USER;
+        this.type = TicketNoteTypeEnum.USER;
         return this;
     }
 
@@ -390,7 +366,7 @@ public class TicketNote extends KEntity {
      * @throws KayakoException the kayako exception
      */
     public Ticket getTicket(Boolean refresh) throws KayakoException {
-        if (!this.getType().equals(TYPE_TICKET)) {
+        if (!this.getType().equals(TicketNoteTypeEnum.TICKET)) {
             return null;
         }
         if ((this.ticket == null || refresh) && this.getTicketId() > 0) {
@@ -408,7 +384,7 @@ public class TicketNote extends KEntity {
     public TicketNote setTicket(Ticket ticket) {
         this.ticket = ticket;
         this.ticketId = ticket.getId();
-        this.type = TYPE_TICKET;
+        this.type = TicketNoteTypeEnum.TICKET;
         return this;
     }
 
@@ -418,7 +394,7 @@ public class TicketNote extends KEntity {
      * @return the user organization id
      */
     public int getUserOrganizationId() {
-        if (!this.getType().equals(TYPE_USER_ORGANIZATION)) {
+        if (!this.getType().equals(TicketNoteTypeEnum.USER_ORGANIZATION)) {
             return 0;
         }
         return userOrganizationId;
@@ -441,7 +417,7 @@ public class TicketNote extends KEntity {
      *
      * @return the type
      */
-    public String getType() {
+    public TicketNoteTypeEnum getType() {
         return type;
     }
 
@@ -451,7 +427,7 @@ public class TicketNote extends KEntity {
      * @param type the type
      * @return the type
      */
-    public TicketNote setType(String type) {
+    public TicketNote setType(TicketNoteTypeEnum type) {
         this.type = type;
         return this;
     }
@@ -752,7 +728,7 @@ public class TicketNote extends KEntity {
      * @throws KayakoException the kayako exception
      */
     public TicketNote create() throws KayakoException {
-        if (!this.getType().equals(TYPE_TICKET)) {
+        if (!this.getType().equals(TicketNoteTypeEnum.TICKET)) {
             throw new KayakoException("Ticket note creation is for type ticket only.");
         }
         return (TicketNote) super.create(controller);
@@ -771,11 +747,11 @@ public class TicketNote extends KEntity {
     public ArrayList<String> getIdArray() {
         ArrayList<String> arrayList = new ArrayList<String>();
 
-        if (this.getType().equals(TYPE_TICKET)) {
+        if (this.getType().equals(TicketNoteTypeEnum.TICKET)) {
             arrayList.add(Integer.toString(this.getTicketId()));
-        } else if (this.getType().equals(TYPE_USER)) {
+        } else if (this.getType().equals(TicketNoteTypeEnum.USER)) {
             arrayList.add(Integer.toString(this.getUserId()));
-        } else if (this.getType().equals(TYPE_USER_ORGANIZATION)) {
+        } else if (this.getType().equals(TicketNoteTypeEnum.USER_ORGANIZATION)) {
             arrayList.add(Integer.toString(this.getUserOrganizationId()));
         }
 
@@ -789,12 +765,12 @@ public class TicketNote extends KEntity {
         if (!element.getElementName().equals(objectXmlName)) {
             throw new KayakoException();
         }
-        this.setType(element.getAttribute("type")).setId(Helper.parseInt(element.getAttribute("id")));
-        if (this.getType().equals(TYPE_TICKET)) {
+        this.setType(TicketNoteTypeEnum.getEnum(element.getAttribute("type"))).setId(Helper.parseInt(element.getAttribute("id")));
+        if (this.getType().equals(TicketNoteTypeEnum.TICKET)) {
             this.setTicketId(Helper.parseInt(element.getAttribute("ticketid")));
-        } else if (this.getType().equals(TYPE_USER)) {
+        } else if (this.getType().equals(TicketNoteTypeEnum.USER)) {
             this.setUserId(Helper.parseInt(element.getAttribute("userid")));
-        } else if (this.getType().equals(TYPE_USER_ORGANIZATION)) {
+        } else if (this.getType().equals(TicketNoteTypeEnum.USER_ORGANIZATION)) {
             this.setUserOrganizationId(Helper.parseInt(element.getAttribute("userorganizationid")));
         }
         this.setNoteColor(ColorEnum.getEnum(element.getAttribute("notecolor")));
