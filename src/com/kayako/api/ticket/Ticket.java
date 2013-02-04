@@ -1,8 +1,6 @@
 package com.kayako.api.ticket;
 
-import com.kayako.api.CreatorEnum;
-import com.kayako.api.Department;
-import com.kayako.api.FlagEnum;
+import com.kayako.api.*;
 import com.kayako.api.customfield.CustomFieldGroup;
 import com.kayako.api.exception.KayakoException;
 import com.kayako.api.rest.KEntityCustom;
@@ -26,34 +24,6 @@ import java.util.HashMap;
  */
 public class Ticket extends KEntityCustom {
 
-    /**
-     * The constant CREATION_MODE_SUPPORTCENTER.
-     */
-    public static final int CREATION_MODE_SUPPORTCENTER = 1;
-    /**
-     * The constant CREATION_MODE_STAFFCP.
-     */
-    public static final int CREATION_MODE_STAFFCP = 2;
-    /**
-     * The constant CREATION_MODE_EMAIL.
-     */
-    public static final int CREATION_MODE_EMAIL = 3;
-    /**
-     * The constant CREATION_MODE_API.
-     */
-    public static final int CREATION_MODE_API = 4;
-    /**
-     * The constant CREATION_MODE_SITEBADGE.
-     */
-    public static final int CREATION_MODE_SITEBADGE = 5;
-    /**
-     * The constant CREATION_TYPE_DEFAULT.
-     */
-    public static final int CREATION_TYPE_DEFAULT = 1;
-    /**
-     * The constant CREATION_TYPE_PHONE.
-     */
-    public static final int CREATION_TYPE_PHONE = 2;
     /**
      * Flag for searching using query - search the Ticket ID & Mask ID :  SEARCH_TICKET_ID
      */
@@ -290,16 +260,12 @@ public class Ticket extends KEntityCustom {
     protected CreatorEnum creator;
     /**
      * Ticket creation mode.
-     *
-     * @apiField * @see Ticket::CREATION_MODE static final Stringants.
      */
-    protected int creationMode;
+    protected CreationModeEnum creationMode;
     /**
      * Ticket creation type.
-     *
-     * @apiField alias =type     * @see Ticket::CREATION_TYPE static final Stringants.
      */
-    protected int creationType;
+    protected CreationTypeEnum creationType;
     /**
      * Is this ticket escalated.
      *
@@ -1281,7 +1247,7 @@ public class Ticket extends KEntityCustom {
      *
      * @return the creation mode
      */
-    public int getCreationMode() {
+    public CreationModeEnum getCreationMode() {
         return creationMode;
     }
 
@@ -1291,7 +1257,7 @@ public class Ticket extends KEntityCustom {
      * @param creationMode the creation mode
      * @return the creation mode
      */
-    public Ticket setCreationMode(int creationMode) {
+    public Ticket setCreationMode(CreationModeEnum creationMode) {
         this.creationMode = creationMode;
         return this;
     }
@@ -1301,7 +1267,7 @@ public class Ticket extends KEntityCustom {
      *
      * @return the creation type
      */
-    public int getCreationType() {
+    public CreationTypeEnum getCreationType() {
         return creationType;
     }
 
@@ -1311,7 +1277,7 @@ public class Ticket extends KEntityCustom {
      * @param creationType the creation type
      * @return the creation type
      */
-    public Ticket setCreationType(int creationType) {
+    public Ticket setCreationType(CreationTypeEnum creationType) {
         this.creationType = creationType;
         return this;
     }
@@ -2465,9 +2431,9 @@ public class Ticket extends KEntityCustom {
             } else if (elementName.equals("creator")) {
                 this.setCreator(CreatorEnum.getEnum(component.getContent()));
             } else if (elementName.equals("creationmode")) {
-                this.setCreationMode(Helper.parseInt(component.getContent()));
+                this.setCreationMode(CreationModeEnum.getEnum(component.getContent()));
             } else if (elementName.equals("creationtype")) {
-                this.setCreationType(Helper.parseInt(component.getContent()));
+                this.setCreationType(CreationTypeEnum.getEnum(component.getContent()));
             } else if (elementName.equals("isescalated")) {
                 this.setEscalated(Helper.parseInt(component.getContent()) == 1);
             } else if (elementName.equals("escalationruleid")) {
@@ -2537,7 +2503,7 @@ public class Ticket extends KEntityCustom {
                     break;
             }
             ticketHashMap.put("contents", this.getContents());
-            ticketHashMap.put("type", Integer.toString(this.getCreationType()));
+            ticketHashMap.put("type", this.getCreationType().getString());
             ticketHashMap.put("ignoreautoresponder", this.getIgnoreAutoResponder() ? "1" : "0");
 
         } else {

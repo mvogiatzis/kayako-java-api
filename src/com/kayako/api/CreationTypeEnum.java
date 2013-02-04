@@ -11,10 +11,10 @@ package com.kayako.api;
  */
 public enum CreationTypeEnum {
     /**
-     * The PUBLIC.
-     */PUBLIC, /**
-     * The PRIVATE.
-     */PRIVATE;
+     * The DEFAULT.
+     */DEFAULT, /**
+     * The PHONE.
+     */PHONE;
 
     /**
      * Gets string.
@@ -23,10 +23,10 @@ public enum CreationTypeEnum {
      */
     public String getString() {
         switch (this) {
-            case PUBLIC:
-                return "public";
-            case PRIVATE:
-                return "private";
+            case DEFAULT:
+                return "1";
+            case PHONE:
+                return "2";
             default:
                 return "";
         }
@@ -40,10 +40,10 @@ public enum CreationTypeEnum {
      * @return the enum
      */
     public static CreationTypeEnum getEnum(String access) {
-        if (access.equalsIgnoreCase("public")) {
-            return PUBLIC;
+        if (access.equalsIgnoreCase("2")) {
+            return DEFAULT;
         } else {
-            return PRIVATE;
+            return PHONE;
         }
     }
 }
