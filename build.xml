@@ -1,6 +1,6 @@
 <project name="JavaSDK" default="dist" basedir=".">
     <description>
-        simple example build file
+        Build File for Kayako
     </description>
     <property name="src" location="src"/>
     <property name="build" location="build"/>
@@ -10,8 +10,7 @@
         <tstamp/>
         <mkdir dir="${build}"/>
     </target>
-    <target name="compile" depends="init"
-            description="compile the source ">
+    <target name="compile" depends="init" description="compile the source ">
         <javac srcdir="${src}" destdir="${build}" includeantruntime="false">
             <classpath id="classpath" description="The default classpath.">
                 <pathelement path="${lib}"/>
@@ -20,7 +19,6 @@
                 </fileset>
             </classpath>
         </javac>
-
     </target>
     <target name="dist" depends="compile"
             description="generate the distribution">
