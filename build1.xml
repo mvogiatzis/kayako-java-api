@@ -62,7 +62,7 @@
   <!-- Project Libraries -->
   
   <path id="library.base64-2.3.8.classpath">
-    <pathelement location="${basedir}/src/com/kayako/api/tpl/base64-2.3.8.jar"/>
+    <pathelement location="${basedir}/lib/base64-2.3.8.jar"/>
   </path>
   
   
@@ -109,9 +109,6 @@
   
   <patternset id="excluded.from.module.javasdk">
     <patternset refid="ignored.files"/>
-    <exclude name="Doc/**"/>
-    <exclude name=".idea/**"/>
-    <exclude name="out/**"/>
   </patternset>
   
   <patternset id="excluded.from.compilation.javasdk">
@@ -119,9 +116,8 @@
   </patternset>
   
   <path id="javasdk.module.sourcepath">
-    <dirset dir="${module.javasdk.basedir}/../../workspace">
-      <include name="JavaSDK"/>
-      <include name="JavaSDK/src"/>
+    <dirset dir="${module.javasdk.basedir}">
+      <include name="src"/>
     </dirset>
   </path>
   
@@ -139,10 +135,6 @@
     </javac>
     
     <copy todir="${javasdk.output.dir}">
-      <fileset dir="${module.javasdk.basedir}">
-        <patternset refid="compiler.resources"/>
-        <type type="file"/>
-      </fileset>
       <fileset dir="${module.javasdk.basedir}/src">
         <patternset refid="compiler.resources"/>
         <type type="file"/>
