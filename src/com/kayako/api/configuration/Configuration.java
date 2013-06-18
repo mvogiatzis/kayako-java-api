@@ -1,18 +1,36 @@
 package com.kayako.api.configuration;
 
+/*
+Copyright (c) 2013 Kayako
+
+Permission is hereby granted, free of charge, to any person
+obtaining a copy of this software and associated documentation
+files (the "Software"), to deal in the Software without
+restriction, including without limitation the rights to use,
+copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following
+conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+OTHER DEALINGS IN THE SOFTWARE.
+*/
+
 import com.kayako.api.util.library.RESTClient;
 import com.kayako.api.util.library.RESTInterface;
 
 /**
  * The type Configuration.
- *
- * @author Kayako Support System Pvt Ltd
- * @package api
- * @copyright Copyright (c) 2001-2012, Kayako
- * @license http ://www.kayako.com/license
- * @link http ://www.kayako.com
  */
-
 public class Configuration {
     private String baseUrl;
     private String apiKey;
@@ -20,7 +38,7 @@ public class Configuration {
     private Boolean debug;
     private Boolean standardUrlType = true;
     private static Configuration configuration = null;
-    //http://docs.oracle.com/javase/6/docs/api/java/text/SimpleDateFormat.html
+
     private String dateFormat = "yyyy-MM-dd";
     private String dateTimeFormat = "yyyy-MM-dd HH:mm:ss";
 
@@ -32,7 +50,6 @@ public class Configuration {
     private RESTInterface restClient = null;
 
     private Configuration(String baseUrl, String apiKey, String secretKey, Boolean testMode) {
-        //this("http://swift.kayako.com/api/index.php?", "80866fb4-b6e2-6548-a51sfda37894", "ZWJiNTkzYzMtNmEwNS1dfgfdgdfghdhYzhmMWRkNDVkYmY2ZmQwYjU4MjgtYzY0ghfGQ0LWJkZjktNWE3NmViZDRhMmFk");
         this.baseUrl = baseUrl;
         this.apiKey = apiKey;
         this.secretKey = secretKey;
@@ -52,6 +69,7 @@ public class Configuration {
             configuration.setSecretKey(secretKey);
             configuration.setDebug(testMode);
         }
+        
         return configuration;
     }
 
