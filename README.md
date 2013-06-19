@@ -24,6 +24,10 @@ public class TestTicket{
 	
 	public void TestCreation() {
 	
+		Configuration config = Configuration.init("<API URL>", "<API Key>", "<Secret Key>");
+		Configuration.setConfiguration(config);
+	
+		try {		
 			// Get User Group
 			UserGroup ug = new UserGroup().populate(UserGroup.getAll(UserGroup.getController()).filterByComponentValue("title", "Registered").getFirstComponent());
 			
@@ -31,7 +35,7 @@ public class TestTicket{
 			UserOrganization uo = new UserOrganization().populate(UserOrganization.getAll(UserOrganization.getController()).getFirstComponent());
 			
 			// Create User
-			User user = ug.createUser("Sampl222333eUser", "sampleuser" + System.currentTimeMillis() + "@example.com", "abc123").setUserOrganization(uo).setSalutation(SalutationEnum.MR).setSendWelcomeEmail(false).create();
+			User user = ug.createUser("Sampl222333eUser", "sampleuser@example.com", "abc123").setUserOrganization(uo).setSalutation(SalutationEnum.MR).setSendWelcomeEmail(false).create();
 		
 			// Get priority component
 			TicketPriority tp = new TicketPriority().populate(TicketPriority.getAll().filterByComponentValue("title", "Urgent").getFirstComponent());
@@ -48,6 +52,7 @@ public class TestTicket{
 			
 			System.out.println(" ticket ID :: " + ticket.getId());
 		} catch(Exception exception) {
+			exception.printStackTrace();
 		}
 			
 		return;
