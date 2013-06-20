@@ -694,7 +694,7 @@ public class Department extends KEntity {
         return this;
     }
 
-    public HashMap<String, String> buildHashMap() {
+    public HashMap<String, String> buildHashMap(Boolean newDepartment) {
         HashMap<String, String> departmentHashMap = new HashMap<String, String>();
         departmentHashMap.put("title", this.getTitle());
         departmentHashMap.put("type", this.getType().getString());
