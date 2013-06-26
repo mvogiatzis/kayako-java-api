@@ -834,5 +834,17 @@ public class TicketNote extends KEntity {
     public String toString() {
         return super.toString();
     }
+    
+    /**
+     * Get raw array element.
+     *
+     * @param controller the controller
+     * @param parameters ArrayList of Parameters (TicketID and TicketTimeTrackID)
+     * @return the raw array element
+     * @throws KayakoException the kayako exception
+     */
+    public static RawArrayElement get(String controller, ArrayList<String> parameters) throws KayakoException {
+        return KEntity.getRESTClient().get(controller, parameters).getFirstComponent();
+    }
 
 }

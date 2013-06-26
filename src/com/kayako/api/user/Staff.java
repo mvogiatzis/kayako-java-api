@@ -692,7 +692,7 @@ public class Staff extends KEntity {
      *
      * @return the hash map
      */
-    public HashMap<String, String> buildHashMap() {
+    public HashMap<String, String> buildHashMap(Boolean NewStaff) {
         HashMap<String, String> staffHashMap = new HashMap<String, String>();
         staffHashMap.put("firstname", this.getFirstName());
         staffHashMap.put("lastname", this.getLastName());
