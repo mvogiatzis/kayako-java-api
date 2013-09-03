@@ -621,4 +621,16 @@ public class TicketAttachment extends KEntity {
     public TicketAttachment create() throws KayakoException {
         return (TicketAttachment) super.create(controller);
     }
+    
+    /**
+     * Get raw array element.
+     *
+     * @param controller the controller
+     * @param parameters @param parameters ArrayList of Parameters (TicketID and TicketAttachmentID)
+     * @return the raw array element
+     * @throws KayakoException the kayako exception
+     */ //These functions will return RawArrayElement, similar functions will be written in SubClasses to use these functions
+    public static RawArrayElement get(String controller, ArrayList<String> parameters) throws KayakoException {
+        return KEntity.getRESTClient().get(controller, parameters).getFirstComponent();
+    }
 }
