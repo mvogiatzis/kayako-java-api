@@ -161,6 +161,7 @@ public class CustomFieldFile extends CustomField {
             throw new KayakoException();
         }
 
+        super.populate(element);
         this.setFileName(element.getAttribute("filename"));
 
         try {

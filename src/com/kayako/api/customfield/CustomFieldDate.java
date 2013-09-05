@@ -136,9 +136,12 @@ public class CustomFieldDate extends CustomField {
             throw new KayakoException();
         }
 
-        //content = timestamp
-        this.setTimestamp(new Timestamp(Helper.parseLong(element.getContent())));
+        super.populate(element);
+        try {
+			this.setTimestamp(new Timestamp(Helper.getTimeStampFromDateString(element.getContent())));
+		} catch (ParseException e) {
+		}
+        
         return this;
-
     }
 }
