@@ -684,7 +684,7 @@ public class Department extends KEntity {
                 ArrayList<RawArrayElement> userGroupElements = component.getComponents();
                 for (RawArrayElement innerComponent : userGroupElements) {
                     if (innerComponent.getElementName().equals("id")) {
-                        this.userGroupIds.add(new Integer(component.getContent()));
+                        this.userGroupIds.add(new Integer(innerComponent.getContent()));
                     }
 
                 }
