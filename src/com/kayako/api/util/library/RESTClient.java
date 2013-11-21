@@ -29,6 +29,8 @@ import com.kayako.api.configuration.Configuration;
 import com.kayako.api.exception.KayakoException;
 import com.kayako.api.rest.RawArrayElement;
 import com.kayako.api.rest.XMLHandler;
+import com.kayako.api.util.Helper;
+
 import net.iharder.Base64;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -38,6 +40,8 @@ import javax.crypto.spec.SecretKeySpec;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
+
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -224,8 +228,14 @@ public class RESTClient implements RESTInterface {
                 SAXParserFactory factory = SAXParserFactory.newInstance();
 
                 try {
+                	String content = Helper.slurp(inputStream, 1024);
+                	
+                	if (this.config.isDebug()) {
+                		log.warning("Response Content :: " + content);
+                	}
+                	
                     SAXParser parser = factory.newSAXParser();
-                    parser.parse(is, myHandler);
+                    parser.parse(new InputSource(new ByteArrayInputStream(content.getBytes())), myHandler);
                 } catch (ParserConfigurationException e) {
                     e.printStackTrace();
                 } catch (SAXException e) {
@@ -251,7 +261,7 @@ public class RESTClient implements RESTInterface {
         }
         return element;
     }
-
+    
     /**
      * Prepares URL (and returns it) and POST data (updates it via reference).
      */

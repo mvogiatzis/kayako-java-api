@@ -476,6 +476,8 @@ public class TicketPost extends KEntity {
                 return this.userId;
             case STAFF:
                 return this.staffId;
+		default:
+			break;
         }
         return 0;
     }
@@ -499,6 +501,8 @@ public class TicketPost extends KEntity {
             case STAFF:
                 this.setStaffId(creatorId);
                 break;
+		default:
+			break;
         }
         return this;
     }
@@ -1052,6 +1056,8 @@ public class TicketPost extends KEntity {
             case USER:
                 ticketPostHashMap.put("userid", Integer.toString(this.getUserId()));
                 break;
+		default:
+			break;
         }
 
         return ticketPostHashMap;

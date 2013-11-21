@@ -497,6 +497,8 @@ public class Ticket extends KEntityCustom {
                 break;
             case USER:
                 this.setUserId(creatorId);
+		default:
+			break;
         }
         return this;
     }
@@ -1221,6 +1223,8 @@ public class Ticket extends KEntityCustom {
                 return this.userId;
             case STAFF:
                 return this.staffId;
+		default:
+			break;
         }
         return 0;
     }
@@ -1250,6 +1254,8 @@ public class Ticket extends KEntityCustom {
             case STAFF:
                 this.setStaffId(creatorId);
                 break;
+		default:
+			break;
         }
         return this;
     }
@@ -2524,6 +2530,8 @@ public class Ticket extends KEntityCustom {
                 case AUTO:
                     ticketHashMap.put("autouserid", Integer.toString(1));
                     break;
+			default:
+				break;
             }
             ticketHashMap.put("contents", this.getContents());
             ticketHashMap.put("type", this.getCreationType().getString());

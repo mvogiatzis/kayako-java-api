@@ -31,6 +31,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.UnsupportedEncodingException;
 import java.text.DateFormat;
 import java.text.Format;
 import java.text.ParseException;
@@ -60,6 +63,7 @@ public class Helper {
         // Before converting to an int type, check
         // to ensure that file is not larger than Integer.MAX_VALUE.
         if (length > Integer.MAX_VALUE) {
+            is.close();
             throw new IOException("Could not completely read file " + file.getName() + " as it is too long (" + length + " bytes, max supported " + Integer.MAX_VALUE + ")");
         }
 
@@ -75,6 +79,7 @@ public class Helper {
 
         // Ensure all the bytes have been read in
         if (offset < bytes.length) {
+            is.close();
             throw new IOException("Could not completely read file " + file.getName());
         }
 
@@ -161,4 +166,36 @@ public class Helper {
         return dateStr;
     }
 
+    /**
+     * Slurp an Input stream
+     * 
+     * @param is Input stream
+     * @param bufferSize read buffer size
+     * @return content
+     */
+    public static String slurp(final InputStream is, final int bufferSize)
+    {
+      final char[] buffer = new char[bufferSize];
+      final StringBuilder out = new StringBuilder();
+      try {
+        final Reader in = new InputStreamReader(is, "UTF-8");
+        try {
+          for (;;) {
+            int rsz = in.read(buffer, 0, buffer.length);
+            if (rsz < 0)
+              break;
+            out.append(buffer, 0, rsz);
+          }
+        }
+        finally {
+          in.close();
+        }
+      }
+      catch (UnsupportedEncodingException ex) {
+      }
+      catch (IOException ex) {
+      }
+
+      return out.toString();
+    }
 }
