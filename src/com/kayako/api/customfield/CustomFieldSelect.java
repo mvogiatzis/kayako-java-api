@@ -70,10 +70,8 @@ public class CustomFieldSelect extends CustomField {
      */
     public CustomFieldSelect setSelectedOption(CustomFieldOption selectedOption) throws KayakoException {
         this.selectedOption = selectedOption;
-        if (this.selectedOption != null) {
+        if (this.selectedOption != null && this.getRawValue() == null) {
             this.setRawValue(this.selectedOption.getValue());
-        } else {
-            this.setRawValue(null);
         }
         return this;
     }
