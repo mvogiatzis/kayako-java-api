@@ -235,7 +235,7 @@ public class RESTClient implements RESTInterface {
                 	}
                 	
                     SAXParser parser = factory.newSAXParser();
-                    parser.parse(new InputSource(new ByteArrayInputStream(content.getBytes())), myHandler);
+                    parser.parse(new InputSource(new ByteArrayInputStream(content.getBytes(charset))), myHandler);
                 } catch (ParserConfigurationException e) {
                     e.printStackTrace();
                 } catch (SAXException e) {
