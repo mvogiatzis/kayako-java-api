@@ -26,6 +26,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 */
 
 import com.kayako.api.configuration.Configuration;
+import com.kayako.api.enums.HttpResponseType;
 import com.kayako.api.exception.KayakoException;
 import com.kayako.api.rest.RawArrayElement;
 import com.kayako.api.rest.XMLHandler;
@@ -62,6 +63,8 @@ import java.util.zip.GZIPInputStream;
 public class RESTClient implements RESTInterface {
 
     private Configuration config;
+    private HttpResponseType responseType = HttpResponseType.XML; 
+    		
     private static final Logger log = Logger.getLogger(RESTClient.class.getName());
     private static String charset;
 
@@ -103,7 +106,7 @@ public class RESTClient implements RESTInterface {
 
     @Override
     public RawArrayElement post(String controller, ArrayList<String> parameters) {
-        return this.post(controller, new ArrayList<String>(), new HashMap<String, String>());
+        return this.post(controller, parameters, new HashMap<String, String>());
     }
 
     @Override
@@ -233,6 +236,16 @@ public class RESTClient implements RESTInterface {
                 	if (this.config.isDebug()) {
                 		log.warning("Response Content :: " + content);
                 	}
+                	
+                	if (this.getResponseType() == HttpResponseType.PLAIN) {
+						return element.setContent(content);
+					}else if (this.getResponseType() == HttpResponseType.JSON) {
+						/**
+						 * @todo
+						 * Return JSON Object 
+						 */
+						return element.setContent(content);
+					}
                 	
                     SAXParser parser = factory.newSAXParser();
                     parser.parse(new InputSource(new ByteArrayInputStream(content.getBytes(charset))), myHandler);
@@ -375,4 +388,25 @@ public class RESTClient implements RESTInterface {
         }
         return postBody;
     }
+    
+    /**
+	 * Get Http Response Type Enum.
+	 * 
+	 * @return {@link HttpResponseType}
+	 */
+	public HttpResponseType getResponseType() {
+		return responseType;
+	}
+
+	/**
+	 * Set HTTP Response Type Enum.
+	 * 
+	 * @param responseType
+	 * @return {@link RESTClient}
+	 */
+	public RESTClient setResponseType(HttpResponseType responseType) {
+		this.responseType = responseType;
+		return this;
+	}
+
 }
