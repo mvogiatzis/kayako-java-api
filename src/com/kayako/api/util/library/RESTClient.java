@@ -26,7 +26,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 */
 
 import com.kayako.api.configuration.Configuration;
-import com.kayako.api.enums.HttpResponseType;
+import com.kayako.api.enums.HttpResponseTypeEnum;
 import com.kayako.api.exception.KayakoException;
 import com.kayako.api.rest.RawArrayElement;
 import com.kayako.api.rest.XMLHandler;
@@ -63,7 +63,7 @@ import java.util.zip.GZIPInputStream;
 public class RESTClient implements RESTInterface {
 
     private Configuration config;
-    private HttpResponseType responseType = HttpResponseType.XML; 
+    private HttpResponseTypeEnum responseType = HttpResponseTypeEnum.XML; 
     		
     private static final Logger log = Logger.getLogger(RESTClient.class.getName());
     private static String charset;
@@ -237,9 +237,9 @@ public class RESTClient implements RESTInterface {
                 		log.warning("Response Content :: " + content);
                 	}
                 	
-                	if (this.getResponseType() == HttpResponseType.PLAIN) {
+                	if (this.getResponseType() == HttpResponseTypeEnum.PLAIN) {
 						return element.setContent(content);
-					}else if (this.getResponseType() == HttpResponseType.JSON) {
+					}else if (this.getResponseType() == HttpResponseTypeEnum.JSON) {
 						/**
 						 * @todo
 						 * Return JSON Object 
@@ -394,7 +394,7 @@ public class RESTClient implements RESTInterface {
 	 * 
 	 * @return {@link HttpResponseType}
 	 */
-	public HttpResponseType getResponseType() {
+	public HttpResponseTypeEnum getResponseType() {
 		return responseType;
 	}
 
@@ -404,7 +404,7 @@ public class RESTClient implements RESTInterface {
 	 * @param responseType
 	 * @return {@link RESTClient}
 	 */
-	public RESTClient setResponseType(HttpResponseType responseType) {
+	public RESTClient setResponseType(HttpResponseTypeEnum responseType) {
 		this.responseType = responseType;
 		return this;
 	}
