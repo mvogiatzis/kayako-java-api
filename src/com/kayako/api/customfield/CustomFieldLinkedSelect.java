@@ -63,8 +63,9 @@ public class CustomFieldLinkedSelect extends CustomFieldSelect {
 
     @Override
     public CustomFieldLinkedSelect setSelectedOption(CustomFieldOption customFieldOption) throws KayakoException {
-        if (this.getSelectedOption() != null) {
-            this.setRawValue(this.getOption(this.getSelectedOption().getParentOptionId()).getValue() + PARENT_CHILD_SEPARATOR + this.getSelectedOption().getValue());
+        if (customFieldOption != null) {
+        	this.selectedOption = customFieldOption;
+            this.setRawValue(this.getOption(customFieldOption.getParentOptionId()).getValue() + PARENT_CHILD_SEPARATOR + customFieldOption.getValue());
         } else {
             this.setRawValue(null);
         }
