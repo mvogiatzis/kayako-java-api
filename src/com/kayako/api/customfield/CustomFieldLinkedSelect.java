@@ -77,11 +77,10 @@ public class CustomFieldLinkedSelect extends CustomFieldSelect {
         HashMap<String, String> hashMap = new HashMap<String, String>();
         if (this.getSelectedOption().getParentOptionId() > 0) {
             hashMap.put(this.getName() + "[0]", Integer.toString(this.getSelectedOption().getParentOptionId()));
-            hashMap.put(this.getName() + "[0][" + Integer.toString(this.getSelectedOption().getParentOptionId()) + "]", Integer.toString(this.getSelectedOption().getId()));
+            hashMap.put(this.getName() + "[1][" + Integer.toString(this.getSelectedOption().getParentOptionId()) + "]", Integer.toString(this.getSelectedOption().getId()));
         } else {
             hashMap.put(this.getName() + "[0]", Integer.toString(this.getSelectedOption().getId()));
         }
-
         return hashMap;
     }
 }
