@@ -248,7 +248,9 @@ public class RESTClient implements RESTInterface {
 					}
                 	
                     SAXParser parser = factory.newSAXParser();
-                    parser.parse(new InputSource(new ByteArrayInputStream(content.getBytes(charset))), myHandler);
+                    if (isXML(content)){
+                        parser.parse(new InputSource(new ByteArrayInputStream(content.getBytes(charset))), myHandler);
+                    }
                 } catch (ParserConfigurationException e) {
                     e.printStackTrace();
                 } catch (SAXException e) {
@@ -258,7 +260,7 @@ public class RESTClient implements RESTInterface {
                 connection.disconnect();
                 element = myHandler.getRawArrayElement();
 
-                if (this.config.isDebug()) {
+                if (this.config.isDebug() && element != null) {
                     log.warning(element.toString());
                 }
 
@@ -274,7 +276,18 @@ public class RESTClient implements RESTInterface {
         }
         return element;
     }
-    
+
+
+    /**
+     * Very basic XML validation
+     *
+     * @param content The XML Contents
+     * @return True if it starts with an XML tag, false otherwise
+     */
+    private boolean isXML(final String content) {
+        return content != null && content.toLowerCase().trim().startsWith("<?xml");
+    }
+
     /**
      * Prepares URL (and returns it) and POST data (updates it via reference).
      */
